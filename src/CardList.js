@@ -1,29 +1,34 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import Card from './Card';
 
-const CardList = ({negozi}) => {
+const CardList = ({negozi, categorie}) => {
 
 	const cardsArray = negozi.map((negozio,i) =>{
+
+		//setCat( categorie.filter(categoria => {return categoria.id === negozio.id_categoria}) );
+		//console.log(cat2[0].nome);
 
 			return (
 				<Card 
 					key={i} 
 					nome={negozio.nome} 
-					id_categoria={negozio.id_categoria} 
+					categoria={
+						categorie
+						.filter(categoria => categoria.id === negozio.id_categoria)
+						.map(categorieFiltrate => (categorieFiltrate.nome))
+					}
 					url_logo={negozio.url_logo} 
-					citta={negozio.citta} 
+					citta={negozio.citta}
 				/>
 			);
-	})
+	});
 
 
 	return (
 
 		<Fragment>
 
-			<div>
-				{cardsArray}
-			</div>
+			{cardsArray}
 
 		</Fragment>
 

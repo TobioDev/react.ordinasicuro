@@ -7,6 +7,7 @@ import CardList from './CardList';
 function App() {
 
 	const [negoziHome, setNegoziHome] = useState([]);
+	const [categorie, setCategorie] = useState([]);
 
 	//Passare array vuoto alla fine se si vuole simulare il comportamento di componentDidMount 
 	useEffect(()=>{
@@ -14,6 +15,11 @@ function App() {
 		fetch('https://ordinasicuro.it/index.php/api/negozi_home')
 		  .then(response => response.json())
 		  .then(json => setNegoziHome(json));
+
+		  fetch('https://ordinasicuro.it/index.php/api/categorie')
+		    .then(response => response.json())
+		    .then(json => setCategorie(json));
+
 	}, []);
 
 
@@ -22,14 +28,7 @@ function App() {
 		});
 
 
-
-	// const cardsArray = negoziHome.map((negozio,i) =>{
-	// 	return (
-	// 		<p>{negozio.nome}</p>
-	// 	);
-	// })
 	if (negoziHome.lenght === 0){
-		console.log('ancora zero');
 	}
 	else{
 
@@ -38,9 +37,9 @@ function App() {
 			<Fragment >
 
 		  	<Header />
-		  	<SezioneBoxed>
+		  	<SezioneBoxed backgroundColor="bg-near-white">
 
-		  		<CardList negozi={negoziFiltrati}/>
+		  		<CardList negozi={negoziFiltrati} categorie={categorie}/>
 		  		
 		  	</SezioneBoxed>    
 
