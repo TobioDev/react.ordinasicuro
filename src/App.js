@@ -3,6 +3,8 @@ import './App.css';
 import Header from './Header';
 import SezioneBoxed from './SezioneBoxed';
 import CardList from './CardList';
+import TimelineVerticale from './TimelineVerticale';
+import FeaturesIcone from './FeaturesIcone';
 
 function App() {
 
@@ -41,7 +43,19 @@ function App() {
 
 		  		<CardList negozi={negoziFiltrati} categorie={categorie}/>
 		  		
-		  	</SezioneBoxed>    
+		  	</SezioneBoxed>
+
+		  	<SezioneBoxed backgroundColor="bg-white">
+
+		  		<FeaturesIcone />		  		
+		  		
+		  	</SezioneBoxed>   
+
+		  	<SezioneBoxed backgroundColor="bg-near-white" align="items-start">
+
+		  		<TimelineVerticale/>
+		  		
+		  	</SezioneBoxed>      
 
 		  </Fragment>
 
