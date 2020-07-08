@@ -1,7 +1,7 @@
 import React from 'react';
 import './SezioneBoxed.css';
 
-const SezioneBoxed = ({children, backgroundColor, align}) => {
+const SezioneBoxed = ({children, backgroundColor, align, direction}) => {
 
 	if (!backgroundColor){
 		
@@ -11,13 +11,18 @@ const SezioneBoxed = ({children, backgroundColor, align}) => {
 
 	if (!align){
 		
-		align = "items-start";
+		align = "items-center";
+	}
+
+	if (!direction){
+		
+		direction = "flex-row";
 	}
 
 	return(
 
-		<div className={" " + backgroundColor }>
-			<div className={'pa3 ph5-ns sezioneboxed flex flex-wrap justify-center ' + align}>
+		<div className={"flex flex-wrap justify-center items-center" + backgroundColor }>
+			<div className={'pa3 sezioneboxed flex flex-wrap justify-center ' + align + ' ' + direction }>
 				{children}				
 			</div>
 		</div>

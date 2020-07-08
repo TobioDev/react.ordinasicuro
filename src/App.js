@@ -51,7 +51,8 @@ function App() {
 		  		
 		  	</SezioneBoxed>   
 
-		  	<SezioneBoxed backgroundColor="bg-near-white" align="items-start">
+		  	<SezioneBoxed
+		  		backgroundColor="bg-near-white"	align="items-start" direction="flex-column"		  	>
 
 		  		<TimelineVerticale/>
 		  		
