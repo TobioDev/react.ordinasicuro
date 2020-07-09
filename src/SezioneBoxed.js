@@ -9,20 +9,10 @@ const SezioneBoxed = ({children, backgroundColor, align, direction}) => {
 	}
 	
 
-	if (!align){
-		
-		align = "items-center";
-	}
-
-	if (!direction){
-		
-		direction = "flex-row";
-	}
-
 	return(
 
-		<div className={"flex flex-wrap justify-center items-center" + backgroundColor }>
-			<div className={'pa3 sezioneboxed flex flex-wrap justify-center ' + align + ' ' + direction }>
+		<div className={"flex flex-wrap justify-center items-center " + backgroundColor }>
+			<div className='pa3 sezioneboxed flex flex-wrap justify-center items-center flex-column'>
 				{children}				
 			</div>
 		</div>

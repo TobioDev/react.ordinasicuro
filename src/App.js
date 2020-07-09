@@ -5,6 +5,8 @@ import SezioneBoxed from './SezioneBoxed';
 import CardList from './CardList';
 import TimelineVerticale from './TimelineVerticale';
 import FeaturesIcone from './FeaturesIcone';
+import ConsigliCovid from './ConsigliCovid';
+import IscrizioneOS from './IscrizioneOS';
 
 function App() {
 
@@ -51,12 +53,21 @@ function App() {
 		  		
 		  	</SezioneBoxed>   
 
-		  	<SezioneBoxed
-		  		backgroundColor="bg-near-white"	align="items-start" direction="flex-column"		  	>
+		  	<SezioneBoxed backgroundColor="bg-white" >
 
 		  		<TimelineVerticale/>
 		  		
-		  	</SezioneBoxed>      
+		  	</SezioneBoxed>
+
+		  	<SezioneBoxed backgroundColor="bg-near-white" >
+
+		  		<ConsigliCovid />
+		  	</SezioneBoxed>
+
+		  	<SezioneBoxed backgroundColor="bg-near-white" >
+
+		  		<IscrizioneOS />
+		  	</SezioneBoxed>         
 
 		  </Fragment>
 
