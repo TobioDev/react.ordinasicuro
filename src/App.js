@@ -8,6 +8,7 @@ import FeaturesIcone from './FeaturesIcone';
 import ConsigliCovid from './ConsigliCovid';
 import IscrizioneOS from './IscrizioneOS';
 import CtaIcona from './CtaIcona';
+import Footer from './Footer';
 
 function App() {
 
@@ -62,6 +63,8 @@ function App() {
 				<SezioneBoxed backgroundColor="bg-dark-gray" >
 					<IscrizioneOS />
 				</SezioneBoxed>
+
+				<Footer />>
 
 			</Fragment>
 
