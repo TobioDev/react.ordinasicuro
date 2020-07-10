@@ -1,5 +1,5 @@
 import React from 'react';
-import './SezioneBoxed.css';
+import './SezioneBoxed.css';		
 
 const SezioneBoxed = ({children, backgroundColor, align, direction}) => {
 
@@ -19,9 +19,6 @@ const SezioneBoxed = ({children, backgroundColor, align, direction}) => {
 
 
 	)
-
-	//Prova Commit
-
 	
 
 }
