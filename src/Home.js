@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 
 import Header from './Header';
 import SezioneBoxed from './SezioneBoxed';
@@ -9,15 +9,35 @@ import ConsigliCovid from './ConsigliCovid';
 import IscrizioneOS from './IscrizioneOS';
 import CtaIcona from './CtaIcona';
 
-const Home = ({ negozi, categorie, contatore }) => {
+
+const Home = () => {
+
+    const [negoziHome, setNegoziHome] = useState([]);
+    const [categorie, setCategorie] = useState([]);
+
+    //Passare array vuoto alla fine se si vuole simulare il comportamento di componentDidMount 
+    useEffect(() => {
+        fetch('https://ordinasicuro.it/index.php/api/negozi_home')
+            .then(response => response.json())
+            .then(json => setNegoziHome(json));
+        fetch('https://ordinasicuro.it/index.php/api/categorie')
+            .then(response => response.json())
+            .then(json => setCategorie(json));
+    }, []);
+
+    const negoziFiltrati = negoziHome.filter(negozio => {
+        return negozio.visibile !== '0';
+    });
+    
     return (
         <Fragment>
-            <Header contatore={contatore} />
+
+            <Header />
 
             <CtaIcona />
 
             <SezioneBoxed backgroundColor="bg-near-white">
-                <CardList negozi={negozi} categorie={categorie} />
+                <CardList negozi={negoziFiltrati} categorie={categorie} />
             </SezioneBoxed>
 
 

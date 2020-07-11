@@ -1,62 +1,48 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import './App.css';
 
-import { Route } from 'react-router-dom'
+import { Menu, Segment } from 'semantic-ui-react';
 
 import Home from './Home'
 import Footer from './Footer';
 
+import './App.css';
+
+import { Route, Link } from 'react-router-dom'
+
+
 function App() {
 
-	const [negoziHome, setNegoziHome] = useState([]);
-	const [categorie, setCategorie] = useState([]);
 
-	//Passare array vuoto alla fine se si vuole simulare il comportamento di componentDidMount 
-	useEffect(() => {
-		fetch('https://ordinasicuro.it/index.php/api/negozi_home')
-			.then(response => response.json())
-			.then(json => setNegoziHome(json));
-		fetch('https://ordinasicuro.it/index.php/api/categorie')
-			.then(response => response.json())
-			.then(json => setCategorie(json));
-	}, []);
+	return (
 
+		<Fragment >
+			<Segment inverted className="w-100" style={{marginBottom:"0px", position:"fixed", top:0, zIndex:800}} >
+				<Menu inverted secondary size="massive">
+					<Menu.Item >
+						<img style={{width:"150px"}} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo"/>
+					</Menu.Item>
+					<Menu.Menu position="right">
+						<Menu.Item name='home' active={true} />
+						<Menu.Item name='messages' />
+						<Menu.Item name='friends' />
+					</Menu.Menu>
+					
+				</Menu>
+			</Segment>
+			<Route
+				exact
+				path="/"
+				render={() => (
+					<Home />
+				)}
+			/>
 
-	const negoziFiltrati = negoziHome.filter(negozio => {
-		return negozio.visibile !== '0';
-	});
+			<Footer />
 
-
-	if (negoziHome.lenght === 0) {
-	}
-	else {
-		return (
-
-			<Fragment >
-				<Route
-					exact
-					path="/"
-					render={()=> (
-						<Home negozi = {negoziFiltrati} categorie={categorie} />
-					)}
-				/>
-
-				<Route
-					exact
-					path="/footer"
-					render={()=> (
-						<Footer />
-					)}
-				/>
-				
-				<Footer />
-
-			</Fragment>
+		</Fragment>
 
 
-		);
-
-	}
+	);
 
 
 

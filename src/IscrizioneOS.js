@@ -5,7 +5,7 @@ const IscrizioneOS = () => {
 	return (
 
 		<Fragment>
-			<div style={{backgroundImage:'url("https://ordinasicuro.it/img/map-image.png")'}}>
+			<div className="mv4" style={{backgroundImage:'url("https://ordinasicuro.it/img/map-image.png")'}}>
 				<div className="flex justify-center items-center flex-column">
 					<h1 className="tc mb0 white">AGGIUNGI IL TUO NEGOZIO A ORDINA SICURO</h1>
 					<h2 className="tc b f4 fw2 white mt0 lh-copy">Inviaci la tua richiesta di iscrizione per essere aggiunto a Ordina Sicuro</h2>
