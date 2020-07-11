@@ -34,7 +34,7 @@ const Header = () => {
 		            	className="mw-100 w-100 w5-ns f5 input-reset ba b--black-20 pv3 ph4 border-box"
 		            />
 		            <input
-		            	type="submit"
+						type="submit"
 		            	value="CERCA"
 		            	className="input-reset grow w-100 w-auto-ns mt2 bg-black-80 white f5 pv2 pv3-ns ph4 ba b--black-80 bg-hover-mid-gray"
 		            />

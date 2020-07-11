@@ -1,13 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import './App.css';
-import Header from './Header';
-import SezioneBoxed from './SezioneBoxed';
-import CardList from './CardList';
-import TimelineVerticale from './TimelineVerticale';
-import FeaturesIcone from './FeaturesIcone';
-import ConsigliCovid from './ConsigliCovid';
-import IscrizioneOS from './IscrizioneOS';
-import CtaIcona from './CtaIcona';
+
+import { Route } from 'react-router-dom'
+
+import Home from './Home'
 import Footer from './Footer';
 
 function App() {
@@ -37,34 +33,23 @@ function App() {
 		return (
 
 			<Fragment >
+				<Route
+					exact
+					path="/"
+					render={()=> (
+						<Home negozi = {negoziFiltrati} categorie={categorie} />
+					)}
+				/>
 
-				<Header />
+				<Route
+					exact
+					path="/footer"
+					render={()=> (
+						<Footer />
+					)}
+				/>
 				
-				<CtaIcona />
-
-				<SezioneBoxed backgroundColor="bg-near-white">
-					<CardList negozi={negoziFiltrati} categorie={categorie} />
-				</SezioneBoxed>
-
-				
-
-				<SezioneBoxed backgroundColor="bg-white">
-					<FeaturesIcone />
-				</SezioneBoxed>
-
-				<SezioneBoxed backgroundColor="bg-white" >
-					<TimelineVerticale />
-				</SezioneBoxed>
-
-				<SezioneBoxed backgroundColor="bg-near-white" >
-					<ConsigliCovid />
-				</SezioneBoxed>
-
-				<SezioneBoxed backgroundColor="bg-dark-gray" >
-					<IscrizioneOS />
-				</SezioneBoxed>
-
-				<Footer />>
+				<Footer />
 
 			</Fragment>
 
