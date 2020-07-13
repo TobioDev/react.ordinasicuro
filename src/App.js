@@ -7,6 +7,7 @@ import Footer from './Footer';
 import './App.css';
 
 import { Route } from 'react-router-dom'
+import NavbarOS from './NavbarOS';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                 <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
 				<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
             </Helmet>
+			<NavbarOS />
 			<Route
 				exact
 				path="/"

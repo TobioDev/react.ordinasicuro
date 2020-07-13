@@ -10,7 +10,7 @@ const Header = () => {
 
 	return (
 
-		<header className="sans-serif">
+		<header className="sans-serif" id="home">
 			<div className="cover bg-left bg-center-l">
 				<div className="bg-black-80 pt7 pb6">
 					<div className="tc ph3">
