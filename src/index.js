@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-
-import 'semantic-ui-css/semantic.min.css'
 import 'tachyons';
+import 'semantic-ui-css/semantic.min.css'
+
 
 import { BrowserRouter } from 'react-router-dom'
 
