@@ -15,6 +15,7 @@ const CardList = ({negozi, categorie}) => {
 			}
 			url_logo={negozio.url_logo} 
 			citta={negozio.citta}
+			id_negozio={negozio.id}
 		/>
 			
 	);

@@ -8,6 +8,7 @@ import './App.css';
 
 import { Route } from 'react-router-dom'
 import NavbarOS from './NavbarOS';
+import Negozio from './Negozio';
 
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
 					<Home />
 				)}
 			/>
+			<Route 
+				path='/negozio/:id_negozio'
+				exact
+				component={Negozio} />
 
 			<Footer />
 
