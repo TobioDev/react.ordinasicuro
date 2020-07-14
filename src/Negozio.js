@@ -7,6 +7,7 @@ const Negozio = (props) => {
 
     const [infoNegozio, setInfoNegozio] = useState([]);
     const [categorie, setCategorie] = useState([]);
+    const [categorieArticoli, setCategorieArticoli] = useState([]);
     const [articoli, setArticoli] = useState([]);
 
     useEffect(() => {
@@ -15,6 +16,7 @@ const Negozio = (props) => {
             .then(json => {
                 setInfoNegozio(json.get_negozio);
                 setCategorie(json.get_categorie);
+                setCategorieArticoli(json.get_categorie_articoli);
                 setArticoli(json.get_articoli);
                     }
             );
@@ -27,7 +29,7 @@ const Negozio = (props) => {
 
         <Fragment>
             <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
-            <ListaArticoli articoli={articoli} />
+            <ListaArticoli articoli={articoli} categorieArticoli={categorieArticoli} />
         </Fragment>    
 
     )
