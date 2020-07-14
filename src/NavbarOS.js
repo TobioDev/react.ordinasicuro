@@ -37,7 +37,7 @@ const NavbarOS = () => {
             </Sidebar>
 
             <Segment inverted className="w-100 dn db-l" style={{ marginBottom: "0px", marginTop: '0px', position: "fixed", top: 0, zIndex: 101 }} >
-                <Menu inverted secondary size="">
+                <Menu inverted secondary size="normal">
                     <Menu.Item >
                         <img style={{ width: "150px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" />
                     </Menu.Item>
@@ -53,13 +53,13 @@ const NavbarOS = () => {
             </Segment>
 
             <Segment inverted className="w-100 dn-l" style={{ marginBottom: "0px", marginTop: "0px", position: "fixed", top: 0, zIndex: 101 }} >
-                <Menu inverted secondary size="massive">
+                <Menu inverted secondary size="tiny">
                     <Menu.Item >
-                        <img style={{ width: "150px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" />
+                        <img style={{ width: "120px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" />
                     </Menu.Item>
                     <Menu.Menu position="right">
                         <Menu.Item >
-                        <AiOutlineMenu className="white f1" onClick={apriChiudiMenu} />
+                        <AiOutlineMenu className="white f2" onClick={apriChiudiMenu} />
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>

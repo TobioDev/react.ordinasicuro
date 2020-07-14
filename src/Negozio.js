@@ -1,26 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
+
+import HeaderNegozio from './HeaderNegozio'
+import ListaArticoli from './ListaArticoli'
 
 const Negozio = (props) => {
 
     const [infoNegozio, setInfoNegozio] = useState([]);
-    const [parola, setParola] = useState('nada');
+    const [categorie, setCategorie] = useState([]);
+    const [articoli, setArticoli] = useState([]);
 
     useEffect(() => {
         fetch('https://ordinasicuro.it/index.php/api/negozio/' + props.match.params.id_negozio)
             .then(response => response.json())
             .then(json => {
-                setInfoNegozio(json);
-                const risp = json.get_negozio.nome;
-                setParola(risp);
-
+                setInfoNegozio(json.get_negozio);
+                setCategorie(json.get_categorie);
+                setArticoli(json.get_articoli);
                     }
-            )
+            );
+        
+        window.scrollTo(0, 0)
+        
     }, []);
 
     return (
-        <div>
-            <p></p>
-        </div>
+
+        <Fragment>
+            <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
+            <ListaArticoli articoli={articoli} />
+        </Fragment>    
+
     )
 }
 

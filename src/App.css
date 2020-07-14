@@ -28,12 +28,24 @@
   color: #61dafb;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .sottotitolo{
   font-family: 'Droid Serif';
 }
 
 .titolo{
   font-family: Montserrat;
+}
+
+.colore-primario{
+  color: #fbd10d;
+}
+
+.sfondo-primario{
+  background-color: #fbd10d;
 }
 
 @keyframes App-logo-spin {
