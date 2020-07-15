@@ -29,9 +29,8 @@ const Negozio = (props) => {
 
         <Fragment>
             <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
-            <form id="lista_articoli">
                 <ListaArticoli articoli={articoli} categorieArticoli={categorieArticoli} />
-            </form>
+                <input type="submit" value="INVIA ORA" form="form-articoli"/>
         </Fragment>    
 
     )

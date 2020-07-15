@@ -1,8 +1,20 @@
 import React from 'react'
+import { useForm } from "react-hook-form"
+
+
 import Articolo from './Articolo'
 import SezioneBoxed from './SezioneBoxed'
 
 const ListaArticoli = ({articoli, categorieArticoli}) => {
+
+    const { register, handleSubmit, watch, errors} = useForm();
+    const onSubmit = data => {
+
+        let arrayTotale = Object.entries(data);
+        arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='');
+        console.log(arrayTotale);
+
+    };
 
     const stampaArticoliPerCategoria = categorieArticoli
                                         .map( (categoriaArticolo) => (
@@ -15,6 +27,7 @@ const ListaArticoli = ({articoli, categorieArticoli}) => {
 
                                                     <Articolo
                                                         key={articoloFiltrato.id} 
+                                                        register={register}
                                                         id={articoloFiltrato.id} 
                                                         visibilita={articoloFiltrato.visibilita} 
                                                         nome={articoloFiltrato.nome} 
@@ -33,9 +46,11 @@ const ListaArticoli = ({articoli, categorieArticoli}) => {
     
 
     return (
-        <SezioneBoxed >
-            {stampaArticoliPerCategoria}
-        </SezioneBoxed >
+        <form onSubmit={handleSubmit(onSubmit)} nome="form-articoli" id="form-articoli">
+            <SezioneBoxed >
+                {stampaArticoliPerCategoria}
+            </SezioneBoxed >
+        </form>
     )
 }
 

@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 
 import  './Articolo.css'
 
-const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine }) => {
+const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register }) => {
 
     const [quantita, setQuantita] = useState(0);
     const [visibilitaNota, setvisibilitaNota] = useState('dn');
@@ -46,7 +46,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                 </div>
                 <div class="w-100 mt3 flex justify-start items-center">
                     <div className="flex justify-start items-center w-60">
-                        <input name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mb2 w-20" value={quantita} type="text" aria-describedby="name-desc"/> <p className="mh2 w-20">{unita_misura}</p> 
+                        <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mb2 w-20" value={quantita} type="text" aria-describedby="name-desc"/> <p className="mh2 w-20">{unita_misura}</p> 
                         <button type="button" class="f6 br3 bn ph3 pv2 mb2 mr2 dib white bg-dark-green titolo fw7" onClick={aggiungi}> + </button>
                         <button type="button" class="f6 br3 bn ph3 pv2 mb2 dib white bg-dark-red titolo fw7" onClick={diminuisci}> - </button>
                     </div>
@@ -55,7 +55,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     </div>
                 </div>
                 <div class={"w-100 mt3 justify-start items-center " + visibilitaNota}>
-                    <textarea name={"nota"+id} id={"nota"+id} rows="10" className="w-100 pa2" placeholder="Inserisci qui una tua nota per questo prodotto..."></textarea>
+                    <textarea ref={register} name={"nota"+id} id={"nota"+id} rows="10" className="w-100 pa2" placeholder="Inserisci qui una tua nota per questo prodotto..."></textarea>
                 </div>
             </div>
             
