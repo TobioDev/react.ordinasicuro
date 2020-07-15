@@ -5,6 +5,7 @@ import Home from './Home'
 import Footer from './Footer';
 
 import './App.css';
+import 'animate.css/animate.css' 
 
 import { Route } from 'react-router-dom'
 import NavbarOS from './NavbarOS';

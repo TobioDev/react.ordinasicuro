@@ -29,7 +29,9 @@ const Negozio = (props) => {
 
         <Fragment>
             <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
-            <ListaArticoli articoli={articoli} categorieArticoli={categorieArticoli} />
+            <form id="lista_articoli">
+                <ListaArticoli articoli={articoli} categorieArticoli={categorieArticoli} />
+            </form>
         </Fragment>    
 
     )
