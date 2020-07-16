@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
 
+import { useHistory } from "react-router-dom";
 
 import Articolo from './Articolo'
 import SezioneBoxed from './SezioneBoxed'
@@ -8,11 +9,24 @@ import SezioneBoxed from './SezioneBoxed'
 const ListaArticoli = ({articoli, categorieArticoli}) => {
 
     const { register, handleSubmit, watch, errors} = useForm();
+    let history = useHistory();
+    
     const onSubmit = data => {
 
-        let arrayTotale = Object.entries(data);
-        arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='');
-        console.log(arrayTotale);
+        //let arrayTotale = Object.entries(data);
+        //arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='');
+        //console.log( JSON.stringify(arrayTotale));
+        // history.push("/#home");
+        console.log(data);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        };
+        fetch('https://ordinasicuro.it/api/crea_ordine', requestOptions)
+            .then(response => response.json())
+            .then(dati => console.log('risposta', dati));
 
     };
 
