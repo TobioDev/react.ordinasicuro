@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import {Helmet} from "react-helmet";
 
 import Home from './Home'
-import Footer from './Footer';
 
 import './App.css';
 import 'animate.css/animate.css' 
@@ -36,8 +35,6 @@ function App() {
 				path='/negozio/:id_negozio'
 				exact
 				component={Negozio} />
-
-			<Footer />
 
 		</Fragment>
 

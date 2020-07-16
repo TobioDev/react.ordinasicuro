@@ -21,7 +21,7 @@ const Faq = () => {
       <h1 className="titolo mb0">F.A.Q.</h1>
       <p className="sottotitolo gray i">Domande Frequenti</p>
       <div className="flex items-center justify-center w-100 mb5">
-        <Accordion styled>
+        <Accordion styled style={{"width": "100%"}}>
           <Accordion.Title
             active={activeIndex === 0}
             index={0}

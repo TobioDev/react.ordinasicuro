@@ -8,6 +8,7 @@ import ConsigliCovid from './ConsigliCovid';
 import IscrizioneOS from './IscrizioneOS';
 import CtaIcona from './CtaIcona';
 import Faq from './Faq';
+import Footer from './Footer'
 import NavbarOS from './NavbarOS';
 
 
@@ -58,6 +59,7 @@ const Home = () => {
             <SezioneBoxed backgroundColor="bg-dark-gray" >
                 <IscrizioneOS />
             </SezioneBoxed>
+            <Footer />
         </Fragment>
     )
 }
