@@ -13,19 +13,21 @@ const ListaArticoli = ({articoli, categorieArticoli}) => {
     
     const onSubmit = data => {
 
-        //let arrayTotale = Object.entries(data);
-        //arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='');
+        let arrayTotale = Object.entries(data);
+        arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='');
         //console.log( JSON.stringify(arrayTotale));
         // history.push("/#home");
         console.log(data);
+        console.log('modalità json', JSON.stringify(data));
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: JSON.stringify(arrayTotale)
         };
+        console.log('body',requestOptions.body)
         fetch('https://ordinasicuro.it/api/crea_ordine', requestOptions)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(dati => console.log('risposta', dati));
 
     };
