@@ -1,11 +1,24 @@
 import React, { Fragment, useState } from 'react'
+import { Dropdown } from 'semantic-ui-react'
 
 import  './Articolo.css'
 
-const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register }) => {
+const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, componentiArticolo, associazioniComponenteArticolo }) => {
 
     const [quantita, setQuantita] = useState(0);
     const [visibilitaNota, setvisibilitaNota] = useState('dn');
+
+
+    const stampaSelectComponenti = (componentiArticolo, associazioniComponenteArticolo, id) => {
+        let arrayOpzioniComponenti = [];
+        associazioniComponenteArticolo
+            .filter( associazione => associazione.id_articolo === id)
+            .map( associazioneFiltrata => componentiArticolo
+                                            .filter( componente => componente.id === associazioneFiltrata.id_componente)
+                                            .map( componenteFiltrato => arrayOpzioniComponenti.push({key: componenteFiltrato.nome, text: componenteFiltrato.nome, value: componenteFiltrato.id}))
+            )
+        return (<Dropdown placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} />)
+    } 
     
 
     const link_img = (url_immagine) => {
@@ -43,6 +56,9 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                 <div className="w-100 mt3 flex items-start justify-start">
                     {link_img(url_immagine)}
                     <p className="sottotitolo">{descrizione}</p>
+                </div>
+                <div class="w-100 mt3 flex justify-start items-center">
+                    {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) }
                 </div>
                 <div class="w-100 mt3 flex justify-start items-center">
                     <div className="flex justify-start items-center w-60">
