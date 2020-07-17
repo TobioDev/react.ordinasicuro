@@ -17,6 +17,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                                             .filter( componente => componente.id === associazioneFiltrata.id_componente)
                                             .map( componenteFiltrato => arrayOpzioniComponenti.push({key: componenteFiltrato.nome, text: componenteFiltrato.nome, value: componenteFiltrato.id}))
             )
+        if(arrayOpzioniComponenti.length>0)
         return (<Dropdown placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} />)
     } 
     
