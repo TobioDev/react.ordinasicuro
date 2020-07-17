@@ -8,24 +8,22 @@ import SezioneBoxed from './SezioneBoxed'
 
 const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
 
-    const { register, handleSubmit, watch, errors} = useForm();
+    const { register, handleSubmit, setValue, watch, errors} = useForm();
     let history = useHistory();
-
-    console.log('componenti', componentiArticolo);
-    console.log('associazioni', associazioniComponenteArticolo);
     
     const onSubmit = data => {
 
         let variabile_presenza_errori = false;
 
         let arrayTotale = Object.entries(data);
-        arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='');
+        arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='' && elemento[1]!==undefined);
         //console.log( JSON.stringify(arrayTotale));
         // history.push("/#home");
         console.log(data);
         console.log('modalità json', JSON.stringify(data));
+        console.log('arrayTotale', arrayTotale);
 
-        if(arrayTotale.length>1){
+        if(arrayTotale.length>0){
 
             const requestOptions = {
                 method: 'POST',
@@ -57,6 +55,7 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
                                                         <Articolo
                                                             key={articoloFiltrato.id} 
                                                             register={register}
+                                                            setValue={setValue}
                                                             id={articoloFiltrato.id} 
                                                             visibilita={articoloFiltrato.visibilita} 
                                                             nome={articoloFiltrato.nome} 

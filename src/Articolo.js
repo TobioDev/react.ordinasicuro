@@ -1,12 +1,18 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 import  './Articolo.css'
 
-const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, componentiArticolo, associazioniComponenteArticolo }) => {
+const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, setValue, componentiArticolo, associazioniComponenteArticolo }) => {
 
     const [quantita, setQuantita] = useState(0);
     const [visibilitaNota, setvisibilitaNota] = useState('dn');
+
+
+    //Per registrare valore Dropdown Semantic UI
+    const handleChange = (e, { name, value }) => {setValue(name, value)}
+
+    useEffect( () => {register("componenti"+id);},[register])
 
 
     const stampaSelectComponenti = (componentiArticolo, associazioniComponenteArticolo, id) => {
@@ -18,7 +24,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                                             .map( componenteFiltrato => arrayOpzioniComponenti.push({key: componenteFiltrato.nome, text: componenteFiltrato.nome, value: componenteFiltrato.id}))
             )
         if(arrayOpzioniComponenti.length>0)
-        return (<Dropdown placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} />)
+        return (<Dropdown onChange={handleChange} name={"componenti"+id} id={"componenti"+id} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti}/>)
     } 
     
 
