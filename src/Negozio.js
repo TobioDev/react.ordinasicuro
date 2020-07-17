@@ -1,10 +1,13 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { Button, Icon } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 import HeaderNegozio from './HeaderNegozio'
 import ListaArticoli from './ListaArticoli'
 
 const Negozio = (props) => {
+
+    const [visibilitaLoader, setVisibilitaLoader] = useState(true);
 
     const [infoNegozio, setInfoNegozio] = useState([]);
     const [categorie, setCategorie] = useState([]);
@@ -25,6 +28,7 @@ const Negozio = (props) => {
                 setArticoli(json.get_articoli);
                 setComponentiArticolo(json.get_componenti_articolo);
                 setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
+                setVisibilitaLoader(false)
                     }
             );
         
@@ -33,15 +37,18 @@ const Negozio = (props) => {
     return (
 
         <Fragment>
+            <Dimmer active={visibilitaLoader}>
+                <Loader>Stiamo raccogliendo tutte le informazioni...</Loader>
+            </Dimmer>
             <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
-                <ListaArticoli idNegozio={props.match.params.id_negozio} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+            <ListaArticoli idNegozio={props.match.params.id_negozio} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 {/* <input type="submit" value="INVIA ORA" /> */}
-                <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="form-articoli">
-                  <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>
-                  <Button.Content hidden>
+            <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="form-articoli">
+                <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>
+                <Button.Content hidden>
                     <Icon name='arrow right' />
-                  </Button.Content>
-                </Button>
+                </Button.Content>
+            </Button>
         </Fragment>    
 
     )
