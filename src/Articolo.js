@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Button } from 'semantic-ui-react'
 
 import  './Articolo.css'
 
@@ -7,12 +7,22 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     const [quantita, setQuantita] = useState(0);
     const [visibilitaNota, setvisibilitaNota] = useState('dn');
+    const [disabilitaNota, setDisabilitaNota] = useState(true);
 
 
     //Per registrare valore Dropdown Semantic UI
     const handleChange = (e, { name, value }) => {setValue(name, value)}
 
     useEffect( () => {register("componenti"+id);},[register])
+
+    useEffect( () => {
+        if(quantita===0){
+            setDisabilitaNota(true)
+        }
+        else{
+            setDisabilitaNota(false)
+        }
+    },[quantita])
 
 
     const stampaSelectComponenti = (componentiArticolo, associazioniComponenteArticolo, id) => {
@@ -34,9 +44,9 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
         }
     }
 
-    const aggiungi=() => (
-        setQuantita((quantita*1)+1)
-    )
+    const aggiungi=() => {
+        setQuantita((quantita*1)+1);
+    }
 
     const diminuisci=() => {
         if(quantita >0){
@@ -74,7 +84,8 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                         <button type="button" class="f6 br3 bn ph3 pv2 mb2 dib white bg-dark-red titolo fw7" onClick={diminuisci}> - </button>
                     </div>
                     <div className="flex justify-end items-center w-40 titolo fw7">
-                        <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button>
+                        <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
+                        {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
                     </div>
                 </div>
                 <div class={"w-100 mt3 justify-start items-center " + visibilitaNota}>

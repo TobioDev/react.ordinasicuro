@@ -1,14 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import { useForm } from "react-hook-form"
 
 import { useHistory } from "react-router-dom";
 
 import Articolo from './Articolo'
 import SezioneBoxed from './SezioneBoxed'
+import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+
 
 const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
 
     const { register, handleSubmit, setValue, watch, errors} = useForm();
+    const [ aperturaModale, setAperturaModale ] = useState(false);
+    const [ titoloModale, setTitoloModale] = useState('');
+    const [ messaggioModale, setMessaggioModale] = useState('');
+
+    const avviaModale = (titolo, testo) => {
+        setAperturaModale(true);
+        setTitoloModale(titolo);
+        setMessaggioModale(testo);
+    }
+
+    const chiudiModale = () => setAperturaModale(false);
+
     let history = useHistory();
     
     const onSubmit = data => {
@@ -19,25 +33,26 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
         arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='' && elemento[1]!==undefined);
         //console.log( JSON.stringify(arrayTotale));
         // history.push("/#home");
-        console.log(data);
-        console.log('modalità json', JSON.stringify(data));
-        console.log('arrayTotale', arrayTotale);
+        // console.log(data);
+        // console.log('modalità json', JSON.stringify(data));
+        // console.log('arrayTotale', arrayTotale);
 
-        if(arrayTotale.length>0){
+        //Maggiore di 1 perchè c'è sempre l'id del negozio
+        if(arrayTotale.length>1){
 
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(arrayTotale)
             };
-            console.log('body',requestOptions.body)
+            // console.log('body',requestOptions.body)
             fetch('https://ordinasicuro.it/api/crea_ordine', requestOptions)
                 .then(response => response.json())
                 .then(dati => console.log('risposta', dati));
 
         }
         else{
-            alert('Per proseguire, seleziona almeno una voce dal menu.');
+            avviaModale('Attenzione','Per proseguire devi ordinare almeno un prodotto');
         }
 
         
@@ -78,12 +93,30 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
     
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} nome="form-articoli" id="form-articoli">
-            <input ref={register} type="hidden" id="idNegozio" name="idNegozio" value={idNegozio}/>
-            <SezioneBoxed >
-                {stampaArticoliPerCategoria}
-            </SezioneBoxed >
-        </form>
+
+        <Fragment>
+            <form onSubmit={handleSubmit(onSubmit)} nome="form-articoli" id="form-articoli">
+                <input ref={register} type="hidden" id="idNegozio" name="idNegozio" value={idNegozio}/>
+                <SezioneBoxed >
+                    {stampaArticoliPerCategoria}
+                </SezioneBoxed >
+            </form>
+
+            {/* {Modale} */}
+            <Modal open={aperturaModale} onClose={chiudiModale} basic size='small' closeIcon>
+                <Header icon='hand spock' content={titoloModale} />
+                <Modal.Content>
+                <p>
+                    {messaggioModale}
+                </p>
+                </Modal.Content>
+                <Modal.Actions>
+                <Button color='green' onClick={chiudiModale} inverted>
+                    <Icon name='checkmark' /> Ok
+                </Button>
+                </Modal.Actions>
+            </Modal>
+        </Fragment>
     )
 }
 
