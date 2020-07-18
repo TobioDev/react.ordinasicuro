@@ -3,7 +3,7 @@ import { Dropdown, Button } from 'semantic-ui-react'
 
 import  './Articolo.css'
 
-const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, setValue, componentiArticolo, associazioniComponenteArticolo }) => {
+const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, setValue, componentiArticolo, associazioniComponenteArticolo, avviaModaleImg }) => {
 
     const [quantita, setQuantita] = useState(0);
     const [visibilitaNota, setvisibilitaNota] = useState('dn');
@@ -40,7 +40,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img className="w4 h4 fl mr3 img-articolo br3" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } alt="" />
+            return <img className="w4 h4 fl mr3 img-articolo br3" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 
@@ -74,16 +74,17 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     {link_img(url_immagine)}
                     <p className="sottotitolo">{descrizione}</p>
                 </div>
-                <div class="w-100 mt3 flex justify-start items-center">
+                {/* <div class="w-100 mt3 flex justify-start items-center">
                     {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) }
-                </div>
+                </div> */}
                 <div class="w-100 mt3 flex justify-start items-center">
-                    <div className="flex justify-start items-center w-60">
-                        <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mb2 w-20" value={quantita} type="text" aria-describedby="name-desc"/> <p className="mh2 w-20">{unita_misura}</p> 
-                        <button type="button" class="f6 br3 bn ph3 pv2 mb2 mr2 dib white bg-dark-green titolo fw7" onClick={aggiungi}> + </button>
-                        <button type="button" class="f6 br3 bn ph3 pv2 mb2 dib white bg-dark-red titolo fw7" onClick={diminuisci}> - </button>
+                    <div className="flex justify-start items-center w-70">
+                        <p className="mh2 mv0">{unita_misura}</p> 
+                        <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mv0 mr2 w-20 w-10-l" value={quantita} type="text" aria-describedby="name-desc"/>
+                        <Button type="button" color='green' content='+' onClick={aggiungi} />
+                        <Button type="button" color='red' content='-' onClick={diminuisci} />
                     </div>
-                    <div className="flex justify-end items-center w-40 titolo fw7">
+                    <div className="flex justify-end items-center w-30 titolo fw7">
                         <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
                         {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
                     </div>

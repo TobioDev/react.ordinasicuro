@@ -5,15 +5,17 @@ import { useHistory } from "react-router-dom";
 
 import Articolo from './Articolo'
 import SezioneBoxed from './SezioneBoxed'
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react'
 
 
 const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
 
     const { register, handleSubmit, setValue, watch, errors} = useForm();
     const [ aperturaModale, setAperturaModale ] = useState(false);
+    const [ aperturaModaleImg, setAperturaModaleImg ] = useState(false);
     const [ titoloModale, setTitoloModale] = useState('');
     const [ messaggioModale, setMessaggioModale] = useState('');
+    const [ urlImgModale, setUrlImgModale] = useState('');
 
     const avviaModale = (titolo, testo) => {
         setAperturaModale(true);
@@ -21,7 +23,13 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
         setMessaggioModale(testo);
     }
 
+    const avviaModaleImg = (url) => {
+        setAperturaModaleImg(true);
+        setUrlImgModale("https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/"+url);
+    }
+
     const chiudiModale = () => setAperturaModale(false);
+    const chiudiModaleImg = () => setAperturaModaleImg(false);
 
     let history = useHistory();
     
@@ -71,6 +79,7 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
                                                             key={articoloFiltrato.id} 
                                                             register={register}
                                                             setValue={setValue}
+                                                            avviaModaleImg={avviaModaleImg}
                                                             id={articoloFiltrato.id} 
                                                             visibilita={articoloFiltrato.visibilita} 
                                                             nome={articoloFiltrato.nome} 
@@ -115,6 +124,13 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
                     <Icon name='checkmark' /> Ok
                 </Button>
                 </Modal.Actions>
+            </Modal>
+
+            {/* {Modale immagine} */}
+            <Modal open={aperturaModaleImg} onClose={chiudiModaleImg} basic closeIcon>
+                <Modal.Content image>
+                <Image wrapped size='medium' src={urlImgModale} centered />
+                </Modal.Content>
             </Modal>
         </Fragment>
     )
