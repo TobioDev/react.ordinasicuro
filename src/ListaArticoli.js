@@ -35,8 +35,6 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
     
     const onSubmit = data => {
 
-        let variabile_presenza_errori = false;
-
         let arrayTotale = Object.entries(data);
         arrayTotale = arrayTotale.filter((elemento)=>elemento[1]!=='0' && elemento[1]!=='' && elemento[1]!==undefined);
         //console.log( JSON.stringify(arrayTotale));
@@ -56,7 +54,21 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
             // console.log('body',requestOptions.body)
             fetch('https://ordinasicuro.it/api/crea_ordine', requestOptions)
                 .then(response => response.json())
-                .then(dati => console.log('risposta', dati));
+                .then(dati => {
+                    if(dati.presenza_errori===false){
+
+                        if(dati.presenza_composti===true){
+                            history.push("/conferma-composti/"+dati.id_ordine_creato);
+                        }
+                        else{
+                            history.push("/conferma-ordine/"+dati.id_ordine_creato);
+                        }
+
+                    }
+                    else{
+                        avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                    }
+                });
 
         }
         else{

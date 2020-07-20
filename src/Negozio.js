@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { Button, Icon, Dimmer, Loader, Input, Label, Menu, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, Dimmer, Loader, Menu, Dropdown } from 'semantic-ui-react'
 
 import { HashLink as Link } from 'react-router-hash-link';
 
 import HeaderNegozio from './HeaderNegozio'
 import ListaArticoli from './ListaArticoli'
-import { useHistory } from 'react-router-dom';
+import LoaderOS from './LoaderOS';
 
 const Negozio = (props) => {
 
@@ -17,6 +17,25 @@ const Negozio = (props) => {
     const [articoli, setArticoli] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
+
+    useEffect(() => {
+
+        window.scrollTo(0,0);
+
+        fetch('https://ordinasicuro.it/index.php/api/negozio/' + props.match.params.id_negozio)
+            .then(response => response.json())
+            .then(json => {
+                setInfoNegozio(json.get_negozio);
+                setCategorie(json.get_categorie);
+                setCategorieArticoli(json.get_categorie_articoli);
+                setArticoli(json.get_articoli);
+                setComponentiArticolo(json.get_componenti_articolo);
+                setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
+                setVisibilitaLoader(false)
+                    }
+            );
+
+    }, []);
 
     const stampaSubmenuCategorieDesktop = categorieArticoli => (
         categorieArticoli.map( categoria => 
@@ -39,46 +58,15 @@ const Negozio = (props) => {
         return arrayOpzioniCategorie;
     }
 
-    var history = useHistory();
-
-    const handleChange = (e, { value }) => history.push('#categoria-'+value)
- 
-    useEffect(() => {
-
-
-        //   const selected = history.location.hash
-        //   console.log(history.location.hash)
-        //   if(selected && selected.length > 0) {
-        //     const elem = document.querySelector(selected)
-        //     elem && elem.scrollIntoView()
-        //   }else{
-        //     window.scrollTo(0, 0)
-        //   }
-
-          window.scrollTo(0,0);
-        
-
-        fetch('https://ordinasicuro.it/index.php/api/negozio/' + props.match.params.id_negozio)
-            .then(response => response.json())
-            .then(json => {
-                setInfoNegozio(json.get_negozio);
-                setCategorie(json.get_categorie);
-                setCategorieArticoli(json.get_categorie_articoli);
-                setArticoli(json.get_articoli);
-                setComponentiArticolo(json.get_componenti_articolo);
-                setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
-                setVisibilitaLoader(false)
-                    }
-            );
-        
-    }, []);
+    const handleChange = (e, { value }) => {
+        var elmnt = document.getElementById("categoria-"+value);
+        elmnt.scrollIntoView();
+    }
 
     return (
 
         <Fragment>
-            <Dimmer active={visibilitaLoader}>
-                <Loader>Stiamo raccogliendo tutte le informazioni...</Loader>
-            </Dimmer>
+            <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
             <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
             <div className="w-100 flex flex-row items-start justify-center">
                 <div className="w-20 dn flex-l items-start justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>

@@ -9,6 +9,7 @@ import 'animate.css/animate.css'
 import { Route } from 'react-router-dom'
 import NavbarOS from './NavbarOS';
 import Negozio from './Negozio';
+import ConfermaOrdine from './ConfermaOrdine';
 
 
 function App() {
@@ -35,6 +36,11 @@ function App() {
 				path='/negozio/:id_negozio'
 				exact
 				component={Negozio} />
+			
+			<Route 
+				path='/conferma-ordine/:id_ordine'
+				exact
+				component={ConfermaOrdine} />
 
 		</Fragment>
 
