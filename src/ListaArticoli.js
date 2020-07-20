@@ -69,8 +69,9 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
 
     const stampaArticoliPerCategoria = categorieArticoli
                                         .map( categoriaArticolo => (
-                                            <div className="w-100 mv4">
+                                            <div className="w-100 mv4 ph3">
                                                 <h1>{categoriaArticolo.nome}</h1>
+                                                <a id={"categoria-"+categoriaArticolo.nome} style={{"position": "relative", "top":"-160px"}}></a>
                                                 {articoli
                                                     .filter( articolo => articolo.id_categoria_articolo === categoriaArticolo.id)
                                                     .map( articoloFiltrato => (
@@ -106,9 +107,7 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
         <Fragment>
             <form onSubmit={handleSubmit(onSubmit)} nome="form-articoli" id="form-articoli">
                 <input ref={register} type="hidden" id="idNegozio" name="idNegozio" value={idNegozio}/>
-                <SezioneBoxed >
-                    {stampaArticoliPerCategoria}
-                </SezioneBoxed >
+                {stampaArticoliPerCategoria}
             </form>
 
             {/* {Modale} */}

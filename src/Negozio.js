@@ -1,9 +1,11 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { Button, Icon } from 'semantic-ui-react'
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Button, Icon, Dimmer, Loader, Input, Label, Menu, Dropdown } from 'semantic-ui-react'
+
+import { HashLink as Link } from 'react-router-hash-link';
 
 import HeaderNegozio from './HeaderNegozio'
 import ListaArticoli from './ListaArticoli'
+import { useHistory } from 'react-router-dom';
 
 const Negozio = (props) => {
 
@@ -16,8 +18,45 @@ const Negozio = (props) => {
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
 
+    const stampaSubmenuCategorieDesktop = categorieArticoli => (
+        categorieArticoli.map( categoria => 
+                                <Menu.Item as={Link}
+                                    to={"#categoria-"+categoria.nome}  
+                                    name= {categoria.nome}
+                                >
+                                    {categoria.nome}
+                                </Menu.Item>)
+    )
+
+    const opzioniCategorieMobile = (categorieArticoli) => {
+        let arrayOpzioniCategorie = [];
+        categorieArticoli.map( categoria => arrayOpzioniCategorie.push({
+                                                                    key: categoria.id,
+                                                                    text: categoria.nome,
+                                                                    value: categoria.nome
+                                                                }
+                                                                ))
+        return arrayOpzioniCategorie;
+    }
+
+    var history = useHistory();
+
+    const handleChange = (e, { value }) => history.push('#categoria-'+value)
+ 
     useEffect(() => {
-        window.scrollTo(0, 0)
+
+
+        //   const selected = history.location.hash
+        //   console.log(history.location.hash)
+        //   if(selected && selected.length > 0) {
+        //     const elem = document.querySelector(selected)
+        //     elem && elem.scrollIntoView()
+        //   }else{
+        //     window.scrollTo(0, 0)
+        //   }
+
+          window.scrollTo(0,0);
+        
 
         fetch('https://ordinasicuro.it/index.php/api/negozio/' + props.match.params.id_negozio)
             .then(response => response.json())
@@ -41,7 +80,31 @@ const Negozio = (props) => {
                 <Loader>Stiamo raccogliendo tutte le informazioni...</Loader>
             </Dimmer>
             <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
-            <ListaArticoli idNegozio={props.match.params.id_negozio} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+            <div className="w-100 flex flex-row items-start justify-center">
+                <div className="w-20 dn flex-l items-start justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
+                    <Menu vertical>
+                        <Menu.Item active><b className="f3">Categorie</b></Menu.Item>
+                        {stampaSubmenuCategorieDesktop(categorieArticoli)}  
+                    </Menu>
+                </div>
+                <div className="w-100 w-80-l">
+                    <div className="w-100 flex items-center justify-end pr2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px"}}>
+                        <Dropdown
+                            placeholder='Vai alla categoria...'
+                            className="dn-l"
+                            onChange={handleChange}
+                            selection
+                            options={opzioniCategorieMobile(categorieArticoli)}
+                        />    
+                    </div>
+                    
+                    <ListaArticoli idNegozio={props.match.params.id_negozio} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+                </div>
+
+            </div>
+            
+            
+            
                 {/* <input type="submit" value="INVIA ORA" /> */}
             <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="form-articoli">
                 <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>

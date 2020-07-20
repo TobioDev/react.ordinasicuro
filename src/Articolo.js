@@ -12,7 +12,6 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     //Per registrare valore Dropdown Semantic UI
     const handleChange = (e, { name, value }) => {setValue(name, value)}
-
     useEffect( () => {register("componenti"+id);},[register])
 
     useEffect( () => {
@@ -40,7 +39,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img className="w4 h4 fl mr3 img-articolo br3" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
+            return <img className="w4 h4 fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 
@@ -85,7 +84,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                         <Button type="button" color='red' content='-' onClick={diminuisci} />
                     </div>
                     <div className="flex justify-end items-center w-30 titolo fw7">
-                        <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
+                        <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota} style={{"z-index":"-1"}}>Nota</Button>
                         {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
                     </div>
                 </div>
