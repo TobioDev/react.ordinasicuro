@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 
-import { Icon, Step } from 'semantic-ui-react'
+import { Icon, Step, List } from 'semantic-ui-react'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +16,7 @@ const ConfermaOrdine = (props) => {
     const [infoArticoliOrdinati, setInfoArticoliOrdinati] = useState([]);
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
 
-    const idOrdine = props.match.params.id_ordine;
+    const idOrdine = props.match.params.id_ordine              
 
 
     useEffect(() => {
@@ -39,12 +39,28 @@ const ConfermaOrdine = (props) => {
 
     }, []);
 
+    const stampaElementiRiassunto = articoliOrdinati
+                                    .map( articoloOrdinato => 
+                                        <div>
+                                            {infoArticoliOrdinati.filter(infoArticoloOrdinato => articoloOrdinato.id_articolo === infoArticoloOrdinato.id)
+                                                                .map(infoArticoloFiltrato => 
+                                                                <List.Item>
+                        <List.Icon name='github' size='large' verticalAlign='middle' />
+                        <List.Content>
+                            <List.Header >{infoArticoloFiltrato.nome}</List.Header>
+                            <List.Description>{"Quantità: " + articoloOrdinato.quantita}</List.Description>
+                        </List.Content>
+                    </List.Item>
+                )}
+                                        </div>
+                                   
+    );  
+
     return (
-        <div>
+        <Fragment>
             <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
-            <SezioneBoxed>
-                <div className="mt6">
-                    <Step.Group stackable="tablet" size="tiny">
+            <SezioneBoxed className="mt6">
+                <Step.Group stackable="tablet" size="tiny">
                     <Step completed>
                         <Icon name='credit card' />
                         <Step.Content>
@@ -52,18 +68,25 @@ const ConfermaOrdine = (props) => {
                             <Step.Description>Scegli cosa vuoi ordinare</Step.Description>
                         </Step.Content>
                     </Step>
-                        <Step active>
-                            <Icon name='clipboard check' />
-                            <Step.Content>
+                    <Step active>
+                        <Icon name='clipboard check' />
+                        <Step.Content>
                             <Step.Title>Conferma il tuo Ordine</Step.Title>
                             <Step.Description>Verifica le informazioni che hai inserito</Step.Description>
-                            </Step.Content>
-                        </Step>
-                        </Step.Group>
+                        </Step.Content>
+                    </Step>
+                </Step.Group>
+            </SezioneBoxed>
+            <SezioneBoxed className="mt4">
+                <div className="w-100 flex items-start">
+                    <List divided relaxed>
+                        {stampaElementiRiassunto}
+                    </List>
                 </div>
                 
-            </SezioneBoxed>
-        </div>
+
+            </SezioneBoxed>    
+        </Fragment>
     )
 }
 
