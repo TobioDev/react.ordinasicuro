@@ -76,7 +76,7 @@ const Negozio = (props) => {
                     </Menu>
                 </div>
                 <div className="w-100 w-80-l">
-                    <div className="w-100 flex items-center justify-end pr2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px"}}>
+                    <div className="w-100 flex items-center justify-end pr2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
                         <Dropdown
                             placeholder='Vai alla categoria...'
                             className="dn-l"

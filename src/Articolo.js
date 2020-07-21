@@ -54,6 +54,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
     }
 
     const comparsaNota = () => {
+        console.log("ci sono")
         if(visibilitaNota === 'dn'){
             setvisibilitaNota('flex animate__animated animate__fadeIn')
         }else{
@@ -84,7 +85,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                         <Button type="button" color='red' content='-' onClick={diminuisci} />
                     </div>
                     <div className="flex justify-end items-center w-30 titolo fw7">
-                        <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota} style={{"z-index":"-1"}}>Nota</Button>
+                        <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
                         {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
                     </div>
                 </div>

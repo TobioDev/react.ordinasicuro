@@ -1,12 +1,14 @@
 import React, { useEffect, useState, Fragment } from 'react'
 
-import { Icon, Step, List } from 'semantic-ui-react'
+import { Icon, Step, List, Header } from 'semantic-ui-react'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import LoaderOS from './LoaderOS'
 import SezioneBoxed from './SezioneBoxed';
+import ItemRiepilogoOrdine from './ItemRiepilogoOrdine';
+import ModuloInvioOrdine from './ModuloInvioOrdine';
 
 const ConfermaOrdine = (props) => {
     
@@ -39,21 +41,20 @@ const ConfermaOrdine = (props) => {
 
     }, []);
 
+    let prezzoTotaleOrdine = 0;
+
     const stampaElementiRiassunto = articoliOrdinati
                                     .map( articoloOrdinato => 
-                                        <div>
+                                        <Fragment>
                                             {infoArticoliOrdinati.filter(infoArticoloOrdinato => articoloOrdinato.id_articolo === infoArticoloOrdinato.id)
-                                                                .map(infoArticoloFiltrato => 
-                                                                <List.Item>
-                        <List.Icon name='github' size='large' verticalAlign='middle' />
-                        <List.Content>
-                            <List.Header >{infoArticoloFiltrato.nome}</List.Header>
-                            <List.Description>{"Quantità: " + articoloOrdinato.quantita}</List.Description>
-                        </List.Content>
-                    </List.Item>
-                )}
-                                        </div>
-                                   
+                                                                .map(infoArticoloFiltrato => {
+                                                                    prezzoTotaleOrdine += (articoloOrdinato.quantita*infoArticoloFiltrato.prezzo);
+                                                                    return (
+                                                                        <ItemRiepilogoOrdine articoloOrdinato={articoloOrdinato} infoArticoloFiltrato={infoArticoloFiltrato} />
+                                                                    )
+                                                                }
+                                                                )}
+                                        </Fragment>
     );  
 
     return (
@@ -61,7 +62,7 @@ const ConfermaOrdine = (props) => {
             <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
             <SezioneBoxed className="mt6">
                 <Step.Group stackable="tablet" size="tiny">
-                    <Step completed>
+                    <Step completed >
                         <Icon name='credit card' />
                         <Step.Content>
                             <Step.Title>Scegli</Step.Title>
@@ -77,14 +78,21 @@ const ConfermaOrdine = (props) => {
                     </Step>
                 </Step.Group>
             </SezioneBoxed>
-            <SezioneBoxed className="mt4">
-                <div className="w-100 flex items-start">
+            <SezioneBoxed className="mt2">
+                <Header as='h3' block textAlign="center" className="w-100">
+                    IL TUO ORDINE
+                </Header>
+                <h3 className="mt0">{infoNegozio.nome} - {infoNegozio.citta}</h3>
+                <div className="w-100 flex flex-column items-start mt3">
                     <List divided relaxed>
                         {stampaElementiRiassunto}
                     </List>
+                    <h2 className="mt1">Totale: € {(prezzoTotaleOrdine*1).toFixed(2)}</h2>
                 </div>
-                
-
+                <Header as='h3' block textAlign="center" className="w-100">
+                 COMPLETA L'ORDINE CON I TUOI DATI
+                </Header>
+                <ModuloInvioOrdine/>
             </SezioneBoxed>    
         </Fragment>
     )
