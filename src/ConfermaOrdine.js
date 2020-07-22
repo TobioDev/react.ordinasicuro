@@ -1,9 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react'
 
 import { Icon, Step, List, Header } from 'semantic-ui-react'
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
 
 import LoaderOS from './LoaderOS'
 import SezioneBoxed from './SezioneBoxed';
@@ -90,9 +87,9 @@ const ConfermaOrdine = (props) => {
                     <h2 className="mt1">Totale: € {(prezzoTotaleOrdine*1).toFixed(2)}</h2>
                 </div>
                 <Header as='h3' block textAlign="center" className="w-100">
-                 COMPLETA L'ORDINE CON I TUOI DATI
+                    COMPLETA L'ORDINE CON I TUOI DATI
                 </Header>
-                <ModuloInvioOrdine/>
+                <ModuloInvioOrdine nomeNegozio={infoNegozio.nome}/>
             </SezioneBoxed>    
         </Fragment>
     )

@@ -74,15 +74,15 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     {link_img(url_immagine)}
                     <p className="sottotitolo">{descrizione}</p>
                 </div>
-                {/* <div class="w-100 mt3 flex justify-start items-center">
+                <div class="w-100 mt3 flex justify-start items-center">
                     {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) }
-                </div> */}
+                </div>
                 <div class="w-100 mt3 flex justify-start items-center">
                     <div className="flex justify-start items-center w-70">
                         <p className="mh2 mv0">{unita_misura}</p> 
                         <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mv0 mr2 w-20 w-10-l" value={quantita} type="text" aria-describedby="name-desc"/>
-                        <Button type="button" color='green' content='+' onClick={aggiungi} />
                         <Button type="button" color='red' content='-' onClick={diminuisci} />
+                        <Button type="button" color='green' content='+' onClick={aggiungi} />
                     </div>
                     <div className="flex justify-end items-center w-30 titolo fw7">
                         <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
