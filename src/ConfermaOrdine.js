@@ -14,6 +14,10 @@ const ConfermaOrdine = (props) => {
     const [articoliOrdinati, setArticoliOrdinati] = useState([]);
     const [infoArticoliOrdinati, setInfoArticoliOrdinati] = useState([]);
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
+    const [oraInizioAsporto, setOraInizioAsporto] = useState('');
+    const [oraFineAsporto, setOraFineAsporto] = useState('');
+    const [oraInizioDomicilio, setoraInizioDomicilio] = useState('');
+    const [oraFineDomicilio, setoraFineDomicilio] = useState('');
 
     const idOrdine = props.match.params.id_ordine              
 
@@ -29,6 +33,10 @@ const ConfermaOrdine = (props) => {
                 setArticoliOrdinati(json.get_articoli_ordinati);
                 setInfoArticoliOrdinati(json.get_info_articoli_ordinati);
                 setCategorieArticoli(json.get_categorie_articoli);
+                setoraInizioDomicilio();
+                setoraFineDomicilio();
+                setOraInizioAsporto(json.ora_inizio_asporto);
+                setOraFineAsporto(json.ora_fine_asporto);
                 // setComponentiArticolo(json.get_componenti_articolo);
                 // setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
                 setVisibilitaLoader(false)
@@ -89,7 +97,7 @@ const ConfermaOrdine = (props) => {
                 <Header as='h3' block textAlign="center" className="w-100">
                     COMPLETA L'ORDINE CON I TUOI DATI
                 </Header>
-                <ModuloInvioOrdine nomeNegozio={infoNegozio.nome}/>
+                <ModuloInvioOrdine infoNegozio={infoNegozio} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto}/>
             </SezioneBoxed>    
         </Fragment>
     )

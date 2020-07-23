@@ -54,7 +54,6 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
     }
 
     const comparsaNota = () => {
-        console.log("ci sono")
         if(visibilitaNota === 'dn'){
             setvisibilitaNota('flex animate__animated animate__fadeIn')
         }else{
@@ -75,7 +74,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     <p className="sottotitolo">{descrizione}</p>
                 </div>
                 <div class="w-100 mt3 flex justify-start items-center">
-                    {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) }
+                    {/* {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) } */}
                 </div>
                 <div class="w-100 mt3 flex justify-start items-center">
                     <div className="flex justify-start items-center w-70">

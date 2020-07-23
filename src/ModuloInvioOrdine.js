@@ -1,21 +1,38 @@
 import React, { Fragment, useState} from 'react'
 import { Button, Checkbox, Form, Input, Select, TextArea} from 'semantic-ui-react'
 
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import it from "date-fns/locale/it";
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 
-const ModuloInvioOrdine = ({ nomeNegozio }) => {
-
-    const [startDate, setStartDate] = useState(
-        setHours(setMinutes(new Date(), 30), 16)
-      );
-
-    const options = [ { key: 'domicilio', text: 'A domicilio', value: 'consegna' }, { key: 'asporto', text: 'Asporto', value: 'asporto' },]
+const ModuloInvioOrdine = ({ infoNegozio, oraInizioAsporto, oraFineAsporto}) => {
 
     
-    const handleChange = (e, { name, value }) => {}
+    registerLocale("it", it);
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [fraseOrario, setFraseOrario] = useState("Quando vuoi ricevere l'ordine?")
+
+    let options = []
+
+    if(infoNegozio.asporto==='1'){
+        options = [ { key: 'domicilio', text: 'A domicilio', value: 'domicilio' }, { key: 'asporto', text: 'Asporto', value: 'asporto' },]
+    }
+    else{
+        options = [ { key: 'domicilio', text: 'A domicilio', value: 'domicilio' }]
+    }
+
+    
+    const handleChange = (e, { name, value }) => {
+        if(value==='domicilio'){
+            setFraseOrario("Quando vuoi ricevere l'ordine?")
+        }
+        else{
+            setFraseOrario("Quando vuoi ritirare l'ordine?")
+        }
+    }
 
     return (
         <Fragment>
@@ -59,25 +76,37 @@ const ModuloInvioOrdine = ({ nomeNegozio }) => {
                         type="email"
                     />
                     <Form.Field>
-                        <label>Quando vuoi ricevere l'ordine?*</label>
+                        <label>{fraseOrario}*</label>
                         <DatePicker
+                            // selected={startDate}
+                            // onChange={date => setStartDate(date)}
+                            // showTimeSelectOnly
+                            // excludeTimes={[
+                            // // setHours(setMinutes(new Date(), 0), 17),
+                            // // setHours(setMinutes(new Date(), 30), 18),
+                            // // setHours(setMinutes(new Date(), 30), 19),
+                            // // setHours(setMinutes(new Date(), 30), 17)
+                            // ]}
+                            // dateFormat="d MMMM yyyy, H:mm"
+                            // timeFormat="HH:mm"
+                            // locale="it"
+                            // onFocus={(e) => e.target.readOnly = true}
                             selected={startDate}
                             onChange={date => setStartDate(date)}
+                            locale="it"
                             showTimeSelect
-                            excludeTimes={[
-                            setHours(setMinutes(new Date(), 0), 17),
-                            setHours(setMinutes(new Date(), 30), 18),
-                            setHours(setMinutes(new Date(), 30), 19),
-                            setHours(setMinutes(new Date(), 30), 17)
-                            ]}
-                            dateFormat="d MMMM yyyy, H:mm"
+                            showTimeSelectOnly
+                            timeIntervals={30}
+                            timeFormat="HH:mm"
+                            timeCaption="Orario"
+                            dateFormat="HH:mm"
                             onFocus={(e) => e.target.readOnly = true}
                         />
                     </Form.Field>
                 </Form.Group>
                 <Form.Field>
                     <TextArea 
-                        placeholder={"Se vuoi puoi aggiungere una nota all'ordine per "+nomeNegozio+" (facoltativo)"}
+                        placeholder={"Se vuoi puoi aggiungere una nota all'ordine per "+infoNegozio.nome+" (facoltativo)"}
                     />
                 </Form.Field>
             
