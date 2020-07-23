@@ -10,6 +10,7 @@ import { Route } from 'react-router-dom'
 import NavbarOS from './NavbarOS';
 import Negozio from './Negozio';
 import ConfermaOrdine from './ConfermaOrdine';
+import ConfermaComposti from './ConfermaComposti';
 
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
 			<Route 
 				path='/conferma-composti/:id_ordine'
 				exact
-				component={ConfermaOrdine} />
+				component={ConfermaComposti} />
 
 		</Fragment>
 
