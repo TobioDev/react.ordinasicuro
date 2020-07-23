@@ -42,6 +42,11 @@ function App() {
 				exact
 				component={ConfermaOrdine} />
 
+			<Route 
+				path='/conferma-composti/:id_ordine'
+				exact
+				component={ConfermaOrdine} />
+
 		</Fragment>
 
 
