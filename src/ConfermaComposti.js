@@ -6,15 +6,28 @@ import SezioneBoxed from './SezioneBoxed';
 
 const ConfermaComposti = (props) => {
 
+    const { register, handleSubmit, setValue, watch, errors, control} = useForm();
+
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [articoliOrdinatiComposti, setArticoliOrdinatiComposti] = useState([]);
     const [articoliComposti, setArticoliComposti] = useState([]);
     const [idOrdine, setIdOrdine] = useState('');
     const [campoFormModificato, setCampoFormModificato] = useState('');
+    const [valoreFormModificato, setValoreFormModificato] = useState('');
 
-    const { register, handleSubmit, setValue, watch, errors} = useForm();
+    //Per registrare valore Dropdown Semantic UI
+    const handleChange = (e, { name, value }) => {
+        setCampoFormModificato(name);
+        setCampoFormModificato(value);
+        // console.log('name1112', typeof name)
+        // console.log('sder', campoFormModificato)
+        
+    }
     
+    useEffect( () => {
+        setValue(campoFormModificato, valoreFormModificato);
+        register({ campoFormModificato });},[register])
 
     useEffect(() => {
 
@@ -30,23 +43,10 @@ const ConfermaComposti = (props) => {
                 setIdOrdine(json.get_ordine.id);
                 console.log(json)
                 console.log(props.match.params.id_ordine)
-                // setInfoNegozio(json.get_negozio);
-                // setCategorie(json.get_categorie);
-                // setCategorieArticoli(json.get_categorie_articoli);
-                // setArticoli(json.get_articoli);
-                // setComponentiArticolo(json.get_componenti_articolo);
-                // setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
-                // setVisibilitaLoader(false)
                     }
             );
 
     }, []);
-
-    //Per registrare valore Dropdown Semantic UI
-    const handleChange = (e, { name, value }) => {
-        setCampoFormModificato(name);
-        setValue(name, value);
-    }
 
     const stampaSelectComponenti = articoliOrdinatiComposti
                                     .map( (articoloOrdinatoComposto, i) => {
@@ -87,10 +87,7 @@ const ConfermaComposti = (props) => {
 
     
 
-    useEffect( () => {
-        let prova = 
-        register(campoFormModificato);
-    },[register])
+    
 
     const onSubmit = data => {
         console.log(data)
@@ -120,10 +117,11 @@ const ConfermaComposti = (props) => {
                 <Button color="green" type='submit'>Invia ora il tuo ordine</Button>
                 <p>{campoFormModificato}</p>
             </Form>
-            
-            
+
+
         </SezioneBoxed>
     )
+    
 }
 
 export default ConfermaComposti
