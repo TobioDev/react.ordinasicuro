@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 
 import { Dropdown, Step, Icon, Form, Button} from 'semantic-ui-react'
 import SezioneBoxed from './SezioneBoxed';
+import ItemConfermaComposti from './ItemConfermaComposti';
 
 const ConfermaComposti = (props) => {
 
@@ -13,21 +14,9 @@ const ConfermaComposti = (props) => {
     const [articoliOrdinatiComposti, setArticoliOrdinatiComposti] = useState([]);
     const [articoliComposti, setArticoliComposti] = useState([]);
     const [idOrdine, setIdOrdine] = useState('');
-    const [campoFormModificato, setCampoFormModificato] = useState('');
-    const [valoreFormModificato, setValoreFormModificato] = useState('');
+    //const [campoFormModificato, setCampoFormModificato] = useState('');
+    //const [valoreFormModificato, setValoreFormModificato] = useState('');
 
-    //Per registrare valore Dropdown Semantic UI
-    const handleChange = (e, { name, value }) => {
-        setCampoFormModificato(name);
-        setCampoFormModificato(value);
-        // console.log('name1112', typeof name)
-        // console.log('sder', campoFormModificato)
-        
-    }
-    
-    useEffect( () => {
-        setValue(campoFormModificato, valoreFormModificato);
-        register({ campoFormModificato });},[register])
 
     useEffect(() => {
 
@@ -72,7 +61,8 @@ const ConfermaComposti = (props) => {
                                                         <div className="pa3 ba b--black-30 br3 mb3" key={articoloOrdinatoComposto.id+index}>
                                                             <h4>{index+1} - {nome}</h4>
                                                             <p>{descrizione}</p>
-                                                            <Dropdown onChange={handleChange} name={"componenti-"+articoloOrdinatoComposto.id_articolo+"-"+index} id={"componenti"+articoloOrdinatoComposto.id_articolo} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} required/>
+                                                            <ItemConfermaComposti idArticolo={articoloOrdinatoComposto.id_articolo} arrayOpzioniComponenti={arrayOpzioniComponenti} index={index} setValue={setValue} register={register}/>
+                                                            {/* <Dropdown onChange={handleChange} name={"componenti-"+articoloOrdinatoComposto.id_articolo+"-"+index} id={"componenti"+articoloOrdinatoComposto.id_articolo} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} required/> */}
                                                         </div> 
                                                     )
                                                     
@@ -115,7 +105,6 @@ const ConfermaComposti = (props) => {
             <Form onSubmit={handleSubmit(onSubmit)} nome="formComponenti" id="formComponenti">
                 {stampaSelectComponenti}
                 <Button color="green" type='submit'>Invia ora il tuo ordine</Button>
-                <p>{campoFormModificato}</p>
             </Form>
 
 
