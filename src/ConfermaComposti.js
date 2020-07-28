@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useForm } from "react-hook-form"
 
-import { Dropdown, Step, Icon, Form, Button} from 'semantic-ui-react'
+import { useHistory } from "react-router-dom";
+
+import { Step, Icon, Form, Button} from 'semantic-ui-react'
 import SezioneBoxed from './SezioneBoxed';
 import ItemConfermaComposti from './ItemConfermaComposti';
 
@@ -30,8 +32,8 @@ const ConfermaComposti = (props) => {
                 setArticoliOrdinatiComposti(json.get_articoli_ordinati_composti);
                 setArticoliComposti(json.get_articoli_composti_da_articoli_ordinati);
                 setIdOrdine(json.get_ordine.id);
-                console.log(json)
-                console.log(props.match.params.id_ordine)
+                //console.log(json)
+                //console.log(props.match.params.id_ordine)
                     }
             );
 
@@ -77,38 +79,73 @@ const ConfermaComposti = (props) => {
 
     
 
-    
+    let history = useHistory();
 
     const onSubmit = data => {
-        console.log(data)
+        let variabileFormCompleto = true;
+        let arrayTotale = Object.entries(data);
+        arrayTotale.map( campo => {if(campo[1]===0 || campo[1] === undefined){variabileFormCompleto = false}})
+        if(variabileFormCompleto === false){
+            alert("Prima di procedere è necessario selezionare almeno un'opzione per ogni prodotto ordinato")
+        }
+        else{
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(arrayTotale)
+            };
+            fetch('https://ordinasicuro.it/api/aggiungi_associazioni_ordine_componente_articolo', requestOptions)
+            .then(response => response.json())
+            .then(dati => {
+                if(dati.presenza_errori===false){
+                    history.push("/conferma-ordine/"+dati.idOrdine);
+
+                }
+                else{
+                    //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                    alert("Si è verificato un errore durante l'invio del tuo ordine. Riprova di nuovo.")
+                }
+            });
+        }
+        //console.log(variabileFormCompleto);
+        console.log(arrayTotale)
+        //console.log(data)
     }
 
     return (
-        <SezioneBoxed className="mt6">
-            <Step.Group stackable="tablet" size="tiny">
-                <Step completed >
-                    <Icon name='credit card' />
-                    <Step.Content>
-                        <Step.Title>1 - Scegli</Step.Title>
-                        <Step.Description>Scegli cosa vuoi ordinare</Step.Description>
-                    </Step.Content>
-                </Step>
-                <Step active>
-                    <Icon name='clipboard check' />
-                    <Step.Content>
-                        <Step.Title>2 - Scegli le opzioni</Step.Title>
-                        <Step.Description>Scegli le opzioni o i componenti per questi prodotti</Step.Description>
-                    </Step.Content>
-                </Step>
-            </Step.Group>
-            <p className="tc">Alcuni dei tuoi prodotti hanno delle opzioni o dei componenti fra cui scegliere</p>
-            <Form onSubmit={handleSubmit(onSubmit)} nome="formComponenti" id="formComponenti">
-                {stampaSelectComponenti}
-                <Button color="green" type='submit'>Invia ora il tuo ordine</Button>
-            </Form>
+        <Fragment>
+            <SezioneBoxed className="mt6 mb4">
+                <Step.Group stackable="tablet" size="tiny">
+                    <Step completed >
+                        <Icon name='credit card' />
+                        <Step.Content>
+                            <Step.Title>1 - Scegli</Step.Title>
+                            <Step.Description>Scegli cosa vuoi ordinare</Step.Description>
+                        </Step.Content>
+                    </Step>
+                    <Step active>
+                        <Icon name='clipboard check' />
+                        <Step.Content>
+                            <Step.Title>2 - Scegli le opzioni</Step.Title>
+                            <Step.Description>Scegli le opzioni o i componenti per questi prodotti</Step.Description>
+                        </Step.Content>
+                    </Step>
+                </Step.Group>
+                <p className="tc">Alcuni dei tuoi prodotti hanno delle opzioni o dei componenti fra cui scegliere <span role="img" aria-label="down">👇🏻</span> </p>
+                <Form onSubmit={handleSubmit(onSubmit)} nome="formComponenti" id="formComponenti">
+                    <input ref={register} type="hidden" id="idOrdine" name="idOrdine" value={idOrdine}/>
+                    {stampaSelectComponenti}
+                </Form>
 
 
-        </SezioneBoxed>
+            </SezioneBoxed>
+            <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="formComponenti">
+                <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>
+                <Button.Content hidden>
+                    <Icon name='arrow right' />
+                </Button.Content>
+            </Button>
+        </Fragment>
     )
     
 }
