@@ -16,6 +16,9 @@ const ConfermaOrdine = (props) => {
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
     const [oraInizioAsporto, setOraInizioAsporto] = useState('');
     const [oraFineAsporto, setOraFineAsporto] = useState('');
+    const [componentiArticolo, setComponentiArticolo] = useState('');
+    const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState('');
+    const [associazioniOrdineComponenteArticolo, setAssociazioniOrdineComponenteArticolo] = useState('');
     const [oraInizioDomicilio, setoraInizioDomicilio] = useState('');
     const [oraFineDomicilio, setoraFineDomicilio] = useState('');
 
@@ -37,8 +40,9 @@ const ConfermaOrdine = (props) => {
                 setoraFineDomicilio();
                 setOraInizioAsporto(json.ora_inizio_asporto);
                 setOraFineAsporto(json.ora_fine_asporto);
-                // setComponentiArticolo(json.get_componenti_articolo);
-                // setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
+                setComponentiArticolo(json.get_componenti_articolo);
+                setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
+                setAssociazioniOrdineComponenteArticolo(json.get_associazioni_ordine_componente_articolo);
                 setVisibilitaLoader(false)
                 console.log(json);
                     }

@@ -98,7 +98,7 @@ const ConfermaComposti = (props) => {
             .then(response => response.json())
             .then(dati => {
                 if(dati.presenza_errori===false){
-                    history.push("/conferma-ordine/"+dati.idOrdine);
+                    history.push("/conferma-ordine/"+idOrdine);
 
                 }
                 else{
