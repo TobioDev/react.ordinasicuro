@@ -161,7 +161,7 @@ const ModuloInvioOrdine = ({ infoNegozio, oraInizioAsporto, oraFineAsporto}) => 
                 <Form.Field>
                     <Checkbox label={<label>Ho letto <a href="https://www.iubenda.com/privacy-policy/92168795">l'informativa per la privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR.</label>} required />
                 </Form.Field>
-                <Button color="green" type='submit'>Invia ora il tuo ordine</Button>
+                <Button color="green" type='submit' className="w-100">Invia ora il tuo ordine</Button>
             </Form>
         </Fragment>
     )

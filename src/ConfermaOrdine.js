@@ -16,9 +16,9 @@ const ConfermaOrdine = (props) => {
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
     const [oraInizioAsporto, setOraInizioAsporto] = useState('');
     const [oraFineAsporto, setOraFineAsporto] = useState('');
-    const [componentiArticolo, setComponentiArticolo] = useState('');
-    const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState('');
-    const [associazioniOrdineComponenteArticolo, setAssociazioniOrdineComponenteArticolo] = useState('');
+    const [componentiArticolo, setComponentiArticolo] = useState([]);
+    const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
+    const [associazioniOrdineComponenteArticolo, setAssociazioniOrdineComponenteArticolo] = useState([]);
     const [oraInizioDomicilio, setoraInizioDomicilio] = useState('');
     const [oraFineDomicilio, setoraFineDomicilio] = useState('');
 
@@ -54,12 +54,13 @@ const ConfermaOrdine = (props) => {
 
     const stampaElementiRiassunto = articoliOrdinati
                                     .map( articoloOrdinato => 
-                                        <Fragment>
+                                        <Fragment key={articoloOrdinato.id}>
                                             {infoArticoliOrdinati.filter(infoArticoloOrdinato => articoloOrdinato.id_articolo === infoArticoloOrdinato.id)
                                                                 .map(infoArticoloFiltrato => {
                                                                     prezzoTotaleOrdine += (articoloOrdinato.quantita*infoArticoloFiltrato.prezzo);
+                                                                    let associazioniOrdine = associazioniOrdineComponenteArticolo.filter( associazione => associazione.id_articolo === articoloOrdinato.id_articolo)
                                                                     return (
-                                                                        <ItemRiepilogoOrdine articoloOrdinato={articoloOrdinato} infoArticoloFiltrato={infoArticoloFiltrato} />
+                                                                        <ItemRiepilogoOrdine key={articoloOrdinato.id} articoloOrdinato={articoloOrdinato} infoArticoloFiltrato={infoArticoloFiltrato} componentiArticolo={componentiArticolo} associazioniOrdineComponenteArticolo = {associazioniOrdine}  />
                                                                     )
                                                                 }
                                                                 )}

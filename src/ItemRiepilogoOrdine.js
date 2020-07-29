@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import { List } from 'semantic-ui-react'
 
 
-const ItemRiepilogoOrdine = ({articoloOrdinato, infoArticoloFiltrato}) => {
+const ItemRiepilogoOrdine = ({articoloOrdinato, infoArticoloFiltrato, componentiArticolo, associazioniOrdineComponenteArticolo}) => {
 
     const quantita = articoloOrdinato.quantita;
 
@@ -21,18 +21,43 @@ const ItemRiepilogoOrdine = ({articoloOrdinato, infoArticoloFiltrato}) => {
 
     }
 
+    const stampaComponenti = () => {
+        let risultato = []
+        for (let index = 0; index < articoloOrdinato.quantita; index++) {
+            
+            risultato.push(
+                <Fragment> <b>{(index*1)+1}</b> 
+                {associazioniOrdineComponenteArticolo
+                    .filter( associazione => associazione.replica*1 === (index*1)+1)
+                    .map( associazioneFiltrata =>
+                            componentiArticolo.filter( componente => componente.id === associazioneFiltrata.id_componente)
+                                                .map(componenteFiltrato => <Fragment>{' - '+componenteFiltrato.nome}</Fragment>)
+                            )}
+            
+                    <br />
+                </Fragment>
+            ) 
+            
+        }
+        return risultato;
+    }
+
     return (
         <Fragment>
-            <List.Item>
+            <List.Item key={articoloOrdinato.id}>
                 <List.Icon name='caret square right' size='large' verticalAlign='middle' />
                 <List.Content> 
-                    <List.Header className="f4">{infoArticoloFiltrato.nome}</List.Header>
+                    <List.Header className="f4"><div className="mt2">{infoArticoloFiltrato.nome}</div></List.Header>
                     <List.Description className="mt2">
                         <b>Quantità: </b>{quantita}
                         <br />
                         <b> Prezzo totale: €</b>{prezzoTotale} ({quantita} x €{prezzo})
                         <br />
                         {stampaNota()}
+                        
+                        <div className='mt3 mb2'>
+                            {stampaComponenti()}
+                        </div>
                     </List.Description>
                 </List.Content>
             </List.Item>
