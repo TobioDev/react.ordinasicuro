@@ -9,7 +9,7 @@ import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import getHours from 'date-fns/setMinutes'
 
-const ModuloInvioOrdine = ({ infoNegozio, oraInizioAsporto, oraFineAsporto}) => {
+const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsporto}) => {
 
     registerLocale("it", it);
 
@@ -36,6 +36,7 @@ const ModuloInvioOrdine = ({ infoNegozio, oraInizioAsporto, oraFineAsporto}) => 
             setModalitaOrdine('asporto')
             setFraseOrario("Quando vuoi ritirare l'ordine?")
         }
+        setValue('tipologia_consegna', value);
     }
 
     //Agganciare campi form Semantic UI con React-Hook-Form
@@ -60,6 +61,8 @@ const ModuloInvioOrdine = ({ infoNegozio, oraInizioAsporto, oraFineAsporto}) => 
         <Fragment>
             <Form onSubmit={handleSubmit(onSubmit)} nome="formConfermaOrdine" id="formConfermaOrdine">
                 <Form.Group widths='equal'>
+                    <input type="hidden" ref={register} name="id_negozio" id="id_negozio" value={infoNegozio.id} />
+                    <input type="hidden" ref={register} name="id_ordine" id="id_ordine" value={idOrdine} />
                     <Form.Field
                         control={Input}
                         label='Il tuo nome:'
@@ -85,7 +88,6 @@ const ModuloInvioOrdine = ({ infoNegozio, oraInizioAsporto, oraFineAsporto}) => 
                     options={options}
                     name="tipologia_consegna"
                     id="tipologia_consegna"
-                    onChange={handleChangeHookForm}
                     placeholder='Seleziona una tiplogia di consegna:'
                     onChange={handleChangeModalita}
                     required

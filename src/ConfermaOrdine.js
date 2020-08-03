@@ -102,7 +102,7 @@ const ConfermaOrdine = (props) => {
                 <Header as='h3' block textAlign="center" className="w-100">
                     COMPLETA L'ORDINE CON I TUOI DATI
                 </Header>
-                <ModuloInvioOrdine infoNegozio={infoNegozio} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto}/>
+                <ModuloInvioOrdine infoNegozio={infoNegozio} idOrdine={idOrdine} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto}/>
             </SezioneBoxed>    
         </Fragment>
     )
