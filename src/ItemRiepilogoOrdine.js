@@ -22,24 +22,29 @@ const ItemRiepilogoOrdine = ({articoloOrdinato, infoArticoloFiltrato, componenti
     }
 
     const stampaComponenti = () => {
-        let risultato = []
-        for (let index = 0; index < articoloOrdinato.quantita; index++) {
-            
-            risultato.push(
-                <Fragment> <b>{(index*1)+1}</b> 
-                {associazioniOrdineComponenteArticolo
-                    .filter( associazione => associazione.replica*1 === (index*1)+1)
-                    .map( associazioneFiltrata =>
-                            componentiArticolo.filter( componente => componente.id === associazioneFiltrata.id_componente)
-                                                .map(componenteFiltrato => <Fragment>{' - '+componenteFiltrato.nome}</Fragment>)
-                            )}
-            
-                    <br />
-                </Fragment>
-            ) 
-            
+        if(infoArticoloFiltrato.tipologia==='composto'){
+
+            let risultato = []
+            for (let index = 0; index < articoloOrdinato.quantita; index++) {
+
+                risultato.push(
+                    <Fragment> <b>{(index*1)+1}</b> 
+                    {associazioniOrdineComponenteArticolo
+                        .filter( associazione => associazione.replica*1 === (index*1)+1)
+                        .map( associazioneFiltrata =>
+                                componentiArticolo.filter( componente => componente.id === associazioneFiltrata.id_componente)
+                                                    .map(componenteFiltrato => <Fragment>{' - '+componenteFiltrato.nome}</Fragment>)
+                                )}
+
+                        <br />
+                    </Fragment>
+                ) 
+
+            }
+            return risultato;
+
         }
-        return risultato;
+        
     }
 
     return (

@@ -45,8 +45,10 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
         setValue(name, value);
     }
     const handleChangeHookFormDatepicker = ( date ) => {
-        setStartDate(date);
-        setValue('orario', date.toTimeString().split(' ')[0]);
+
+        console.log(date);
+            setStartDate(date);
+            setValue('orario', date.toTimeString().split(' ')[0]);
     }
 
     useEffect( () => {
@@ -55,14 +57,43 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
 
     const onSubmit = data => {
         console.log(data);
+
+        if(typeof data.orario !== 'undefined'){
+
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(data)
+            };
+            // console.log('body',requestOptions.body)
+            fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
+                .then(response => response.json())
+                .then(dati => {
+                    if(dati.presenza_errori===false){
+
+                        alert('Successo!');
+
+
+                    }
+                    else{
+                        //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                        alert('Errore!');
+                    }
+                });
+
+        }else{
+            alert("Completa tutti i campi richiesti prima di procedere.")
+        }
+
+        
     }
 
     return (
         <Fragment>
             <Form onSubmit={handleSubmit(onSubmit)} nome="formConfermaOrdine" id="formConfermaOrdine">
                 <Form.Group widths='equal'>
-                    <input type="hidden" ref={register} name="id_negozio" id="id_negozio" value={infoNegozio.id} />
-                    <input type="hidden" ref={register} name="id_ordine" id="id_ordine" value={idOrdine} />
+                    <input type="hidden" ref={register} name="id_negozio" id="id_negozio" value={infoNegozio.id} required/>
+                    <input type="hidden" ref={register} name="id_ordine" id="id_ordine" value={idOrdine} required/>
                     <Form.Field
                         control={Input}
                         label='Il tuo nome:'
@@ -161,8 +192,16 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                 </Form.Field>
             
                 <Form.Field>
-                    <Checkbox label={<label>Ho letto <a href="https://www.iubenda.com/privacy-policy/92168795">l'informativa per la privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR.</label>} required />
+                    <input type="checkbox" required name="gdpr" id="gdpr"/> Ho letto <a href="https://www.iubenda.com/privacy-policy/92168795">l'informativa per la privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR. 
                 </Form.Field>
+                {/* <Form.Field
+                    control={Checkbox}
+                    name="gdpr"
+                    id="gdpr"
+                    onChange={handleChangeHookForm}
+                    label={<label>Ho letto <a href="https://www.iubenda.com/privacy-policy/92168795">l'informativa per la privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR.</label>}
+                    required
+                /> */}
                 <Button color="green" type='submit' className="w-100">Invia ora il tuo ordine</Button>
             </Form>
         </Fragment>
