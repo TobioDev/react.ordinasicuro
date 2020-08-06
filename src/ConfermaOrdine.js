@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react'
+import { useHistory } from "react-router-dom";
 
 import { Icon, Step, List, Header } from 'semantic-ui-react'
 
@@ -10,6 +11,7 @@ import ModuloInvioOrdine from './ModuloInvioOrdine';
 const ConfermaOrdine = (props) => {
     
     const [infoNegozio, setInfoNegozio] = useState([]);
+    const [infoOrdine, setInfoOrdine] = useState([]);
     const [categorieArticoli, setCategorieArticoli] = useState([]);
     const [articoliOrdinati, setArticoliOrdinati] = useState([]);
     const [infoArticoliOrdinati, setInfoArticoliOrdinati] = useState([]);
@@ -33,6 +35,7 @@ const ConfermaOrdine = (props) => {
             .then(response => response.json())
             .then(json => {
                 setInfoNegozio(json.get_negozio);
+                setInfoOrdine(json.get_ordine);
                 setArticoliOrdinati(json.get_articoli_ordinati);
                 setInfoArticoliOrdinati(json.get_info_articoli_ordinati);
                 setCategorieArticoli(json.get_categorie_articoli);
@@ -67,45 +70,60 @@ const ConfermaOrdine = (props) => {
                                         </Fragment>
     );  
 
-    return (
-        <Fragment>
-            <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
-            <SezioneBoxed className="mt6">
-                <Step.Group stackable="tablet" size="tiny">
-                    <Step completed >
-                        <Icon name='credit card' />
-                        <Step.Content>
-                            <Step.Title>Scegli</Step.Title>
-                            <Step.Description>Scegli cosa vuoi ordinare</Step.Description>
-                        </Step.Content>
-                    </Step>
-                    <Step active>
-                        <Icon name='clipboard check' />
-                        <Step.Content>
-                            <Step.Title>Conferma il tuo Ordine</Step.Title>
-                            <Step.Description>Verifica le informazioni che hai inserito</Step.Description>
-                        </Step.Content>
-                    </Step>
-                </Step.Group>
-            </SezioneBoxed>
-            <SezioneBoxed className="mt2">
-                <Header as='h3' block textAlign="center" className="w-100">
-                    IL TUO ORDINE
-                </Header>
-                <h3 className="mt0">{infoNegozio.nome} - {infoNegozio.citta}</h3>
-                <div className="w-100 flex flex-column items-start mt3">
-                    <List divided relaxed>
-                        {stampaElementiRiassunto}
-                    </List>
-                    <h2 className="mt1">Totale: € {(prezzoTotaleOrdine*1).toFixed(2)}</h2>
-                </div>
-                <Header as='h3' block textAlign="center" className="w-100">
-                    COMPLETA L'ORDINE CON I TUOI DATI
-                </Header>
-                <ModuloInvioOrdine infoNegozio={infoNegozio} idOrdine={idOrdine} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto}/>
-            </SezioneBoxed>    
-        </Fragment>
-    )
+    let history = useHistory();
+
+    console.log(infoOrdine.confermato);
+
+    if(infoOrdine.confermato==='1'){
+        
+        history.push("/negozio/"+infoNegozio.id);
+        return null;
+    }
+    else{
+
+        return (
+            <Fragment>
+                <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
+                <SezioneBoxed className="mt6">
+                    <Step.Group stackable="tablet" size="tiny">
+                        <Step completed >
+                            <Icon name='credit card' />
+                            <Step.Content>
+                                <Step.Title>Scegli</Step.Title>
+                                <Step.Description>Scegli cosa vuoi ordinare</Step.Description>
+                            </Step.Content>
+                        </Step>
+                        <Step active>
+                            <Icon name='clipboard check' />
+                            <Step.Content>
+                                <Step.Title>Conferma il tuo Ordine</Step.Title>
+                                <Step.Description>Verifica le informazioni che hai inserito</Step.Description>
+                            </Step.Content>
+                        </Step>
+                    </Step.Group>
+                </SezioneBoxed>
+                <SezioneBoxed className="mt2">
+                    <Header as='h3' block textAlign="center" className="w-100">
+                        IL TUO ORDINE
+                    </Header>
+                    <h3 className="mt0">{infoNegozio.nome} - {infoNegozio.citta}</h3>
+                    <div className="w-100 flex flex-column items-start mt3">
+                        <List divided relaxed>
+                            {stampaElementiRiassunto}
+                        </List>
+                        <h2 className="mt1">Totale: € {(prezzoTotaleOrdine*1).toFixed(2)}</h2>
+                    </div>
+                    <Header as='h3' block textAlign="center" className="w-100">
+                        COMPLETA L'ORDINE CON I TUOI DATI
+                    </Header>
+                    <ModuloInvioOrdine infoNegozio={infoNegozio} idOrdine={idOrdine} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto}/>
+                </SezioneBoxed>    
+            </Fragment>
+        )
+
+    }
+
+    
 }
 
 export default ConfermaOrdine

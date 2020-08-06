@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+import { useHistory } from "react-router-dom";
 
 import { Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
@@ -14,6 +15,12 @@ const NavbarOS = () => {
         setMenuVisibilita(!menuVisibilita);
     }
 
+    let history = useHistory();
+
+    const vaiHome = () => {
+        history.push('/#home');
+    };
+
     return (
         <Fragment>
             <Sidebar
@@ -25,8 +32,8 @@ const NavbarOS = () => {
                 visible={menuVisibilita}
                 width='thin'
             >
-                <Menu.Item >
-                    <img className="pv4" style={{ width: "150px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" />
+                <Menu.Item onClick={apriChiudiMenu}>
+                    <Link to="/#home"><img className="pv4" style={{ width: "150px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" /></Link>
                 </Menu.Item>
                 <Menu.Item as={Link} to="/#home" name='HOME' active={true} onClick={apriChiudiMenu} />
                 <Menu.Item as={Link} to="/#attivita" name='LE NOSTRE ATTIVITÀ' onClick={apriChiudiMenu} />
@@ -38,8 +45,8 @@ const NavbarOS = () => {
 
             <Segment inverted className="w-100 dn db-l" style={{ marginBottom: "0px", marginTop: '0px', position: "fixed", top: 0, zIndex: 101 }} >
                 <Menu inverted secondary size="normal">
-                    <Menu.Item >
-                        <img style={{ width: "150px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" />
+                    <Menu.Item  >
+                        <Link to="/#home"><img style={{ width: "150px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" /></Link>
                     </Menu.Item>
                     <Menu.Menu position="right">
                         <Menu.Item as={Link} to="/" name='HOME' active={true} />
@@ -55,7 +62,7 @@ const NavbarOS = () => {
             <Segment inverted className="w-100 dn-l" style={{ marginBottom: "0px", marginTop: "0px", position: "fixed", top: 0, zIndex: 101 }} >
                 <Menu inverted secondary size="tiny">
                     <Menu.Item >
-                        <img style={{ width: "120px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" />
+                        <Link to="/#home"><img style={{ width: "120px" }} src="https://ordinasicuro.it/img/logo_home.png" alt="Ordina Sicuro Logo" /></Link>
                     </Menu.Item>
                     <Menu.Menu position="right">
                         <Menu.Item >
