@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Accordion, Icon } from 'semantic-ui-react'
 
 const Faq = () => {
@@ -29,13 +29,12 @@ const Faq = () => {
             className="w-100" 
           >
             <Icon name='dropdown' />
-            <span className="titolo">What is a dog?</span>
+            <span className="titolo">Come può questo servizio aiutare il settore food nel post emergenza Covid19?</span>
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 0}>
             <p>
-              A dog is a type of domesticated animal. Known for its loyalty and
-              faithfulness, it can be found as a welcome guest in many households
-              across the world.
+              Utilizzando il Menu Digitale Ordina Sicuro potrai evitare inutili spese per menu usa e getta o nella igienizzazione dei tuoi normali menu cartacei.
+              In questo modo potrai reinvestire le tue risorse in attività e servizi che ti permettano di rilanciare la tua impresa.
             </p>
           </Accordion.Content>
 
@@ -45,13 +44,11 @@ const Faq = () => {
             onClick={handleClick}
           >
             <Icon name='dropdown' />
-            What kinds of dogs are there?
+            A chi è rivolto il servizio?
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 1}>
             <p>
-              There are many breeds of dogs. Each breed varies in size and
-              temperament. Owners often select a breed of dog that they find to be
-              compatible with their own lifestyle and desires from a companion.
+              Il servizio è rivolto a tutti le attività che operano nell'ambito food e che hanno bisogno di utilizzare menù: ristoranti, bar, pub, bagnini, chalet e così via.
             </p>
           </Accordion.Content>
 
@@ -61,19 +58,24 @@ const Faq = () => {
             onClick={handleClick}
           >
             <Icon name='dropdown' />
-            How do you acquire a dog?
+            Il servizio è a pagamento?
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 2}>
             <p>
-              Three common ways for a prospective owner to acquire a dog is from
-              pet shops, private owners, or shelters.
+            No, il servizio di Menu Digitale è totalmente GRATIS per il primo mese. Al termine del periodo gratuito sarete voi a comunicarci se avete intenzione di attivare un abbonamento mensile pari a € 19,90/mese inviandoci una mail all'indirizzo info@ordinasicuro.it. Nel caso non ci dovesse arrivare nessuna vostra comunicazione riguardo la volontà di attivare l'abbonamento, il vostro menù sarà semplicemente sospeso e ci metteremo in contatto con voi per decidere come proseguire.
             </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 3}
+            index={3}
+            onClick={handleClick}
+          >
+            <Icon name='dropdown' />
+            Oltre a sfogliare il Menu Digitale, il cliente può anche ordinare?
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 3}>
             <p>
-              A pet shop may be the most convenient way to buy a dog. Buying a dog
-              from a private owner allows you to assess the pedigree and
-              upbringing of your dog before choosing to take it home. Lastly,
-              finding your dog from a shelter, helps give a good home to a dog who
-              may not find one so readily.
+            Certo, è possibile attivare la <b>gestione per asporto e consegna a domicilio</b> in modo tale da renderti <b>completamente autonomo</b> e senza pagare enormi commissioni del 20/30% su ogni ordine che ricevi come impongono altri servizi. Il modulo per asporto e domicilio è attivabile con ZERO COMMISSIONI e un singolo abbonamento mensile pari a € 19,90.
             </p>
           </Accordion.Content>
         </Accordion>

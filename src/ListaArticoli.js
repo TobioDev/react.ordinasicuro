@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form"
 import { useHistory } from "react-router-dom";
 
 import Articolo from './Articolo'
+import ArticoloBase from './ArticoloBase'
 import SezioneBoxed from './SezioneBoxed'
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react'
 
 
-const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
+const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
 
     const { register, handleSubmit, setValue, watch, errors} = useForm();
     const [ aperturaModale, setAperturaModale ] = useState(false);
@@ -81,32 +82,67 @@ const ListaArticoli = ({idNegozio, articoli, categorieArticoli, componentiArtico
 
     const stampaArticoliPerCategoria = categorieArticoli
                                         .map( categoriaArticolo => (
-                                            <div className="w-100 mv4 ph3">
+                                            <div className="w-100 mv4 ph3" key={categoriaArticolo.id} >
                                                 <h1>{categoriaArticolo.nome}</h1>
                                                 <a id={"categoria-"+categoriaArticolo.nome} style={{"position": "relative", "top":"-160px"}}></a>
                                                 {articoli
                                                     .filter( articolo => articolo.id_categoria_articolo === categoriaArticolo.id)
-                                                    .map( articoloFiltrato => (
+                                                    .map( articoloFiltrato => {
 
-                                                        <Articolo
-                                                            key={articoloFiltrato.id} 
-                                                            register={register}
-                                                            setValue={setValue}
-                                                            avviaModaleImg={avviaModaleImg}
-                                                            id={articoloFiltrato.id} 
-                                                            visibilita={articoloFiltrato.visibilita} 
-                                                            nome={articoloFiltrato.nome} 
-                                                            tipologia={articoloFiltrato.tipologia} 
-                                                            id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
-                                                            descrizione = {articoloFiltrato.descrizione} 
-                                                            unita_misura = {articoloFiltrato.unita_misura} 
-                                                            prezzo = {articoloFiltrato.prezzo} 
-                                                            url_immagine = {articoloFiltrato.url_immagine}
-                                                            componentiArticolo = {componentiArticolo}
-                                                            associazioniComponenteArticolo = {associazioniComponenteArticolo}
-                                                        />
+                                                        if(abbonamentoUtente!=='2' && abbonamentoUtente!=='0'){
 
-                                                    )                                                    
+                                                            return (
+
+                                                                <Articolo
+                                                                    key={articoloFiltrato.id} 
+                                                                    register={register}
+                                                                    setValue={setValue}
+                                                                    avviaModaleImg={avviaModaleImg}
+                                                                    id={articoloFiltrato.id} 
+                                                                    visibilita={articoloFiltrato.visibilita} 
+                                                                    nome={articoloFiltrato.nome} 
+                                                                    tipologia={articoloFiltrato.tipologia} 
+                                                                    id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
+                                                                    descrizione = {articoloFiltrato.descrizione} 
+                                                                    unita_misura = {articoloFiltrato.unita_misura} 
+                                                                    prezzo = {articoloFiltrato.prezzo} 
+                                                                    url_immagine = {articoloFiltrato.url_immagine}
+                                                                    componentiArticolo = {componentiArticolo}
+                                                                    associazioniComponenteArticolo = {associazioniComponenteArticolo}
+                                                                />
+
+                                                            )
+
+                                                        }
+                                                        else{
+
+                                                            return (
+
+                                                                <ArticoloBase
+                                                                    key={articoloFiltrato.id} 
+                                                                    register={register}
+                                                                    setValue={setValue}
+                                                                    avviaModaleImg={avviaModaleImg}
+                                                                    id={articoloFiltrato.id} 
+                                                                    visibilita={articoloFiltrato.visibilita} 
+                                                                    nome={articoloFiltrato.nome} 
+                                                                    tipologia={articoloFiltrato.tipologia} 
+                                                                    id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
+                                                                    descrizione = {articoloFiltrato.descrizione} 
+                                                                    unita_misura = {articoloFiltrato.unita_misura} 
+                                                                    prezzo = {articoloFiltrato.prezzo} 
+                                                                    url_immagine = {articoloFiltrato.url_immagine}
+                                                                    componentiArticolo = {componentiArticolo}
+                                                                    associazioniComponenteArticolo = {associazioniComponenteArticolo}
+                                                                />
+
+                                                            )
+
+                                                        }
+
+                                                        
+
+                                                    }                                                    
 
                                                 )}
                                             </div>                                            

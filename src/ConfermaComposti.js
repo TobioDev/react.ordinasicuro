@@ -9,7 +9,7 @@ import ItemConfermaComposti from './ItemConfermaComposti';
 
 const ConfermaComposti = (props) => {
 
-    const { register, handleSubmit, setValue, watch, errors, control} = useForm();
+    const { register, handleSubmit, setValue} = useForm();
 
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);

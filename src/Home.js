@@ -9,7 +9,6 @@ import IscrizioneOS from './IscrizioneOS';
 import CtaIcona from './CtaIcona';
 import Faq from './Faq';
 import Footer from './Footer'
-import NavbarOS from './NavbarOS';
 
 
 const Home = () => {

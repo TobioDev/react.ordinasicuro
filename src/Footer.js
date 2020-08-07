@@ -26,7 +26,7 @@ const Footer = () => {
                                 Copyright © Ordina Sicuro {new Date().getFullYear()}
                             </p>
                             <p className="f7 black-70 dib pr3 mb3">
-                                <a className="" href="https://www.iubenda.com/privacy-policy/92168795" target="_blank">Privacy Policy</a> - <a href="https://www.iubenda.com/privacy-policy/92168795/cookie-policy" target="_blank" >Cookie Policy</a>
+                                <a className="" href="https://www.iubenda.com/privacy-policy/92168795" target="_blank" rel="noopener noreferrer">Privacy Policy</a> - <a href="https://www.iubenda.com/privacy-policy/92168795/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
                             </p>
                         </div>
                         <div className="db dtc-ns black-70 tc tr-ns v-mid">
@@ -84,7 +84,7 @@ const Footer = () => {
                             Copyright © Ordina Sicuro {new Date().getFullYear()}
                         </p>
                         <p className="f7 black-70 mt4 tc">
-                            <a className="black" href="https://www.iubenda.com/privacy-policy/92168795" target="_blank">Privacy Policy</a> - <a className="black" href="https://www.iubenda.com/privacy-policy/92168795/cookie-policy" target="_blank" >Cookie Policy</a>
+                            <a className="black" href="https://www.iubenda.com/privacy-policy/92168795" target="_blank" rel="noopener noreferrer">Privacy Policy</a> - <a className="black" href="https://www.iubenda.com/privacy-policy/92168795/cookie-policy" target="_blank" rel="noopener noreferrer" >Cookie Policy</a>
                         </p>
                     </div>
         </footer>

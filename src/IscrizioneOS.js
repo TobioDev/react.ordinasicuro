@@ -37,7 +37,7 @@ const IscrizioneOS = () => {
 
 					</div>
 					<div className="mh4">
-						<label className="pa0 ma0 lh-copy pointer white f5"><input type="checkbox" /> Ho letto <a style={{color:'#fed136'}}>l'informativa privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR.</label>
+						<label className="pa0 ma0 lh-copy pointer white f5"><input type="checkbox" /> Ho letto <a href="https://www.iubenda.com/privacy-policy/92168795" style={{color:'#fed136'}}>l'informativa privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR.</label>
 					</div>
 					
 					<div className="flex items-center justify-center mt3 mb4">

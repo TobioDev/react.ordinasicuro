@@ -1,23 +1,41 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Button, Checkbox, Form, Input, Select, TextArea} from 'semantic-ui-react'
+import { Button, Form, Input, Select, TextArea} from 'semantic-ui-react'
 import { useForm } from "react-hook-form"
 
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import it from "date-fns/locale/it";
-import setHours from 'date-fns/setHours'
-import setMinutes from 'date-fns/setMinutes'
-import getHours from 'date-fns/setMinutes'
+// import setHours from 'date-fns/setHours'
+// import setMinutes from 'date-fns/setMinutes'
+// import getHours from 'date-fns/setMinutes'
 
 const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsporto}) => {
 
     registerLocale("it", it);
 
-    const { register, handleSubmit, setValue, watch, errors} = useForm();
+    const { register, handleSubmit, setValue, getValues} = useForm();
     const [startDate, setStartDate] = useState();
     const [fraseOrario, setFraseOrario] = useState("Quando vuoi ricevere l'ordine?");
     const [campoFormModificato, setCampoFormModificato] = useState('');
     const [modalitaOrdine, setModalitaOrdine] = useState('domicilio');
+
+    useEffect(() => {
+
+        if(localStorage.getItem('infoOrdine') !== null){
+
+            let info = JSON.parse(localStorage.getItem('infoOrdine'))
+            
+            document.getElementById("nome").value = info.nome;
+            document.getElementById("cognome").value = info.cognome;
+            document.getElementById("indirizzo").value = info.indirizzo;
+            document.getElementById("telefono").value = info.telefono;
+            document.getElementById("email").value = info.email;
+            document.getElementById("nome").value = info.nome;
+
+        }
+
+    }, [])
+
 
     //Opzioni modalità consegna/asporto
     let options = []
@@ -45,13 +63,12 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
         setValue(name, value);
     }
     const handleChangeHookFormDatepicker = ( date ) => {
-
         console.log(date);
-            setStartDate(date);
-            setValue('orario', date.toTimeString().split(' ')[0]);
+        setStartDate(date);
+        setValue('orario', date.toTimeString().split(' ')[0]);
     }
 
-    useEffect( () => {
+    useEffect( (campoFormModificato) => {
         register({campoFormModificato});
     },[register])
 
@@ -60,12 +77,13 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
 
         if(typeof data.orario !== 'undefined'){
 
+            localStorage.setItem('infoOrdine', JSON.stringify(data));
+
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(data)
             };
-            // console.log('body',requestOptions.body)
             fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
                 .then(response => response.json())
                 .then(dati => {

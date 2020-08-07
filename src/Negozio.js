@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { Button, Icon, Dimmer, Loader, Menu, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, Menu, Dropdown } from 'semantic-ui-react'
 
 import { HashLink as Link } from 'react-router-hash-link';
 
@@ -12,6 +12,7 @@ const Negozio = (props) => {
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
 
     const [infoNegozio, setInfoNegozio] = useState([]);
+    const [infoUtenteNegozio, setInfoUtenteNegozio] = useState([]);
     const [categorie, setCategorie] = useState([]);
     const [categorieArticoli, setCategorieArticoli] = useState([]);
     const [articoli, setArticoli] = useState([]);
@@ -26,6 +27,7 @@ const Negozio = (props) => {
             .then(response => response.json())
             .then(json => {
                 setInfoNegozio(json.get_negozio);
+                setInfoUtenteNegozio(json.get_utente);
                 setCategorie(json.get_categorie);
                 setCategorieArticoli(json.get_categorie_articoli);
                 setArticoli(json.get_articoli);
@@ -40,6 +42,7 @@ const Negozio = (props) => {
     const stampaSubmenuCategorieDesktop = categorieArticoli => (
         categorieArticoli.map( categoria => 
                                 <Menu.Item as={Link}
+                                    key={categoria.id}
                                     to={"#categoria-"+categoria.nome}  
                                     name= {categoria.nome}
                                 >
@@ -61,6 +64,20 @@ const Negozio = (props) => {
     const handleChange = (e, { value }) => {
         var elmnt = document.getElementById("categoria-"+value);
         elmnt.scrollIntoView();
+    }
+
+    const stampaBottoneProsegui = () => {
+        console.log(infoUtenteNegozio.livello)
+        if(infoUtenteNegozio.livello!=='2' && infoUtenteNegozio.livello!=='0'){
+            return (
+                <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="form-articoli">
+                    <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>
+                    <Button.Content hidden>
+                        <Icon name='arrow right' />
+                    </Button.Content>
+                </Button>
+            )
+        }
     }
 
     return (
@@ -86,7 +103,7 @@ const Negozio = (props) => {
                         />    
                     </div>
                     
-                    <ListaArticoli idNegozio={props.match.params.id_negozio} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+                    <ListaArticoli idNegozio={props.match.params.id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 </div>
 
             </div>
@@ -94,12 +111,8 @@ const Negozio = (props) => {
             
             
                 {/* <input type="submit" value="INVIA ORA" /> */}
-            <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="form-articoli">
-                <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>
-                <Button.Content hidden>
-                    <Icon name='arrow right' />
-                </Button.Content>
-            </Button>
+            {stampaBottoneProsegui()}
+            
         </Fragment>    
 
     )

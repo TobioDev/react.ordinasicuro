@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Dropdown, Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+// import { Dropdown } from 'semantic-ui-react'
 
 import  './Articolo.css'
 
@@ -11,8 +12,8 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
 
     //Per registrare valore Dropdown Semantic UI
-    const handleChange = (e, { name, value }) => {setValue(name, value)}
-    useEffect( () => {register("componenti"+id);},[register])
+    // const handleChange = (e, { name, value }) => {setValue(name, value)}
+    // useEffect( (id) => {register("componenti"+id);},[register])
 
     useEffect( () => {
         if(quantita===0){
@@ -24,17 +25,17 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
     },[quantita])
 
 
-    const stampaSelectComponenti = (componentiArticolo, associazioniComponenteArticolo, id) => {
-        let arrayOpzioniComponenti = [];
-        associazioniComponenteArticolo
-            .filter( associazione => associazione.id_articolo === id)
-            .map( associazioneFiltrata => componentiArticolo
-                                            .filter( componente => componente.id === associazioneFiltrata.id_componente)
-                                            .map( componenteFiltrato => arrayOpzioniComponenti.push({key: componenteFiltrato.nome, text: componenteFiltrato.nome, value: componenteFiltrato.id}))
-            )
-        if(arrayOpzioniComponenti.length>0)
-        return (<Dropdown onChange={handleChange} name={"componenti"+id} id={"componenti"+id} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti}/>)
-    } 
+    // const stampaSelectComponenti = (componentiArticolo, associazioniComponenteArticolo, id) => {
+    //     let arrayOpzioniComponenti = [];
+    //     associazioniComponenteArticolo
+    //         .filter( associazione => associazione.id_articolo === id)
+    //         .map( associazioneFiltrata => componentiArticolo
+    //                                         .filter( componente => componente.id === associazioneFiltrata.id_componente)
+    //                                         .map( componenteFiltrato => arrayOpzioniComponenti.push({key: componenteFiltrato.nome, text: componenteFiltrato.nome, value: componenteFiltrato.id}))
+    //         )
+    //     if(arrayOpzioniComponenti.length>0)
+    //     return (<Dropdown onChange={handleChange} name={"componenti"+id} id={"componenti"+id} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti}/>)
+    // } 
     
 
     const link_img = (url_immagine) => {
@@ -73,10 +74,10 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     {link_img(url_immagine)}
                     <p className="sottotitolo">{descrizione}</p>
                 </div>
-                <div class="w-100 mt3 flex justify-start items-center">
+                <div className="w-100 mt3 flex justify-start items-center">
                     {/* {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) } */}
                 </div>
-                <div class="w-100 mt3 flex justify-start items-center">
+                <div className="w-100 mt3 flex justify-start items-center">
                     <div className="flex justify-start items-center w-70">
                         <p className="mh2 mv0">{unita_misura}</p> 
                         <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mv0 mr2 w-20 w-10-l" value={quantita} type="text" aria-describedby="name-desc"/>
@@ -88,7 +89,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                         {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
                     </div>
                 </div>
-                <div class={"w-100 mt3 justify-start items-center " + visibilitaNota}>
+                <div className={"w-100 mt3 justify-start items-center " + visibilitaNota}>
                     <textarea ref={register} name={"nota"+id} id={"nota"+id} rows="10" className="w-100 pa2" placeholder="Inserisci qui una tua nota per questo prodotto..."></textarea>
                 </div>
             </div>
