@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Button, Form, Input, Select, TextArea} from 'semantic-ui-react'
 import { useForm } from "react-hook-form"
 
+import { useHistory } from "react-router-dom";
+
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import it from "date-fns/locale/it";
@@ -24,13 +26,31 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
         if(localStorage.getItem('infoOrdine') !== null){
 
             let info = JSON.parse(localStorage.getItem('infoOrdine'))
+
+            let presenzaUndefined = false;
+            [info].map( element => {
+                    if(element === undefined){
+                        presenzaUndefined = true;
+                    }
+                }
+            )
+
+            if(presenzaUndefined=== false){
+
+                document.getElementById("nome").value = info.nome;
+                setValue("nome", info.nome);
+                document.getElementById("cognome").value = info.cognome;
+                setValue("cognome", info.cognome);
+                document.getElementById("indirizzo").value = info.indirizzo;
+                setValue("indirizzo", info.indirizzo);
+                document.getElementById("telefono").value = info.telefono;
+                setValue("telefono", info.telefono);
+                document.getElementById("email").value = info.email;
+                setValue("email", info.email);
+
+            }
             
-            document.getElementById("nome").value = info.nome;
-            document.getElementById("cognome").value = info.cognome;
-            document.getElementById("indirizzo").value = info.indirizzo;
-            document.getElementById("telefono").value = info.telefono;
-            document.getElementById("email").value = info.email;
-            document.getElementById("nome").value = info.nome;
+            
 
         }
 
@@ -72,6 +92,8 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
         register({campoFormModificato});
     },[register])
 
+    let history = useHistory();
+
     const onSubmit = data => {
         console.log(data);
 
@@ -88,14 +110,12 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                 .then(response => response.json())
                 .then(dati => {
                     if(dati.presenza_errori===false){
-
-                        alert('Successo!');
-
-
+                        //alert('Successo!');
+                        history.push("/ordine-inviato/");
                     }
                     else{
                         //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                        alert('Errore!');
+                        alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
                     }
                 });
 
@@ -210,7 +230,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                 </Form.Field>
             
                 <Form.Field>
-                    <input type="checkbox" required name="gdpr" id="gdpr"/> Ho letto <a href="https://www.iubenda.com/privacy-policy/92168795">l'informativa per la privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR. 
+                    <input type="checkbox" required name="gdpr" id="gdpr"/> Ho letto <a href="/privacy-policy">l'informativa per la privacy</a> e acconsento al trattamento dei miei dati secondo la normativa europea per la protezione dei dati personali n. 679/2016, GDPR. 
                 </Form.Field>
                 {/* <Form.Field
                     control={Checkbox}

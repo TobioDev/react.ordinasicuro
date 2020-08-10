@@ -55,7 +55,7 @@ const Home = () => {
                 <ConsigliCovid />
             </SezioneBoxed>
 
-            <SezioneBoxed backgroundColor="bg-dark-gray" >
+            <SezioneBoxed className="bg-dark-gray">
                 <IscrizioneOS />
             </SezioneBoxed>
             <Footer />

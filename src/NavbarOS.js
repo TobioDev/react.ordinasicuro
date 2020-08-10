@@ -30,9 +30,9 @@ const NavbarOS = () => {
                 <Menu.Item as={Link} to="/#home" name='HOME' active={true} onClick={apriChiudiMenu} />
                 <Menu.Item as={Link} to="/#attivita" name='LE NOSTRE ATTIVITÀ' onClick={apriChiudiMenu} />
                 <Menu.Item as={Link} to="/#come-funziona" name='COME FUNZIONA' onClick={apriChiudiMenu} />
-                <Menu.Item as={Link} to="/#fase-2" name='#FASE2INSIEME' onClick={apriChiudiMenu} />
-                <Menu.Item as={Link} to="/#unisciti" name='UNISCITI' onClick={apriChiudiMenu} />
-                <Menu.Item as={Link} to="/login" name='LOGIN' onClick={apriChiudiMenu} />
+                <Menu.Item as={Link} to="/#fase-3" name='#FASE3INSIEME' onClick={apriChiudiMenu} />
+                <Menu.Item as={Link} to="/#iscrizione" name='UNISCITI' onClick={apriChiudiMenu} />
+                {/* <Menu.Item as={Link} to="/login" name='LOGIN' onClick={apriChiudiMenu} /> */}
             </Sidebar>
 
             <Segment inverted className="w-100 dn db-l" style={{ marginBottom: "0px", marginTop: '0px', position: "fixed", top: 0, zIndex: 101 }} >
@@ -44,9 +44,9 @@ const NavbarOS = () => {
                         <Menu.Item as={Link} to="/" name='HOME' active={true} />
                         <Menu.Item as={Link} to="/#attivita" name='LE NOSTRE ATTIVITÀ'/>
                         <Menu.Item as={Link} to="/#come-funziona" name='COME FUNZIONA' />
-                        <Menu.Item as={Link} to="/#fase-2" name='#FASE2INSIEME' />
-                        <Menu.Item as={Link} to="/#unisciti" name='UNISCITI' />
-                        <Menu.Item as={Link} to="/login" name='LOGIN' />
+                        <Menu.Item as={Link} to="/#fase-3" name='#FASE3INSIEME' />
+                        <Menu.Item as={Link} to="/#iscrizione" name='UNISCITI' />
+                        {/* <Menu.Item as={Link} to="/login" name='LOGIN' /> */}
                     </Menu.Menu>
                 </Menu>
             </Segment>

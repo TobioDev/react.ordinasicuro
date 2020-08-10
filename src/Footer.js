@@ -37,7 +37,7 @@ const Footer = () => {
                                     ></path>
                                 </svg>
                             </a>
-                            <a href="https://twitter.com/" className="link dim dib mr3 black-70">
+                            {/* <a href="https://twitter.com/" className="link dim dib mr3 black-70">
                                 <svg className="db w2 h2" data-icon="twitter" viewBox="0 0 32 32"
                                     fill="currentColor" >
                                     <title >twitter icon</title>
@@ -76,7 +76,7 @@ const Footer = () => {
                                         </g>
                                     </g>
                                 </svg>
-                            </a>
+                            </a> */}
                         </div>
                     </div>
                     <div className="db dn-ns">
@@ -84,7 +84,7 @@ const Footer = () => {
                             Copyright © Ordina Sicuro {new Date().getFullYear()}
                         </p>
                         <p className="f7 black-70 mt4 tc">
-                            <a className="black" href="https://www.iubenda.com/privacy-policy/92168795" target="_blank" rel="noopener noreferrer">Privacy Policy</a> - <a className="black" href="https://www.iubenda.com/privacy-policy/92168795/cookie-policy" target="_blank" rel="noopener noreferrer" >Cookie Policy</a>
+                            <a className="black" href="/privacy-policy">Privacy Policy</a> - <a className="black" href="/cookie-policy">Cookie Policy</a>
                         </p>
                     </div>
         </footer>

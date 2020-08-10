@@ -8,6 +8,7 @@ const FeaturesIcone = () =>{
 	return (
 
 		<Fragment>
+			<a id="come-funziona" style={{"position": "relative", "top":"-140px"}}></a>
 			<div className="mt5">
 				<h1 className="tc titolo">ORDINA SICURO È SEMPLICE ED IMMEDIATO</h1>
 				<div className="flex flex-wrap justify-center items-start">

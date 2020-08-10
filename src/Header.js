@@ -14,7 +14,7 @@ const Header = () => {
 			<div className="cover bg-left bg-center-l">
 				<div className="pt6-l pt5 pb5-l pb4">
 					<div className="tc ph3 mt5-l mt5">
-						<h2 className="fw1 f4 f3-l white-80 mb0 sottotitolo pt4 pt0-l"><i>Fase 2. Ripartiamo in sicurezza.</i></h2>
+						<h2 className="fw1 f4 f3-l white-80 mb0 sottotitolo pt4 pt0-l"><i>Fase 3. Ripartiamo insieme.</i></h2>
 						<h1 className="f1-l f2 fw7 white-90 lh-title mt1 titolo">ORDINA SICURO</h1>
 						<div className="tc mb3">
 							<p className="f5 f3-l fw6 mb2 mt0 white titolo">Effettua una ricerca fra le attività presenti</p>

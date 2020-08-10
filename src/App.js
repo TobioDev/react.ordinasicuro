@@ -11,6 +11,9 @@ import NavbarOS from './NavbarOS';
 import Negozio from './Negozio';
 import ConfermaOrdine from './ConfermaOrdine';
 import ConfermaComposti from './ConfermaComposti';
+import OrdineInviato from './OrdineInviato'
+import PrivacyPolicy from './PrivacyPolicy';
+import CookiePolicy from './CookiePolicy';
 
 
 function App() {
@@ -24,6 +27,7 @@ function App() {
                 <title>Ordina Sicuro - Menu e Vetrina Digitale</title>
                 <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
 				<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+				<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"></link>
             </Helmet>
 			<NavbarOS />
 			<Route
@@ -47,6 +51,21 @@ function App() {
 				path='/conferma-composti/:id_ordine'
 				exact
 				component={ConfermaComposti} />
+
+			<Route 
+				path='/ordine-inviato'
+				exact
+				component={OrdineInviato} />
+
+			<Route 
+				path='/privacy-policy'
+				exact
+				component={PrivacyPolicy} />
+			
+			<Route 
+				path='/cookie-policy'
+				exact
+				component={CookiePolicy} />
 
 		</Fragment>
 
