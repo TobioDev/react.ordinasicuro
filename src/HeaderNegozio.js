@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './HeaderNegozio.css'
 
 const HeaderNegozio = ({infoNegozio, categorie}) => {
 
+	// const [nome, setNome] = useState('')
+
+	// useEffect(() => {
+	// 	setNome(infoNegozio.nome)
+	// 	setNome(nome.replace('\\', ''))
+	// })
+
     const categoriaNegozio = categorie
                                 .filter(categoria => categoria.id === infoNegozio.id_categoria)
-								.map(categorieFiltrate => categorieFiltrate.nome);
+								.map(categorieFiltrate => categorieFiltrate.nome.replace('\\', ''));
 								
 	let urlBackground = "";
 
@@ -15,9 +22,11 @@ const HeaderNegozio = ({infoNegozio, categorie}) => {
 	}
 	else { urlBackground = "https://ordinasicuro.it/img/header-bg.jpg" }
 
+	
+
     return (
         <header className="sans-serif" id="home">
-			<div className="bg-left bg-center-l" style={{ "backgroundImage" : "url("+urlBackground+")" }}>
+			<div className="bg-left bg-center-l" style={{ backgroundImage : "url("+urlBackground+")", backgroundSize : "cover" }}>
 				<div className="pt6-l pt5 pb5-l pb3">
 					<div className="tc ph3 mt5-l mt6-l mt5">
                         <a className="f7 link dim br3 ph3 pv2 mb0 dib black sfondo-primario titolo fw7" href="#0">{categoriaNegozio}</a>

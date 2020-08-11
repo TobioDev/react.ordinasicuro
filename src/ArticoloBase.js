@@ -4,6 +4,9 @@ import  './Articolo.css'
 
 const ArticoloBase = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, setValue, componentiArticolo, associazioniComponenteArticolo, avviaModaleImg }) => {
 
+    let escapeNome = nome.replace("\\", "")
+    let escapeDescrizione = descrizione.replace("\\", "")
+
     
 
     const link_img = (url_immagine) => {
@@ -17,12 +20,12 @@ const ArticoloBase = ({id, visibilita, nome, tipologia, id_categoria_articolo, d
         <Fragment>
             <div className="w-100 pa4 ba b--black-20 br3 mb2">
                 <div className="w-100 flex items-start justify-start">
-                    <p className="w-60 f4 fw7 titolo mb0">{nome}</p>
+                    <p className="w-60 f4 fw7 titolo mb0">{escapeNome}</p>
                     <p className="w-40 f4 titolo flex justify-end">€ {prezzo} / {unita_misura}</p>
                 </div>
                 <div className="w-100 mt3 flex items-start justify-start">
                     {link_img(url_immagine)}
-                    <p className="sottotitolo">{descrizione}</p>
+                    <p className="sottotitolo">{escapeDescrizione}</p>
                 </div>
             </div>
             

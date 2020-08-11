@@ -30,13 +30,13 @@ const Footer = () => {
                             </p>
                         </div>
                         <div className="db dtc-ns black-70 tc tr-ns v-mid">
-                            <a href="https://www.facebook.com/" className="link dim dib mr3 black-70" title="Impossible Labs on Facebook">
+                            {/* <a href="https://www.facebook.com/" className="link dim dib mr3 black-70" title="Impossible Labs on Facebook">
                                 <svg className="db w2 h2" data-icon="facebook" viewBox="0 0 32 32" fill="currentColor">
                                     <title >facebook icon</title>
                                     <path d="M8 12 L13 12 L13 8 C13 2 17 1 24 2 L24 7 C20 7 19 7 19 10 L19 12 L24 12 L23 18 L19 18 L19 30 L13 30 L13 18 L8 18 z"
                                     ></path>
                                 </svg>
-                            </a>
+                            </a> */}
                             {/* <a href="https://twitter.com/" className="link dim dib mr3 black-70">
                                 <svg className="db w2 h2" data-icon="twitter" viewBox="0 0 32 32"
                                     fill="currentColor" >
