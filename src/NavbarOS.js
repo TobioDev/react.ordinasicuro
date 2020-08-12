@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 
-import { Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { Menu, Segment, Sidebar, Icon } from 'semantic-ui-react'
 
 import { AiOutlineMenu } from 'react-icons/ai';
 

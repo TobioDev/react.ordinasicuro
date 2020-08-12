@@ -84,7 +84,7 @@ const Negozio = (props) => {
 
         <Fragment>
             <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
-            <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} />
+            <HeaderNegozio infoNegozio={infoNegozio} categorie={categorie} infoUtenteNegozio={infoUtenteNegozio} />
             <div className="w-100 flex flex-row items-start justify-center">
                 <div className="w-20 dn flex-l items-start justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
                     <Menu vertical>

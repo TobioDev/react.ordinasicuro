@@ -95,7 +95,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
     let history = useHistory();
 
     const onSubmit = data => {
-        console.log(data);
+        //console.log(data);
 
         if(typeof data.orario !== 'undefined'){
 
