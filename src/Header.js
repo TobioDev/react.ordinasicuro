@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import './Header.css';
 
 import { HashLink as Link } from 'react-router-hash-link';
@@ -6,6 +6,18 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 
 const Header = () => {
+
+	const [termineRicerca, setTermineRicerca] = useState('')
+
+	const onChange = (e) => {
+		setTermineRicerca(encodeURI(e.target.value))
+	}
+
+	const handleKeyPress = (event) => {
+		if(event.key === 'Enter'){
+			document.getElementById("linkRicerca").click();
+		}
+	}
 
 
 	return (
@@ -21,12 +33,17 @@ const Header = () => {
 							<input
 								placeholder="Nome, luogo, CAP..."
 								className="mw-100 w-90 w-70-ns f4 input-reset ba b--black-20 pv3 ph4 border-box titolo"
+								onChange={onChange}
+								onKeyPress={handleKeyPress}
 							/>
-							<input
-								type="submit"
-								value="CERCA"
-								className="input-reset grow w-90 w-auto-ns mt2 bg-black-80 white f4 pv2 pv3-ns ph4 ba b--black-80 bg-hover-mid-gray titolo"
-							/>
+							<Link to={"/ricerca/"+termineRicerca} id="linkRicerca">
+								<input
+									type="submit"
+									value="CERCA"
+									className="input-reset grow w-90 w-auto-ns mt2 bg-black-80 white f4 pv2 pv3-ns ph4 ba b--black-80 bg-hover-mid-gray titolo"
+								/>
+							</Link>
+							
 						</div>
 						<div>
 							<Link to="#attivita"><img src="https://ordinasicuro.it/img/arrow_bouncing.gif" className="w4-l w3" alt=""/></Link>

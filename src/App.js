@@ -14,6 +14,7 @@ import ConfermaComposti from './ConfermaComposti';
 import OrdineInviato from './OrdineInviato'
 import PrivacyPolicy from './PrivacyPolicy';
 import CookiePolicy from './CookiePolicy';
+import Ricerca from './Ricerca';
 
 
 function App() {
@@ -37,6 +38,18 @@ function App() {
 					<Home />
 				)}
 			/>
+
+			<Route 
+				path='/ricerca/:termine_ricerca?'
+				exact
+				component={Ricerca} />
+			
+			{/* <Route 
+				path='/ricerca/:termine_ricerca'
+				exact
+				component={Ricerca} /> */}
+
+
 			<Route 
 				path='/negozio/:id_negozio'
 				exact

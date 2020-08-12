@@ -10,6 +10,8 @@ import CtaIcona from './CtaIcona';
 import Faq from './Faq';
 import Footer from './Footer'
 
+import { HashLink as Link } from 'react-router-hash-link';
+
 
 const Home = () => {
 
@@ -39,6 +41,9 @@ const Home = () => {
 
             <SezioneBoxed backgroundColor="bg-near-white">
                 <CardList negozi={negoziFiltrati} categorie={categorie} />
+                <Link to="/ricerca">
+                  <div className="link br2 ph3 pv2 mb2 mt2 mh3-l dib black w-100 tc b f4 hover-white titolo" style={{backgroundColor : "rgb(255, 193, 7)"}}>SFOGLIA TUTTE LE ATTIVITÀ</div>
+                </Link>
             </SezioneBoxed>
 
 
