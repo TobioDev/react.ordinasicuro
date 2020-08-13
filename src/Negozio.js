@@ -19,6 +19,7 @@ const Negozio = (props) => {
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
 
+
     useEffect(() => {
 
         window.scrollTo(0,0);

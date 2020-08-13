@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { useForm } from "react-hook-form"
 
 import { useHistory } from "react-router-dom";
@@ -18,13 +18,20 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
     const [ messaggioModale, setMessaggioModale] = useState('');
     const [ urlImgModale, setUrlImgModale] = useState('');
 
+    let history = useHistory();     
+
+
     const avviaModale = (titolo, testo) => {
         setAperturaModale(true);
         setTitoloModale(titolo);
         setMessaggioModale(testo);
     }
 
+
     const avviaModaleImg = (url) => {
+        window.history.pushState('backPressed', null, null);
+        window.history.pushState('dummy', null, null);
+        window.addEventListener('popstate', chiudiModaleImg, { once: true });
         setAperturaModaleImg(true);
         setUrlImgModale("https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/"+url);
     }
@@ -32,7 +39,6 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
     const chiudiModale = () => setAperturaModale(false);
     const chiudiModaleImg = () => setAperturaModaleImg(false);
 
-    let history = useHistory();
     
     const onSubmit = data => {
 
