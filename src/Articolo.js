@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Divider, Icon, Header} from 'semantic-ui-react'
 // import { Dropdown } from 'semantic-ui-react'
 
 import  './Articolo.css'
@@ -77,7 +77,40 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     return (
         <Fragment>
-            <div className="w-100 pa4 ba b--black-20 br3 mb2">
+            <div className="w-100 pv2 ph3 shadow-3 br3 mb2">
+                <div className="w-100 mv2 flex items-start justify-start">
+                    {link_img(url_immagine)}
+                    <div>
+                        <h1 className="f5 fw7 titolo mb0">{escapeNome}</h1>
+                        <p className="sottotitolo f5 mt3-l mt2">{escapeDescrizione}</p>
+                    </div>
+                </div>
+                {/* <Divider /> */}
+                <div className="w-100 mt4 mb2 flex items-start justify-between">
+                    <div className="w-100 flex justify-start items-center">
+                        <div className="flex justify-start items-center w-70">
+                        <p className="mh2 mv0">{unita_misura}</p> 
+                            <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mv0 mr2 w-20 w-10-l" value={quantita} type="text" aria-describedby="name-desc"/>
+                            <Button type="button" color='red' content='-' onClick={diminuisci} />
+                            <Button type="button" color='green' content='+' onClick={aggiungi} />
+                        </div>
+                        <div className="flex justify-end items-center w-30 titolo fw7">
+                            <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
+                            {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
+                        </div>
+                    </div>
+                </div>
+                <div className={"w-100 mt3 justify-start items-center " + visibilitaNota}>
+                    <textarea ref={register} name={"nota"+id} id={"nota"+id} rows="10" className="w-100 pa2" placeholder="Inserisci qui una tua nota per questo prodotto..."></textarea>
+                </div>
+                <Divider/>
+                <div className="w-100 mv2 flex items-start justify-end">
+                    <p className="w-40 f5 titolo flex justify-end"><b>{prezzoUnita()}</b></p>
+                </div>
+
+            </div>
+
+            {/* <div className="w-100 pa4 ba b--black-20 br3 mb2">
                 <div className="w-100 flex items-start justify-start">
                     <p className="w-60 f4 fw7 titolo mb0">{escapeNome}</p>
                     <p className="w-40 f4 titolo flex justify-end">{prezzoUnita()}</p>
@@ -87,7 +120,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     <p className="sottotitolo">{escapeDescrizione}</p>
                 </div>
                 <div className="w-100 mt3 flex justify-start items-center">
-                    {/* {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) } */}
+                    {stampaSelectComponenti(componentiArticolo, associazioniComponenteArticolo, id) }
                 </div>
                 <div className="w-100 mt3 flex justify-start items-center">
                     <div className="flex justify-start items-center w-70">
@@ -98,13 +131,12 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                     </div>
                     <div className="flex justify-end items-center w-30 titolo fw7">
                         <Button disabled={disabilitaNota} type="button" primary onClick={comparsaNota}>Nota</Button>
-                        {/* <button type="button" class="f6 link dim br3 bn ph3 pv2 mb2 dib white bg-blue titolo fw7" href="#0" onClick={comparsaNota}> Nota </button> */}
                     </div>
                 </div>
                 <div className={"w-100 mt3 justify-start items-center " + visibilitaNota}>
                     <textarea ref={register} name={"nota"+id} id={"nota"+id} rows="10" className="w-100 pa2" placeholder="Inserisci qui una tua nota per questo prodotto..."></textarea>
                 </div>
-            </div>
+            </div> */}
             
         </Fragment>
     )

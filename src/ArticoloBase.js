@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Divider } from 'semantic-ui-react'
 
 import  './Articolo.css'
 
@@ -27,15 +28,23 @@ const ArticoloBase = ({id, visibilita, nome, tipologia, id_categoria_articolo, d
 
     return (
         <Fragment>
-            <div className="w-100 pa4 ba b--black-20 br3 mb2">
-                <div className="w-100 flex items-start justify-start">
-                    <p className="w-60 f4 fw7 titolo mb0">{escapeNome}</p>
+            <div className="w-100 pv2 ph3  br3 mb2 shadow-3">
+                {/* <div className="w-100 flex items-start justify-start">
+                    
                     <p className="w-40 f4 titolo flex justify-end">{prezzoUnita()}</p>
-                </div>
-                <div className="w-100 mt3 flex items-start justify-start">
+                </div> */}
+                <div className="w-100 mv2 flex items-start justify-start">
                     {link_img(url_immagine)}
-                    <p className="sottotitolo">{escapeDescrizione}</p>
+                    <div>
+                        <h1 className="f5 fw7 titolo mb0">{escapeNome}</h1>
+                        <p className="sottotitolo f5 mt3-l mt2">{escapeDescrizione}</p>
+                    </div>
                 </div>
+                <Divider className="w-70 w-100-l fr"/>
+                <div className="w-100 mv2 flex items-start justify-end">
+                    <p className="w-40 f5 titolo flex justify-end"><b>{prezzoUnita()}</b></p>
+                </div>
+
             </div>
             
         </Fragment>
