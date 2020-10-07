@@ -40,12 +40,13 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img className="w4 h4 fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
+            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 
     const aggiungi=() => {
         setQuantita((quantita*1)+1);
+
     }
 
     const diminuisci=() => {
@@ -77,8 +78,8 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     return (
         <Fragment>
-            <div className="w-100 pv2 ph3 shadow-3 br3 mb2">
-                <div className="w-100 mv2 flex items-start justify-start">
+            <div id={"cardArticolo"+id} className="w-100 pv2 ph3 shadow-3 br4 mb2">
+                <div className="w-80 mv2 mh0 flex items-start justify-start">
                     {link_img(url_immagine)}
                     <div>
                         <h1 className="f5 fw7 titolo mb0">{escapeNome}</h1>
@@ -89,7 +90,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
                 <div className="w-100 mt4 mb2 flex items-start justify-between">
                     <div className="w-100 flex justify-start items-center">
                         <div className="flex justify-start items-center w-70">
-                        <p className="mh2 mv0">{unita_misura}</p> 
+                            <p className="mh2 mv0">{unita_misura}</p> 
                             <input ref={register} name={"quantita"+id} id={"quantita"+id} className="input-reset ba b--black-20 pa2 mv0 mr2 w-20 w-10-l" value={quantita} type="text" aria-describedby="name-desc"/>
                             <Button type="button" color='red' content='-' onClick={diminuisci} />
                             <Button type="button" color='green' content='+' onClick={aggiungi} />
