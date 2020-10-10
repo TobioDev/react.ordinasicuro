@@ -15,6 +15,7 @@ import OrdineInviato from './OrdineInviato'
 import PrivacyPolicy from './PrivacyPolicy';
 import CookiePolicy from './CookiePolicy';
 import Ricerca from './Ricerca';
+import Login from './Login';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
 				<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
 				<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"></link>
+				<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
             </Helmet>
 			<NavbarOS />
 			<Route
@@ -38,6 +40,11 @@ function App() {
 					<Home />
 				)}
 			/>
+
+			<Route 
+				path='/login'
+				exact
+				component={Login} />
 
 			<Route 
 				path='/ricerca/:termine_ricerca?'
