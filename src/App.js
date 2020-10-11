@@ -16,6 +16,8 @@ import PrivacyPolicy from './PrivacyPolicy';
 import CookiePolicy from './CookiePolicy';
 import Ricerca from './Ricerca';
 import Login from './Login';
+import Logout from './Logout';
+import PannelloControllo from './PannelloControllo';
 
 
 function App() {
@@ -45,6 +47,16 @@ function App() {
 				path='/login'
 				exact
 				component={Login} />
+			
+			<Route 
+				path='/logout'
+				exact
+				component={Logout} />
+
+			<Route 
+				path='/pannello-controllo'
+				exact
+				component={PannelloControllo} />
 
 			<Route 
 				path='/ricerca/:termine_ricerca?'
