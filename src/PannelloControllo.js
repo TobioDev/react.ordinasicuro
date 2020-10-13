@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 import LoaderOS from './LoaderOS';
 
 import { Button, Icon, Menu, Dropdown } from 'semantic-ui-react'
-import ListaArticoli from './ListaArticoli'
 
 import { HashLink as Link } from 'react-router-hash-link';
+import ListaArticoliPannello from './ListaArticoliPannello';
 
 
 
@@ -100,7 +100,7 @@ const PannelloControllo = ({}) => {
                         />    
                     </div>
                     
-                    <ListaArticoli idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+                    <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 </div>
 
             </div>
