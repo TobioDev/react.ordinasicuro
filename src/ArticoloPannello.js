@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Divider, Icon, Header} from 'semantic-ui-react'
 
+import { HashLink as Link } from 'react-router-hash-link';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -63,6 +65,8 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
         }
     }
 
+    let randomNumber = Math.floor(1000 + Math.random() * 9000);
+
     const useStyles = makeStyles((theme) => ({
         root: {
           '& > *': {
@@ -88,9 +92,11 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
                 <div className="w-100 mt4 mb2 flex items-start justify-between">
                     <div className="w-100 dn flex-l justify-start items-center">
                         <div className="flex items-center w-100" style={{justifyContent : 'space-evenly'}}>
-                        <Button variant="contained" startIcon={<CreateIcon />} style={{backgroundColor: '#17a2b8', color: 'white'}}>
-                            Modifica
-                        </Button>
+                        <Link to={'/modifica-articolo/' + randomNumber + id}>
+                            <Button variant="contained" startIcon={<CreateIcon />} style={{backgroundColor: '#17a2b8', color: 'white'}}>
+                                Modifica
+                            </Button>
+                        </Link>
                         <Button variant="contained" startIcon={<FileCopyIcon />} style={{backgroundColor: '#ffc107', color: 'black'}}>
                             Duplica
                         </Button>
