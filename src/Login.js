@@ -116,7 +116,7 @@ const Login = ({}) => {
                         <input ref={register} type="password" name="password" id="password" />
                     </Input>
                     <br />
-                    <Button class="ui button">Login</Button>
+                    <Button className="ui button">Login</Button>
 
                 </div>
             </Form>

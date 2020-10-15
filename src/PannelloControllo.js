@@ -9,7 +9,7 @@ import ListaArticoliPannello from './ListaArticoliPannello';
 
 
 
-const PannelloControllo = ({}) => {
+const PannelloControllo = ({setLoggato}) => {
 
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
 
@@ -32,6 +32,7 @@ const PannelloControllo = ({}) => {
   
         }
         else{
+            setLoggato(true);
             fetch('https://ordinasicuro.it/index.php/api/negozio/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio )
             .then(response => response.json())
             .then(json => {

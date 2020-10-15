@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form"
 import { useHistory } from "react-router-dom";
 import { id } from 'date-fns/esm/locale';
 
+import IconButton from '@material-ui/core/IconButton';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+
 const ModificaArticolo = (props) => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
@@ -28,29 +31,25 @@ const ModificaArticolo = (props) => {
     useEffect(() => {
 
         if(localStorage.getItem('infoUtente') === null){
-          
             localStorage.removeItem('infoUtente');
             history.push("/login/");
-  
         }
         else{
             fetch('https://ordinasicuro.it/index.php/api/modifica_articolo/' + props.match.params.id_articolo )
             .then(response => response.json())
             .then(json => {
-                // setInfoNegozio(json.get_negozio);
-                // setInfoUtenteNegozio(json.get_utente);
-                // setCategorie(json.get_categorie);
-                // setCategorieArticoli(json.get_categorie_articoli);
-                // setArticoli(json.get_articoli);
-                // setComponentiArticolo(json.get_componenti_articolo);
-                // setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
-                // setVisibilitaLoader(false);
+
                 if(json.get_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
                     setNome(json.get_articolo.nome);
+                    setValue("nome_articolo", json.get_articolo.nome);
                     setDescrizione(json.get_articolo.descrizione);
+                    setValue("descrizione_articolo", json.get_articolo.descrizione);
                     setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
+                    setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
                     setUnitaMisura(json.get_articolo.unita_misura);
+                    setValue("unita_misura_articolo", json.get_articolo.unita_misura);
                     setPrezzo(json.get_articolo.prezzo);
+                    setValue("prezzo_articolo", json.get_articolo.prezzo);
                     setUrlImmagine(json.get_articolo.url_immagine);
                     setTipologia(json.get_articolo.tipologia);
 
@@ -67,10 +66,9 @@ const ModificaArticolo = (props) => {
                         arrayTemporaneo = [];
                         json.get_componenti_articolo.map( componente => arrayTemporaneo.push(componente.id));
                         setArrayOpzioniComponentiArticolo(arrayTemporaneo);
+                        setValue("componenti_articolo", JSON.stringify(arrayTemporaneo));
 
                     }
-
-                    
 
                     console.log(json);
                 }
@@ -82,13 +80,22 @@ const ModificaArticolo = (props) => {
             );
         }
   
-      }, [])
+    }, [])
 
+    const handleChangeCategoria = (e, {value} ) => {
+        setIdCategoriaArticolo(value);
+        setValue("id_categoria_articolo", value);
+    }
 
-    console.log('ciao', arrayOpzioniCategorie);
+    const handleChangeComponenti = (e, {value} ) => {
+        //setIdCategoriaArticolo(value);
+        setArrayOpzioniComponentiArticolo(value);
+        setValue("componenti_articolo", JSON.stringify(value));
+
+    }
 
     const stampaImmagine = urlImmagine => {
-        console.log(urlImmagine);
+
         if (urlImmagine !== ''){
 
             return (
@@ -106,8 +113,8 @@ const ModificaArticolo = (props) => {
 
             return (
                 <Form.Field>
-                    <label>Seleziona tutti i componenti che vuoi rendere disponibili per questo prodotto:</label>
-                    <Dropdown fluid multiple selection options={arrayOpzioniComponentiArticoli} value='126' />
+                    <label>Seleziona tutti i componenti che vuoi rendere disponibili per questo prodotto: (clicca sulla freccia a destra per far comparire gli altri componenti da aggiungere) </label>
+                    <Dropdown ref={register} fluid multiple selection options={arrayOpzioniComponentiArticoli} value={arrayOpzioniComponentiArticolo} onChange={handleChangeComponenti} />
                 </Form.Field>
             
             )
@@ -116,33 +123,33 @@ const ModificaArticolo = (props) => {
 
 
     const onSubmit = data => {
-        //console.log(data);
+        console.log(data);
 
-        if(typeof data.orario !== 'undefined'){
+        // if(typeof data.orario !== 'undefined'){
 
-            localStorage.setItem('infoOrdine', JSON.stringify(data));
+        //     localStorage.setItem('infoOrdine', JSON.stringify(data));
 
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: JSON.stringify(data)
-            };
-            fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
-                .then(response => response.json())
-                .then(dati => {
-                    if(dati.presenza_errori===false){
-                        //alert('Successo!');
-                        history.push("/ordine-inviato/");
-                    }
-                    else{
-                        //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                        alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                    }
-                });
+        //     const requestOptions = {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        //         body: JSON.stringify(data)
+        //     };
+        //     fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
+        //         .then(response => response.json())
+        //         .then(dati => {
+        //             if(dati.presenza_errori===false){
+        //                 //alert('Successo!');
+        //                 history.push("/ordine-inviato/");
+        //             }
+        //             else{
+        //                 //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+        //                 alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+        //             }
+        //         });
 
-        }else{
-            alert("Completa tutti i campi richiesti prima di procedere.")
-        }
+        // }else{
+        //     alert("Completa tutti i campi richiesti prima di procedere.")
+        // }
 
         
     }
@@ -173,17 +180,20 @@ const ModificaArticolo = (props) => {
                         {stampaSezioneComposto(tipologia)}
                         <Form.Field>
                             <label>Seleziona la categoria del prodotto:</label>
-                            <Dropdown fluid selection options={arrayOpzioniCategorie} value={idCategoriaArticolo} />
+                            <Dropdown fluid selection name="id_categoria_articolo" id="id_categoria_articolo" options={arrayOpzioniCategorie} value={idCategoriaArticolo} onChange={handleChangeCategoria}/>
                         </Form.Field>
                         <Form.Field>
                             <label>Unità di misura:</label>
-                            <input ref={register} name="unita_misura" id="unita_misura" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
+                            <input ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
                             <Label pointing>Max 9 caratteri</Label>
                         </Form.Field>
                         <Form.Field>
                             <label>Prezzo:</label>
-                            <input ref={register} name="prezzo" id="prezzo" placeholder='Prezzo' defaultValue={prezzo} type="number"/>
+                            <input ref={register} name="prezzo_articolo" id="prezzo_articolo" placeholder='Prezzo' defaultValue={prezzo} type="number"/>
                             <Label pointing>Utilizza il punto per separare i decimali</Label>
+                        </Form.Field>
+                        <Form.Field>
+                            <Button type="submit" color='green'>Salva</Button>
                         </Form.Field>
 
                     </Form>

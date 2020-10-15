@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {Helmet} from "react-helmet";
 
 import Home from './Home'
@@ -24,6 +24,26 @@ import ModificaArticolo from './ModificaArticolo';
 function App() {
 
 
+
+	const [loggato, setLoggato] = useState([false]);
+	
+
+	useEffect(() => {
+
+		console.log('da APPPP');
+
+        if(localStorage.getItem('infoUtente') === null){
+          
+            setLoggato(false);
+  
+        }
+        else{
+            setLoggato(true);
+        }
+  
+      } )
+
+
 	return (
 
 		<Fragment >
@@ -35,7 +55,7 @@ function App() {
 				<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"></link>
 				<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
             </Helmet>
-			<NavbarOS />
+			<NavbarOS loggato={loggato}/>
 			<Route
 				exact
 				path="/"
@@ -52,12 +72,16 @@ function App() {
 			<Route 
 				path='/logout'
 				exact
-				component={Logout} />
+				render={() => (
+					<Logout setLoggato={setLoggato} />
+				)}/>
 
 			<Route 
 				path='/pannello-controllo'
 				exact
-				component={PannelloControllo} />
+				render={() => (
+					<PannelloControllo setLoggato={setLoggato} />
+				)} />
 
 			<Route 
 				path='/modifica-articolo/:id_articolo'

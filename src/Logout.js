@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 
-const Logout = ({}) => {
+const Logout = ({setLoggato}) => {
     
     let history = useHistory();
 
@@ -10,6 +10,7 @@ const Logout = ({}) => {
         if(localStorage.getItem('infoUtente') !== null){
           
             localStorage.removeItem('infoUtente');
+            setLoggato(false);
             history.push("/login/");
   
         }

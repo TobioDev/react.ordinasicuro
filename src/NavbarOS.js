@@ -6,11 +6,46 @@ import { AiOutlineMenu } from 'react-icons/ai';
 
 import { HashLink as Link } from 'react-router-hash-link';
 
-const NavbarOS = () => {
+const NavbarOS = ({loggato}) => {
     const [menuVisibilita, setMenuVisibilita] = useState(false);
 
     const apriChiudiMenu = () => {
         setMenuVisibilita(!menuVisibilita);
+    }
+
+    const stampaLoginLogout = loginLogout => {
+        console.log('mobile');
+        if(loginLogout){
+            return (
+                <Fragment>
+                    <Menu.Item as={Link} to="/pannello-controllo" name='PANNELLO DI CONTROLLO' onClick={apriChiudiMenu} />
+                    <Menu.Item as={Link} to="/logout" name='LOGOUT' onClick={apriChiudiMenu} />
+                </Fragment>
+            )
+        }
+        else{
+            return(
+                <Menu.Item as={Link} to="/login" name='LOGIN' onClick={apriChiudiMenu} />
+            )
+        }
+    }
+
+    const stampaLoginLogoutDesktop = loggato => {
+        console.log('desktop');
+        console.log('stato', loggato);
+        if(loggato){
+            return (
+                <Fragment>
+                    <Menu.Item as={Link} to="/pannello-controllo" name='PANNELLO DI CONTROLLO' />
+                    <Menu.Item as={Link} to="/logout" name='LOGOUT' />
+                </Fragment>
+            )
+        }
+        else{
+            return(
+                <Menu.Item as={Link} to="/login" name='LOGIN' />
+            )
+        }
     }
 
     return (
@@ -30,8 +65,8 @@ const NavbarOS = () => {
                 <Menu.Item as={Link} to="/#home" name='HOME' active={true} onClick={apriChiudiMenu} />
                 <Menu.Item as={Link} to="/#attivita" name='LE NOSTRE ATTIVITÀ' onClick={apriChiudiMenu} />
                 <Menu.Item as={Link} to="/#come-funziona" name='COME FUNZIONA' onClick={apriChiudiMenu} />
-                <Menu.Item as={Link} to="/#fase-3" name='#FASE3INSIEME' onClick={apriChiudiMenu} />
                 <Menu.Item as={Link} to="/#iscrizione" name='UNISCITI' onClick={apriChiudiMenu} />
+                {stampaLoginLogout(loggato)}
                 {/* <Menu.Item as={Link} to="/login" name='LOGIN' onClick={apriChiudiMenu} /> */}
             </Sidebar>
 
@@ -44,8 +79,8 @@ const NavbarOS = () => {
                         <Menu.Item as={Link} to="/" name='HOME' active={true} />
                         <Menu.Item as={Link} to="/#attivita" name='LE NOSTRE ATTIVITÀ'/>
                         <Menu.Item as={Link} to="/#come-funziona" name='COME FUNZIONA' />
-                        <Menu.Item as={Link} to="/#fase-3" name='#FASE3INSIEME' />
                         <Menu.Item as={Link} to="/#iscrizione" name='UNISCITI' />
+                        {stampaLoginLogoutDesktop(loggato)}
                         {/* <Menu.Item as={Link} to="/login" name='LOGIN' /> */}
                     </Menu.Menu>
                 </Menu>

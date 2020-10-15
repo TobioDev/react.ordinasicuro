@@ -113,21 +113,23 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
                     </div>
                     <div className="w-100 flex dn-l justify-start items-center">
                         <div className="flex items-center w-100" style={{justifyContent : 'space-evenly'}}>
-                        <IconButton style={{backgroundColor: '#17a2b8', color: 'white'}}>
-                            <CreateIcon />
-                        </IconButton>
-                        <IconButton style={{backgroundColor: '#ffc107', color: 'black'}}>
-                            <FileCopyIcon />
-                        </IconButton>
-                        <IconButton  style={{backgroundColor: '#dc3545', color: 'white'}}>
-                            <DeleteIcon />
-                        </IconButton>
-                        <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
-                            <LinkIcon />
-                        </IconButton>
-                        <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
-                            <VisibilityIcon />
-                        </IconButton>
+                            <Link to={'/modifica-articolo/' + randomNumber + id}>
+                                <IconButton style={{backgroundColor: '#17a2b8', color: 'white'}}>
+                                    <CreateIcon />
+                                </IconButton>
+                            </Link>
+                            <IconButton style={{backgroundColor: '#ffc107', color: 'black'}}>
+                                <FileCopyIcon />
+                            </IconButton>
+                            <IconButton  style={{backgroundColor: '#dc3545', color: 'white'}}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
+                                <LinkIcon />
+                            </IconButton>
+                            <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
+                                <VisibilityIcon />
+                            </IconButton>
                         </div>
                     </div>
                 </div>
