@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import SezioneBoxed from './SezioneBoxed'
 
 import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select} from 'semantic-ui-react'
@@ -14,12 +14,17 @@ const ModificaArticolo = (props) => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
 
+    setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio);
+    setValue('componenti_aggiunti_articolo', '');
+
     const [nome, setNome] = useState(['']);
+    const [idArticolo, setIdArticolo] = useState(['']);
     const [descrizione, setDescrizione] = useState(['']);
     const [idCategoriaArticolo, setIdCategoriaArticolo] = useState(['']);
     const [arrayOpzioniCategorie, setArrayOpzioniCategorie] = useState([[]]);
     const [arrayOpzioniComponentiArticoli, setArrayOpzioniComponentiArticoli] = useState([[]]);
     const [arrayOpzioniComponentiArticolo, setArrayOpzioniComponentiArticolo] = useState([[]]);
+    const [numeroMaxComponenti, setNumeroMaxComponenti] = useState(['']);
     const [unitaMisura, setUnitaMisura] = useState(['']);
     const [prezzo, setPrezzo] = useState(['']);
     const [urlImmagine, setUrlImmagine] = useState(['']);
@@ -42,16 +47,21 @@ const ModificaArticolo = (props) => {
                 if(json.get_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
                     setNome(json.get_articolo.nome);
                     setValue("nome_articolo", json.get_articolo.nome);
+                    setIdArticolo(json.get_articolo.id);
+                    setValue("id_articolo", json.get_articolo.id);
                     setDescrizione(json.get_articolo.descrizione);
                     setValue("descrizione_articolo", json.get_articolo.descrizione);
                     setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
                     setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
+                    setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
+                    setValue("numero_max_componenti_articolo", json.get_articolo.numero_max_componenti);
                     setUnitaMisura(json.get_articolo.unita_misura);
                     setValue("unita_misura_articolo", json.get_articolo.unita_misura);
                     setPrezzo(json.get_articolo.prezzo);
                     setValue("prezzo_articolo", json.get_articolo.prezzo);
                     setUrlImmagine(json.get_articolo.url_immagine);
                     setTipologia(json.get_articolo.tipologia);
+                    setValue("tipologia_articolo", json.get_articolo.tipologia);
 
                     let arrayTemporaneo = [];
                     json.get_categorie_negozio.map( categoria => arrayTemporaneo.push({key: categoria.id, text: categoria.nome, value: categoria.id}));
@@ -112,10 +122,25 @@ const ModificaArticolo = (props) => {
         if (tipologia === 'composto'){
 
             return (
-                <Form.Field>
-                    <label>Seleziona tutti i componenti che vuoi rendere disponibili per questo prodotto: (clicca sulla freccia a destra per far comparire gli altri componenti da aggiungere) </label>
-                    <Dropdown ref={register} fluid multiple selection options={arrayOpzioniComponentiArticoli} value={arrayOpzioniComponentiArticolo} onChange={handleChangeComponenti} />
-                </Form.Field>
+                <Fragment>
+
+                    <Form.Field>
+                        <label>Seleziona tutti i componenti che vuoi rendere disponibili per questo prodotto: (clicca sulla freccia a destra per far comparire gli altri componenti da aggiungere) </label>
+                        <Dropdown ref={register} fluid multiple selection options={arrayOpzioniComponentiArticoli} value={arrayOpzioniComponentiArticolo} onChange={handleChangeComponenti} />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Per inserire dei nuovi componenti non presenti nel precedente campo, inserisci il nome di tutti i nuovi componenti separati da virgola:</label>
+                        <input ref={register} name="componenti_aggiunti_articolo" id="componenti_aggiunti_articolo" placeholder='' type="text"/>
+                        <Label pointing>Ad esempio: fiordilatte, cioccolato, vaniglia, stracciatella</Label>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>N° massimo di componenti che l'utente potrà scegliere al momento dell'ordine::</label>
+                        <input ref={register} name="numero_max_componenti_articolo" id="numero_max_componenti_articolo" placeholder='Numero massimo componenti' defaultValue={numeroMaxComponenti} type="number"/>
+                        <Label pointing>Rappresenta il numero massimo di componenti che l'utente può scegliere per comporre questo prodotto. Minimo 1, massimo 10.</Label>
+                    </Form.Field>
+
+                </Fragment>
+                
             
             )
         }
@@ -124,6 +149,28 @@ const ModificaArticolo = (props) => {
 
     const onSubmit = data => {
         console.log(data);
+
+        localStorage.setItem('infoOrdine', JSON.stringify(data));
+
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(data)
+            };
+            fetch('https://ordinasicuro.it/api/aggiorna_articolo', requestOptions)
+                .then(response => response.text())
+                .then(dati => {
+                    console.log(dati);
+                    history.goBack()
+                    // if(dati.presenza_errori===false){
+                    //     //alert('Successo!');
+                    //     history.push("/ordine-inviato/");
+                    // }
+                    // else{
+                    //     //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                    //     alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                    // }
+                });
 
         // if(typeof data.orario !== 'undefined'){
 
@@ -174,7 +221,7 @@ const ModificaArticolo = (props) => {
                         </Form.Field>
                         <Form.Field>
                             <label>Descrizione:</label>
-                            <TextArea ref={register} name="descrizione_articolo" id="descrizione_articolo" placeholder='Descrizione del prodotto' defaultValue={descrizione} maxLength="900"/>
+                            <textarea ref={register} name="descrizione_articolo" id="descrizione_articolo" placeholder='Descrizione del prodotto' defaultValue={descrizione} maxLength="900"/>
                             <Label pointing>Max 900 caratteri</Label>
                         </Form.Field>
                         {stampaSezioneComposto(tipologia)}
