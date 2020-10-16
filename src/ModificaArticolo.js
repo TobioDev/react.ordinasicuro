@@ -1,8 +1,12 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import SezioneBoxed from './SezioneBoxed'
 
-import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select} from 'semantic-ui-react'
+import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon} from 'semantic-ui-react'
 import { useForm } from "react-hook-form"
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { useHistory } from "react-router-dom";
 import { id } from 'date-fns/esm/locale';
@@ -17,6 +21,9 @@ const ModificaArticolo = (props) => {
     setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio);
     setValue('componenti_aggiunti_articolo', '');
 
+    const [open, setOpen] = React.useState(false);
+    const [openModaleImmagine, setOpenModaleImmagine] = React.useState(false);
+
     const [nome, setNome] = useState(['']);
     const [idArticolo, setIdArticolo] = useState(['']);
     const [descrizione, setDescrizione] = useState(['']);
@@ -29,6 +36,30 @@ const ModificaArticolo = (props) => {
     const [prezzo, setPrezzo] = useState(['']);
     const [urlImmagine, setUrlImmagine] = useState(['']);
     const [tipologia, setTipologia] = useState(['']);
+
+    //Codice per snackbar ui-material ----------
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            width: '100%',
+            '& > * + *': {
+                marginTop: theme.spacing(2),
+            },
+        },
+    }));
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+    
+        setOpen(false);
+    };
+
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+    //Fine codice per snackbar ui-material ---------------
+
 
 
     let history = useHistory();
@@ -74,7 +105,8 @@ const ModificaArticolo = (props) => {
                         setArrayOpzioniComponentiArticoli(arrayTemporaneo);
 
                         arrayTemporaneo = [];
-                        json.get_componenti_articolo.map( componente => arrayTemporaneo.push(componente.id));
+                        //console.log('oo',json.get_componenti_articolo)
+                        json.get_componenti_articolo.map( componente => { if(componente !== null) {arrayTemporaneo.push(componente.id)} });
                         setArrayOpzioniComponentiArticolo(arrayTemporaneo);
                         setValue("componenti_articolo", JSON.stringify(arrayTemporaneo));
 
@@ -104,6 +136,33 @@ const ModificaArticolo = (props) => {
 
     }
 
+    const formDataImmagine = new FormData();
+    let flagImmagineModificata = false;
+    
+    const handleChangeImmagine = (e) => {
+        formDataImmagine.append('nuova_immagine_articolo', e.target.files[0]); 
+        console.log('dentro', e.target.files[0])
+        flagImmagineModificata = true;
+    }
+
+    const eliminaImmagine = () => {
+
+        fetch('https://ordinasicuro.it/index.php/api/elimina_immagine_articolo/' + idArticolo )
+        .then(response => response.text())
+        .then(risp => {
+
+            console.log(risp);
+
+            if(risp === 'ok'){
+                setUrlImmagine('');
+
+            }
+
+                }
+        );
+
+    }
+
     const stampaImmagine = urlImmagine => {
 
         if (urlImmagine !== ''){
@@ -112,6 +171,7 @@ const ModificaArticolo = (props) => {
                 <Form.Field>
                     <label>Immagine articolo:</label>
                     <Image src={'https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/' + urlImmagine} size='small' />
+                    <Button type="button" color='red' onClick={() => setOpenModaleImmagine(true)}>Elimina Immagine</Button>
                 </Form.Field>
             
             )
@@ -149,6 +209,7 @@ const ModificaArticolo = (props) => {
 
     const onSubmit = data => {
         console.log(data);
+        console.log(data.nuova_immagine_articolo);
 
         localStorage.setItem('infoOrdine', JSON.stringify(data));
 
@@ -157,46 +218,38 @@ const ModificaArticolo = (props) => {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(data)
             };
-            fetch('https://ordinasicuro.it/api/aggiorna_articolo', requestOptions)
+            fetch('https://ordinasicuro.it/api/aggiorna_articolo/', requestOptions)
                 .then(response => response.text())
                 .then(dati => {
                     console.log(dati);
-                    history.goBack()
-                    // if(dati.presenza_errori===false){
-                    //     //alert('Successo!');
-                    //     history.push("/ordine-inviato/");
-                    // }
-                    // else{
-                    //     //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                    //     alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                    // }
+                    if(dati==="ok" && flagImmagineModificata){
+
+                        const requestOptionsImmagine = {
+                            method: 'POST',
+                            body: formDataImmagine
+                        };
+                        fetch('https://ordinasicuro.it/api/aggiorna_immagine_articolo/' + idArticolo + '/', requestOptionsImmagine)
+                                .then(response => response.text())
+                                .then(dati => {
+                                    console.log('aggiornamento immagine', dati);
+                                    if(dati==="ok"){
+                                        history.goBack()
+                                    }
+                                    else{
+                                        setOpen(true);
+                                    }
+                                });
+                    }
+                    else{
+                        if( dati === 'ok'){
+                            history.goBack();
+                        }else{
+                            setOpen(true);
+                        }
+                        
+                    }
+                    
                 });
-
-        // if(typeof data.orario !== 'undefined'){
-
-        //     localStorage.setItem('infoOrdine', JSON.stringify(data));
-
-        //     const requestOptions = {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        //         body: JSON.stringify(data)
-        //     };
-        //     fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
-        //         .then(response => response.json())
-        //         .then(dati => {
-        //             if(dati.presenza_errori===false){
-        //                 //alert('Successo!');
-        //                 history.push("/ordine-inviato/");
-        //             }
-        //             else{
-        //                 //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-        //                 alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-        //             }
-        //         });
-
-        // }else{
-        //     alert("Completa tutti i campi richiesti prima di procedere.")
-        // }
 
         
     }
@@ -204,14 +257,43 @@ const ModificaArticolo = (props) => {
 
     return (
         <div className="mt6">
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                    Si è verificato un errore nel salvataggio del tuo prodotto.
+                </Alert>
+            </Snackbar>
+
+            <Modal
+                closeIcon
+                open={openModaleImmagine}
+                onClose={() => setOpenModaleImmagine(false)}
+                onOpen={() => setOpenModaleImmagine(true)}
+            >
+                <Header icon='trash' content='Elimina immagine' />
+                <Modal.Content>
+                    <p>
+                        Vuoi davvero eliminare questa immagine?
+                    </p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button color='red' onClick={() => setOpenModaleImmagine(false)}>
+                        <Icon name='remove' /> No
+                    </Button>
+                    <Button color='green' onClick={() => {setOpenModaleImmagine(false); eliminaImmagine();} } >
+                        <Icon name='checkmark' /> Yes
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+
+
             <SezioneBoxed>
                 <div className="w-100">
                     <h2>Modifica il prodotto che hai selezionato</h2>
-                    <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaArticolo" id="formModificaArticolo">
+                    <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaArticolo" id="formModificaArticolo" enctype='multipart/form-data'>
                         {stampaImmagine(urlImmagine)}
                         <Form.Field>
                             <label>Modifica l'immagine per il tuo prodotto:</label>
-                            <input ref={register} type='file' name='immagine_articolo' id="immagine_articolo"></input>
+                            <input ref={register} type='file' name='immagine_articolo' id="immagine_articolo" onChange={handleChangeImmagine}></input>
                             <Label pointing>Max 2MB</Label>
                         </Form.Field>
                         <Form.Field>
@@ -236,7 +318,7 @@ const ModificaArticolo = (props) => {
                         </Form.Field>
                         <Form.Field>
                             <label>Prezzo:</label>
-                            <input ref={register} name="prezzo_articolo" id="prezzo_articolo" placeholder='Prezzo' defaultValue={prezzo} type="number"/>
+                            <input ref={register} step="any" name="prezzo_articolo" id="prezzo_articolo" placeholder='Prezzo' defaultValue={prezzo} type="number"/>
                             <Label pointing>Utilizza il punto per separare i decimali</Label>
                         </Form.Field>
                         <Form.Field>
