@@ -76,18 +76,18 @@ const ModificaArticolo = (props) => {
             .then(json => {
 
                 if(json.get_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
-                    setNome(json.get_articolo.nome);
-                    setValue("nome_articolo", json.get_articolo.nome);
+                    setNome(json.get_articolo.nome.replace("\\\'", "\'"));
+                    setValue("nome_articolo", json.get_articolo.nome.replace("\\\'", "\'"));
                     setIdArticolo(json.get_articolo.id);
                     setValue("id_articolo", json.get_articolo.id);
-                    setDescrizione(json.get_articolo.descrizione);
-                    setValue("descrizione_articolo", json.get_articolo.descrizione);
+                    setDescrizione(json.get_articolo.descrizione.replace("\\\'", "\'"));
+                    setValue("descrizione_articolo", json.get_articolo.descrizione.replace("\\\'", "\'"));
                     setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
                     setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
                     setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
                     setValue("numero_max_componenti_articolo", json.get_articolo.numero_max_componenti);
-                    setUnitaMisura(json.get_articolo.unita_misura);
-                    setValue("unita_misura_articolo", json.get_articolo.unita_misura);
+                    setUnitaMisura(json.get_articolo.unita_misura.replace("\\\'", "\'"));
+                    setValue("unita_misura_articolo", json.get_articolo.unita_misura.replace("\\\'", "\'"));
                     setPrezzo(json.get_articolo.prezzo);
                     setValue("prezzo_articolo", json.get_articolo.prezzo);
                     setUrlImmagine(json.get_articolo.url_immagine);

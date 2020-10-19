@@ -53,8 +53,8 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
 
 
 
-    let escapeNome = nome.replace("\\", "")
-    let escapeDescrizione = descrizione.replace("\\", "")
+    let escapeNome = nome.replace("\\\'", "\'")
+    let escapeDescrizione = descrizione.replace("\\\'", "\'")
 
     let prezzoUnita = () => {
         if(unita_misura.toLowerCase() !== 'pz' ){
