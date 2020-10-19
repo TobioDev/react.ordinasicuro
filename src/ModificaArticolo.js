@@ -293,12 +293,12 @@ const ModificaArticolo = (props) => {
                         {stampaImmagine(urlImmagine)}
                         <Form.Field>
                             <label>Modifica l'immagine per il tuo prodotto:</label>
-                            <input ref={register} type='file' name='immagine_articolo' id="immagine_articolo" onChange={handleChangeImmagine}></input>
+                            <input require ref={register} type='file' name='immagine_articolo' id="immagine_articolo" onChange={handleChangeImmagine}></input>
                             <Label pointing>Max 2MB</Label>
                         </Form.Field>
                         <Form.Field>
                             <label>Nome:</label>
-                            <input ref={register} name="nome_articolo" id="nome_articolo" placeholder='Nome del prodotto' defaultValue={nome} maxLength="60"/>
+                            <input require ref={register} name="nome_articolo" id="nome_articolo" placeholder='Nome del prodotto' defaultValue={nome} maxLength="60"/>
                             <Label pointing>Max 60 caratteri</Label>
                         </Form.Field>
                         <Form.Field>
@@ -313,12 +313,12 @@ const ModificaArticolo = (props) => {
                         </Form.Field>
                         <Form.Field>
                             <label>Unità di misura:</label>
-                            <input ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
+                            <input require ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
                             <Label pointing>Max 9 caratteri</Label>
                         </Form.Field>
                         <Form.Field>
                             <label>Prezzo:</label>
-                            <input ref={register} step="any" name="prezzo_articolo" id="prezzo_articolo" placeholder='Prezzo' defaultValue={prezzo} type="number"/>
+                            <input require ref={register} step="any" name="prezzo_articolo" id="prezzo_articolo" placeholder='Prezzo' defaultValue={prezzo} type="number"/>
                             <Label pointing>Utilizza il punto per separare i decimali</Label>
                         </Form.Field>
                         <Form.Field>
