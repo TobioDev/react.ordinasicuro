@@ -13,7 +13,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 import { id } from 'date-fns/esm/locale';
 
-const ModificaArticolo = (props) => {
+const AggiungiArticolo = (props) => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
 
@@ -71,28 +71,28 @@ const ModificaArticolo = (props) => {
             history.push("/login/");
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/modifica_articolo/' + props.match.params.id_articolo )
+            fetch('https://ordinasicuro.it/index.php/api/aggiungi_articolo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio + '/' )
             .then(response => response.json())
             .then(json => {
 
                 if(json.get_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
-                    setNome(json.get_articolo.nome.replace("\\\'", "\'"));
-                    setValue("nome_articolo", json.get_articolo.nome.replace("\\\'", "\'"));
-                    setIdArticolo(json.get_articolo.id);
-                    setValue("id_articolo", json.get_articolo.id);
-                    setDescrizione(json.get_articolo.descrizione.replace("\\\'", "\'"));
-                    setValue("descrizione_articolo", json.get_articolo.descrizione.replace("\\\'", "\'"));
-                    setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
-                    setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
-                    setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
-                    setValue("numero_max_componenti_articolo", json.get_articolo.numero_max_componenti);
-                    setUnitaMisura(json.get_articolo.unita_misura.replace("\\\'", "\'"));
-                    setValue("unita_misura_articolo", json.get_articolo.unita_misura.replace("\\\'", "\'"));
-                    setPrezzo(json.get_articolo.prezzo);
-                    setValue("prezzo_articolo", json.get_articolo.prezzo);
-                    setUrlImmagine(json.get_articolo.url_immagine);
-                    setTipologia(json.get_articolo.tipologia);
-                    setValue("tipologia_articolo", json.get_articolo.tipologia);
+                    //setNome(json.get_articolo.nome.replace("\\\'", "\'"));
+                    setValue("nome_articolo", '');
+                    //setIdArticolo(json.get_articolo.id);
+                    //setValue("id_articolo", json.get_articolo.id);
+                    //setDescrizione(json.get_articolo.descrizione.replace("\\\'", "\'"));
+                    setValue("descrizione_articolo", '');
+                    // setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
+                    // setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
+                    //setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
+                    setValue("numero_max_componenti_articolo", '');
+                    //setUnitaMisura(json.get_articolo.unita_misura.replace("\\\'", "\'"));
+                    setValue("unita_misura_articolo", '');
+                    //setPrezzo(json.get_articolo.prezzo);
+                    setValue("prezzo_articolo", '');
+                    //setUrlImmagine(json.get_articolo.url_immagine);
+                    //setTipologia(json.get_articolo.tipologia);
+                    //setValue("tipologia_articolo", );
 
                     let arrayTemporaneo = [];
                     json.get_categorie_negozio.map( categoria => arrayTemporaneo.push({key: categoria.id, text: categoria.nome, value: categoria.id}));
@@ -362,4 +362,4 @@ const ModificaArticolo = (props) => {
     )
 }
 
-export default ModificaArticolo
+export default AggiungiArticolo
