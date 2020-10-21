@@ -110,7 +110,7 @@ const PannelloControllo = ({setLoggato}) => {
                             <Button>Gestisci Categorie</Button>
                             <Button>Gestisci Componenti</Button>
                             <Button>Gestisci il tuo Profilo</Button>
-                      </Button.Group>
+                        </Button.Group>
                     </div>
                     <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 </div>
