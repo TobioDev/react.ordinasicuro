@@ -36,6 +36,7 @@ const AggiungiArticolo = (props) => {
     const [prezzo, setPrezzo] = useState(['']);
     const [urlImmagine, setUrlImmagine] = useState(['']);
     const [tipologia, setTipologia] = useState(['']);
+    const [unitaMisuraDisabilitato, setUnitaMisuraDisabilitato] = useState(false);
 
     //Codice per snackbar ui-material ----------
     const useStyles = makeStyles((theme) => ({
@@ -123,10 +124,18 @@ const AggiungiArticolo = (props) => {
     const handleChangeTipologia = (e, {value} ) => {
         setTipologia(value);
         setValue("tipologia_articolo", value);
+        if(value === 'composto'){
+            setUnitaMisuraDisabilitato(true);
+            setValue('unita_misura_articolo', 'pz');
+        }
+        else if (value === 'semplice'){
+            setUnitaMisuraDisabilitato(false);
+            setValue('unita_misura_articolo', '');
+        }
     }
 
     const handleChangeComponenti = (e, {value} ) => {
-        //setIdCategoriaArticolo(value);
+        
         setArrayOpzioniComponentiArticolo(value);
         setValue("componenti_articolo", JSON.stringify(value));
 
@@ -198,50 +207,50 @@ const AggiungiArticolo = (props) => {
 
     const onSubmit = data => {
         console.log(data);
-        console.log(data.nuova_immagine_articolo);
-        setSaving(true);
+        // console.log(data.nuova_immagine_articolo);
+        // setSaving(true);
 
         if(data.nome_articolo !== '' &&  data.descrizione_articolo !== '' && data.unita_misura_articolo !== '' && data.prezzo_articolo !== '' ){
 
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: JSON.stringify(data)
-            };
-            fetch('https://ordinasicuro.it/api/aggiorna_articolo/', requestOptions)
-                .then(response => response.text())
-                .then(dati => {
-                    console.log(dati);
-                    if(dati==="ok" && flagImmagineModificata){
+        //     const requestOptions = {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        //         body: JSON.stringify(data)
+        //     };
+        //     fetch('https://ordinasicuro.it/api/aggiorna_articolo/', requestOptions)
+        //         .then(response => response.text())
+        //         .then(dati => {
+        //             console.log(dati);
+        //             if(dati==="ok" && flagImmagineModificata){
 
-                        const requestOptionsImmagine = {
-                            method: 'POST',
-                            body: formDataImmagine
-                        };
-                        fetch('https://ordinasicuro.it/api/aggiorna_immagine_articolo/' + idArticolo + '/', requestOptionsImmagine)
-                                .then(response => response.text())
-                                .then(dati => {
-                                    console.log('aggiornamento immagine', dati);
-                                    if(dati==="ok"){
-                                        history.goBack()
-                                    }
-                                    else{
-                                        setSaving(false);
-                                        setOpen(true);
-                                    }
-                                });
-                    }
-                    else{
-                        if( dati === 'ok'){
-                            history.goBack();
-                        }else{
-                            setSaving(false);
-                            setOpen(true);
-                        }
+        //                 const requestOptionsImmagine = {
+        //                     method: 'POST',
+        //                     body: formDataImmagine
+        //                 };
+        //                 fetch('https://ordinasicuro.it/api/aggiorna_immagine_articolo/' + idArticolo + '/', requestOptionsImmagine)
+        //                         .then(response => response.text())
+        //                         .then(dati => {
+        //                             console.log('aggiornamento immagine', dati);
+        //                             if(dati==="ok"){
+        //                                 history.goBack()
+        //                             }
+        //                             else{
+        //                                 setSaving(false);
+        //                                 setOpen(true);
+        //                             }
+        //                         });
+        //             }
+        //             else{
+        //                 if( dati === 'ok'){
+        //                     history.goBack();
+        //                 }else{
+        //                     setSaving(false);
+        //                     setOpen(true);
+        //                 }
                         
-                    }
+        //             }
                     
-                });
+        //         });
 
         }
         else{
@@ -321,7 +330,7 @@ const AggiungiArticolo = (props) => {
                             {stampaSezioneComposto(tipologia)}
                             <Form.Field>
                                 <label>Unità di misura:</label>
-                                <input require ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
+                                <input disabled={unitaMisuraDisabilitato} require ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9" />
                                 <Label pointing>Max 9 caratteri</Label>
                             </Form.Field>
                             <Form.Field>
