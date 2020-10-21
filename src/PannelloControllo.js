@@ -51,6 +51,8 @@ const PannelloControllo = ({setLoggato}) => {
   
       }, [])
 
+      const historyPush = (indirizzo) => history.push(indirizzo);
+
       const stampaSubmenuCategorieDesktop = categorieArticoli => (
         categorieArticoli.map( categoria => 
                                 <Menu.Item as={Link}
@@ -101,6 +103,15 @@ const PannelloControllo = ({setLoggato}) => {
                         />    
                     </div>
                     
+                    <div className='dn db-l'>
+                        <Button.Group widths='5'>
+                            <Button positive onClick={() => historyPush('/aggiungi-articolo/')}>Aggiungi Prodotto</Button>
+                            <Button>Gestisci Ordini</Button>
+                            <Button>Gestisci Categorie</Button>
+                            <Button>Gestisci Componenti</Button>
+                            <Button>Gestisci il tuo Profilo</Button>
+                      </Button.Group>
+                    </div>
                     <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 </div>
 
