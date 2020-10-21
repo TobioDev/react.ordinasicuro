@@ -19,6 +19,7 @@ import Login from './Login';
 import Logout from './Logout';
 import PannelloControllo from './PannelloControllo';
 import ModificaArticolo from './ModificaArticolo';
+import AggiungiArticolo from './AggiungiArticolo';
 
 
 function App() {
@@ -87,6 +88,11 @@ function App() {
 				path='/modifica-articolo/:id_articolo'
 				exact
 				component={ModificaArticolo} />
+
+			<Route 
+				path='/aggiungi-articolo/'
+				exact
+				component={AggiungiArticolo} />
 
 			<Route 
 				path='/ricerca/:termine_ricerca?'

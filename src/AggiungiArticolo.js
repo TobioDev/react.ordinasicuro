@@ -75,7 +75,7 @@ const AggiungiArticolo = (props) => {
             .then(response => response.json())
             .then(json => {
 
-                if(json.get_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
+                console.log(json);
                     //setNome(json.get_articolo.nome.replace("\\\'", "\'"));
                     setValue("nome_articolo", '');
                     //setIdArticolo(json.get_articolo.id);
@@ -91,32 +91,18 @@ const AggiungiArticolo = (props) => {
                     //setPrezzo(json.get_articolo.prezzo);
                     setValue("prezzo_articolo", '');
                     //setUrlImmagine(json.get_articolo.url_immagine);
-                    //setTipologia(json.get_articolo.tipologia);
+                    setTipologia('semplice');
                     //setValue("tipologia_articolo", );
 
                     let arrayTemporaneo = [];
                     json.get_categorie_negozio.map( categoria => arrayTemporaneo.push({key: categoria.id, text: categoria.nome, value: categoria.id}));
                     setArrayOpzioniCategorie(arrayTemporaneo);
 
-                    if (json.get_articolo.tipologia === 'composto'){
-
-                        arrayTemporaneo = [];
+                    arrayTemporaneo = [];
                         json.get_componenti_articoli.map( componente => arrayTemporaneo.push({key: componente.id, text: componente.nome, value: componente.id}));
                         setArrayOpzioniComponentiArticoli(arrayTemporaneo);
 
-                        arrayTemporaneo = [];
-                        //console.log('oo',json.get_componenti_articolo)
-                        json.get_componenti_articolo.map( componente => { if(componente !== null) {arrayTemporaneo.push(componente.id)} });
-                        setArrayOpzioniComponentiArticolo(arrayTemporaneo);
-                        setValue("componenti_articolo", JSON.stringify(arrayTemporaneo));
-
-                    }
-
                     console.log(json);
-                }
-                else{
-                    history.push("/login/");
-                }
                 
                     }
             );
@@ -127,6 +113,16 @@ const AggiungiArticolo = (props) => {
     const handleChangeCategoria = (e, {value} ) => {
         setIdCategoriaArticolo(value);
         setValue("id_categoria_articolo", value);
+    }
+
+    const opzioniTipologia = [
+        { key: 'semplice', text: 'Semplice', value: 'semplice' },
+        { key: 'composto', text: 'Composto', value: 'composto' }
+    ];
+
+    const handleChangeTipologia = (e, {value} ) => {
+        setTipologia(value);
+        setValue("tipologia_articolo", value);
     }
 
     const handleChangeComponenti = (e, {value} ) => {
@@ -169,21 +165,6 @@ const AggiungiArticolo = (props) => {
                 }
         );
 
-    }
-
-    const stampaImmagine = urlImmagine => {
-
-        if (urlImmagine !== ''){
-
-            return (
-                <Form.Field>
-                    <label>Immagine articolo:</label>
-                    <Image src={'https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/' + urlImmagine} size='small' />
-                    <Button type="button" color='red' onClick={() => setOpenModaleImmagine(true)}>Elimina Immagine</Button>
-                </Form.Field>
-            
-            )
-        }
     }
 
     const stampaSezioneComposto = tipologia => {
@@ -312,11 +293,10 @@ const AggiungiArticolo = (props) => {
                             </Button>
                         </Link>
                         
-                        <h2>Modifica il prodotto che hai selezionato</h2>
+                        <h2>Aggiungi un nuovo prodotto</h2>
                         <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaArticolo" id="formModificaArticolo" enctype='multipart/form-data'>
-                            {stampaImmagine(urlImmagine)}
                             <Form.Field>
-                                <label>Modifica l'immagine per il tuo prodotto:</label>
+                                <label>Scegli un immagine per il tuo prodotto:</label>
                                 <input require ref={register} type='file' accept="image/*" name='immagine_articolo' id="immagine_articolo" onChange={handleChangeImmagine}></input>
                                 <Label pointing>Max 2MB</Label>
                             </Form.Field>
@@ -330,11 +310,15 @@ const AggiungiArticolo = (props) => {
                                 <textarea ref={register} name="descrizione_articolo" id="descrizione_articolo" placeholder='Descrizione del prodotto' defaultValue={descrizione} maxLength="900"/>
                                 <Label pointing>Max 900 caratteri</Label>
                             </Form.Field>
-                            {stampaSezioneComposto(tipologia)}
                             <Form.Field>
                                 <label>Seleziona la categoria del prodotto:</label>
                                 <Dropdown fluid selection name="id_categoria_articolo" id="id_categoria_articolo" options={arrayOpzioniCategorie} value={idCategoriaArticolo} onChange={handleChangeCategoria}/>
                             </Form.Field>
+                            <Form.Field>
+                                <label>Seleziona la tipologia del prodotto:</label>
+                                <Dropdown fluid selection name="tipologia_articolo" id="tipologia_articolo" options={opzioniTipologia} value={tipologia} onChange={handleChangeTipologia}/>
+                            </Form.Field>
+                            {stampaSezioneComposto(tipologia)}
                             <Form.Field>
                                 <label>Unità di misura:</label>
                                 <input require ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
