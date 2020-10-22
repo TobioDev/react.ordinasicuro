@@ -20,6 +20,8 @@ import Logout from './Logout';
 import PannelloControllo from './PannelloControllo';
 import ModificaArticolo from './ModificaArticolo';
 import AggiungiArticolo from './AggiungiArticolo';
+import DuplicaArticolo from './DuplicaArticolo';
+import EliminaArticolo from './EliminaArticolo';
 
 
 function App() {
@@ -88,6 +90,16 @@ function App() {
 				path='/modifica-articolo/:id_articolo'
 				exact
 				component={ModificaArticolo} />
+
+			<Route 
+				path='/duplica-articolo/:id_articolo'
+				exact
+				component={DuplicaArticolo} />
+
+			<Route 
+				path='/elimina-articolo/:id_articolo'
+				exact
+				component={EliminaArticolo} />
 
 			<Route 
 				path='/aggiungi-articolo/'

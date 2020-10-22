@@ -15,7 +15,7 @@ import { id } from 'date-fns/esm/locale';
 
 const formDataImmagine = new FormData();
 
-const AggiungiArticolo = (props) => {
+const DuplicaArticolo = (props) => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
 
@@ -25,20 +25,19 @@ const AggiungiArticolo = (props) => {
     const [open, setOpen] = React.useState(false);
     const [openModaleImmagine, setOpenModaleImmagine] = React.useState(false);
     const [saving, setSaving] = React.useState(false);
-    const [flagImmagineModificata, setFlagImmagineModificata] = useState(false);
 
-    const [nome, setNome] = useState(['']);
-    const [idArticolo, setIdArticolo] = useState(['']);
-    const [descrizione, setDescrizione] = useState(['']);
-    const [idCategoriaArticolo, setIdCategoriaArticolo] = useState(['']);
+    const [nome, setNome] = useState('');
+    const [idArticolo, setIdArticolo] = useState('');
+    const [descrizione, setDescrizione] = useState('');
+    const [idCategoriaArticolo, setIdCategoriaArticolo] = useState('');
     const [arrayOpzioniCategorie, setArrayOpzioniCategorie] = useState([[]]);
     const [arrayOpzioniComponentiArticoli, setArrayOpzioniComponentiArticoli] = useState([[]]);
     const [arrayOpzioniComponentiArticolo, setArrayOpzioniComponentiArticolo] = useState([[]]);
-    const [numeroMaxComponenti, setNumeroMaxComponenti] = useState(['']);
-    const [unitaMisura, setUnitaMisura] = useState(['']);
-    const [prezzo, setPrezzo] = useState(['']);
-    const [urlImmagine, setUrlImmagine] = useState(['']);
-    const [tipologia, setTipologia] = useState(['']);
+    const [numeroMaxComponenti, setNumeroMaxComponenti] = useState('');
+    const [unitaMisura, setUnitaMisura] = useState('');
+    const [prezzo, setPrezzo] = useState('');
+    const [urlImmagine, setUrlImmagine] = useState('');
+    const [tipologia, setTipologia] = useState('');
     const [unitaMisuraDisabilitato, setUnitaMisuraDisabilitato] = useState(false);
 
     //Codice per snackbar ui-material ----------
@@ -75,38 +74,55 @@ const AggiungiArticolo = (props) => {
             history.push("/login/");
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/aggiungi_articolo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio + '/' )
+            fetch('https://ordinasicuro.it/index.php/api/modifica_articolo/' + props.match.params.id_articolo )
             .then(response => response.json())
             .then(json => {
 
-                console.log(json);
-                    //setNome(json.get_articolo.nome.replace("\\\'", "\'"));
-                    setValue("nome_articolo", '');
-                    //setIdArticolo(json.get_articolo.id);
-                    //setValue("id_articolo", json.get_articolo.id);
-                    //setDescrizione(json.get_articolo.descrizione.replace("\\\'", "\'"));
-                    setValue("descrizione_articolo", '');
-                    // setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
-                    // setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
-                    //setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
-                    setValue("numero_max_componenti_articolo", '');
-                    //setUnitaMisura(json.get_articolo.unita_misura.replace("\\\'", "\'"));
-                    setValue("unita_misura_articolo", '');
-                    //setPrezzo(json.get_articolo.prezzo);
-                    setValue("prezzo_articolo", '');
+                if(json.get_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
+                    setNome(json.get_articolo.nome.replace("\\\'", "\'"));
+                    setValue("nome_articolo", json.get_articolo.nome.replace("\\\'", "\'"));
+                    setIdArticolo(json.get_articolo.id);
+                    setValue("id_articolo", json.get_articolo.id);
+                    setDescrizione(json.get_articolo.descrizione.replace("\\\'", "\'"));
+                    setValue("descrizione_articolo", json.get_articolo.descrizione.replace("\\\'", "\'"));
+                    setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
+                    setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
+                    setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
+                    setValue("numero_max_componenti_articolo", json.get_articolo.numero_max_componenti);
+                    setUnitaMisura(json.get_articolo.unita_misura.replace("\\\'", "\'"));
+                    setValue("unita_misura_articolo", json.get_articolo.unita_misura.replace("\\\'", "\'"));
+                    setPrezzo(json.get_articolo.prezzo);
+                    setValue("prezzo_articolo", json.get_articolo.prezzo);
                     //setUrlImmagine(json.get_articolo.url_immagine);
-                    setTipologia('semplice');
-                    setValue("tipologia_articolo", 'semplice');
+                    setTipologia(json.get_articolo.tipologia);
+                    setValue("tipologia_articolo", json.get_articolo.tipologia);
+                    if(json.get_articolo.tipologia === 'composto'){
+                        setUnitaMisuraDisabilitato(true);
+                    }
 
                     let arrayTemporaneo = [];
                     json.get_categorie_negozio.map( categoria => arrayTemporaneo.push({key: categoria.id, text: categoria.nome, value: categoria.id}));
                     setArrayOpzioniCategorie(arrayTemporaneo);
 
-                    arrayTemporaneo = [];
+                    if (json.get_articolo.tipologia === 'composto'){
+
+                        arrayTemporaneo = [];
                         json.get_componenti_articoli.map( componente => arrayTemporaneo.push({key: componente.id, text: componente.nome, value: componente.id}));
                         setArrayOpzioniComponentiArticoli(arrayTemporaneo);
 
+                        arrayTemporaneo = [];
+                        //console.log('oo',json.get_componenti_articolo)
+                        json.get_componenti_articolo.map( componente => { if(componente !== null) {arrayTemporaneo.push(componente.id)} });
+                        setArrayOpzioniComponentiArticolo(arrayTemporaneo);
+                        setValue("componenti_articolo", JSON.stringify(arrayTemporaneo));
+
+                    }
+
                     console.log(json);
+                }
+                else{
+                    history.push("/login/");
+                }
                 
                     }
             );
@@ -119,39 +135,21 @@ const AggiungiArticolo = (props) => {
         setValue("id_categoria_articolo", value);
     }
 
-    const opzioniTipologia = [
-        { key: 'semplice', text: 'Semplice', value: 'semplice' },
-        { key: 'composto', text: 'Composto', value: 'composto' }
-    ];
-
-    const handleChangeTipologia = (e, {value} ) => {
-        setTipologia(value);
-        setValue("tipologia_articolo", value);
-        if(value === 'composto'){
-            setUnitaMisuraDisabilitato(true);
-            setValue('unita_misura_articolo', 'pz');
-        }
-        else if (value === 'semplice'){
-            setUnitaMisuraDisabilitato(false);
-            setValue('unita_misura_articolo', '');
-        }
-    }
-
     const handleChangeComponenti = (e, {value} ) => {
-        
+        //setIdCategoriaArticolo(value);
         setArrayOpzioniComponentiArticolo(value);
         setValue("componenti_articolo", JSON.stringify(value));
 
     }
 
-    
+    let flagImmagineModificata = false;
     
     const handleChangeImmagine = (e) => {
         console.log(e.target.files[0].size);
         if(e.target.files[0].size<2000000){
             formDataImmagine.append('nuova_immagine_articolo', e.target.files[0]); 
             console.log('dentro', e.target.files[0])
-            setFlagImmagineModificata(true);
+            flagImmagineModificata = true;
             console.log(formDataImmagine.get('nuova_immagine_articolo'));
         }
         else{
@@ -177,6 +175,23 @@ const AggiungiArticolo = (props) => {
                 }
         );
 
+    }
+
+    const stampaImmagine = urlImmagine => {
+
+        console.log('indirizzo', urlImmagine)
+
+        if (urlImmagine !== ''){
+
+            return (
+                <Form.Field>
+                    <label>Immagine articolo:</label>
+                    <Image src={'https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/' + urlImmagine} size='small' />
+                    <Button type="button" color='red' onClick={() => setOpenModaleImmagine(true)}>Elimina Immagine</Button>
+                </Form.Field>
+            
+            )
+        }
     }
 
     const stampaSezioneComposto = tipologia => {
@@ -210,8 +225,8 @@ const AggiungiArticolo = (props) => {
 
     const onSubmit = data => {
         console.log(data);
-        // console.log(data.nuova_immagine_articolo);
-        // setSaving(true);
+        console.log(data.nuova_immagine_articolo);
+        setSaving(true);
 
         if(data.nome_articolo !== '' &&  data.descrizione_articolo !== '' && data.unita_misura_articolo !== '' && data.prezzo_articolo !== '' ){
 
@@ -224,12 +239,7 @@ const AggiungiArticolo = (props) => {
                 .then(response => response.json())
                 .then(dati => {
                     console.log(dati);
-                    console.log('flagImmagine', flagImmagineModificata );
-                    console.log(dati.esito);
                     if(dati.esito==="ok" && flagImmagineModificata){
-
-                        console.log('idperimmagine', dati.id_articolo_inserito);
-                        console.log('formdatapreinvio', formDataImmagine.get('nuova_immagine_articolo'));
 
                         const requestOptionsImmagine = {
                             method: 'POST',
@@ -310,11 +320,11 @@ const AggiungiArticolo = (props) => {
                             </Button>
                         </Link>
                         
-                        <h2>Aggiungi un nuovo prodotto</h2>
+                        <h2>Modifica il prodotto che hai selezionato</h2>
                         <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaArticolo" id="formModificaArticolo" enctype='multipart/form-data'>
-                            <input type="hidden" require ref={register} name="id_negozio" id="id_negozio" value={JSON.parse(localStorage.getItem('infoUtente')).id_negozio}/>
+                            {stampaImmagine(urlImmagine)}
                             <Form.Field>
-                                <label>Scegli un immagine per il tuo prodotto:</label>
+                                <label>Modifica l'immagine per il tuo prodotto:</label>
                                 <input require ref={register} type='file' accept="image/*" name='immagine_articolo' id="immagine_articolo" onChange={handleChangeImmagine}></input>
                                 <Label pointing>Max 2MB</Label>
                             </Form.Field>
@@ -328,18 +338,14 @@ const AggiungiArticolo = (props) => {
                                 <textarea ref={register} name="descrizione_articolo" id="descrizione_articolo" placeholder='Descrizione del prodotto' defaultValue={descrizione} maxLength="900"/>
                                 <Label pointing>Max 900 caratteri</Label>
                             </Form.Field>
+                            {stampaSezioneComposto(tipologia)}
                             <Form.Field>
                                 <label>Seleziona la categoria del prodotto:</label>
                                 <Dropdown fluid selection name="id_categoria_articolo" id="id_categoria_articolo" options={arrayOpzioniCategorie} value={idCategoriaArticolo} onChange={handleChangeCategoria}/>
                             </Form.Field>
                             <Form.Field>
-                                <label>Seleziona la tipologia del prodotto:</label>
-                                <Dropdown fluid selection name="tipologia_articolo" id="tipologia_articolo" options={opzioniTipologia} value={tipologia} onChange={handleChangeTipologia}/>
-                            </Form.Field>
-                            {stampaSezioneComposto(tipologia)}
-                            <Form.Field>
                                 <label>Unità di misura:</label>
-                                <input disabled={unitaMisuraDisabilitato} require ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9" />
+                                <input require disabled={unitaMisuraDisabilitato} ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
                                 <Label pointing>Max 9 caratteri</Label>
                             </Form.Field>
                             <Form.Field>
@@ -364,4 +370,4 @@ const AggiungiArticolo = (props) => {
     )
 }
 
-export default AggiungiArticolo
+export default DuplicaArticolo

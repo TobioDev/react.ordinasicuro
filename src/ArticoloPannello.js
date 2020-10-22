@@ -97,12 +97,16 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
                                 Modifica
                             </Button>
                         </Link>
-                        <Button variant="contained" startIcon={<FileCopyIcon />} style={{backgroundColor: '#ffc107', color: 'black'}}>
-                            Duplica
-                        </Button>
-                        <Button variant="contained" color="secondary" startIcon={<DeleteIcon />}>
-                            Elimina
-                        </Button>
+                        <Link to={'/duplica-articolo/' + randomNumber + id}>
+                            <Button variant="contained" startIcon={<FileCopyIcon />} style={{backgroundColor: '#ffc107', color: 'black'}}>
+                                Duplica
+                            </Button>
+                        </Link>
+                        <Link to={'/elimina-articolo/' + randomNumber + id}>
+                            <Button variant="contained" color="secondary" startIcon={<DeleteIcon />}>
+                                Elimina
+                            </Button>
+                        </Link>
                         <Button variant="contained" startIcon={<LinkIcon />}>
                             Condividi
                         </Button>
@@ -118,12 +122,16 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
                                     <CreateIcon />
                                 </IconButton>
                             </Link>
-                            <IconButton style={{backgroundColor: '#ffc107', color: 'black'}}>
-                                <FileCopyIcon />
-                            </IconButton>
-                            <IconButton  style={{backgroundColor: '#dc3545', color: 'white'}}>
-                                <DeleteIcon />
-                            </IconButton>
+                            <Link to={'/duplica-articolo/' + randomNumber + id}>
+                                <IconButton style={{backgroundColor: '#ffc107', color: 'black'}}>
+                                    <FileCopyIcon />
+                                </IconButton>
+                            </Link>
+                            <Link to={'/elimina-articolo/' + randomNumber + id}>
+                                <IconButton  style={{backgroundColor: '#dc3545', color: 'white'}}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Link>
                             <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
                                 <LinkIcon />
                             </IconButton>

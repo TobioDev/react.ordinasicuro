@@ -36,6 +36,7 @@ const ModificaArticolo = (props) => {
     const [prezzo, setPrezzo] = useState(['']);
     const [urlImmagine, setUrlImmagine] = useState(['']);
     const [tipologia, setTipologia] = useState(['']);
+    const [unitaMisuraDisabilitato, setUnitaMisuraDisabilitato] = useState(false);
 
     //Codice per snackbar ui-material ----------
     const useStyles = makeStyles((theme) => ({
@@ -93,6 +94,9 @@ const ModificaArticolo = (props) => {
                     setUrlImmagine(json.get_articolo.url_immagine);
                     setTipologia(json.get_articolo.tipologia);
                     setValue("tipologia_articolo", json.get_articolo.tipologia);
+                    if(json.get_articolo.tipologia === 'composto'){
+                        setUnitaMisuraDisabilitato(true);
+                    }
 
                     let arrayTemporaneo = [];
                     json.get_categorie_negozio.map( categoria => arrayTemporaneo.push({key: categoria.id, text: categoria.nome, value: categoria.id}));
@@ -145,6 +149,7 @@ const ModificaArticolo = (props) => {
             formDataImmagine.append('nuova_immagine_articolo', e.target.files[0]); 
             console.log('dentro', e.target.files[0])
             flagImmagineModificata = true;
+            console.log(formDataImmagine.get('nuova_immagine_articolo'));
         }
         else{
             setValue('immagine_articolo', '');
@@ -337,7 +342,7 @@ const ModificaArticolo = (props) => {
                             </Form.Field>
                             <Form.Field>
                                 <label>Unità di misura:</label>
-                                <input require ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
+                                <input require disabled={unitaMisuraDisabilitato} ref={register} name="unita_misura_articolo" id="unita_misura_articolo" placeholder='Unità di misura' defaultValue={unitaMisura} maxLength="9"/>
                                 <Label pointing>Max 9 caratteri</Label>
                             </Form.Field>
                             <Form.Field>
