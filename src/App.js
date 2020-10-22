@@ -22,6 +22,7 @@ import ModificaArticolo from './ModificaArticolo';
 import AggiungiArticolo from './AggiungiArticolo';
 import DuplicaArticolo from './DuplicaArticolo';
 import EliminaArticolo from './EliminaArticolo';
+import GestioneComponenti from './GestioneComponenti';
 
 
 function App() {
@@ -85,6 +86,11 @@ function App() {
 				render={() => (
 					<PannelloControllo setLoggato={setLoggato} />
 				)} />
+
+			<Route 
+				path='/gestione-componenti'
+				exact
+				component={GestioneComponenti} />
 
 			<Route 
 				path='/modifica-articolo/:id_articolo'
