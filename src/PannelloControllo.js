@@ -108,7 +108,7 @@ const PannelloControllo = ({setLoggato}) => {
                             <Button positive onClick={() => historyPush('/aggiungi-articolo/')}>Aggiungi Prodotto</Button>
                             <Button>Gestisci Ordini</Button>
                             <Button>Gestisci Categorie</Button>
-                            <Button onClick={() => historyPush('/gestione-componenti/')}>Gestisci Componenti</Button>
+                            <Button color="blue" onClick={() => historyPush('/gestione-componenti/')}>Gestisci Componenti</Button>
                             <Button>Gestisci il tuo Profilo</Button>
                         </Button.Group>
                     </div>
