@@ -23,6 +23,7 @@ import AggiungiArticolo from './AggiungiArticolo';
 import DuplicaArticolo from './DuplicaArticolo';
 import EliminaArticolo from './EliminaArticolo';
 import GestioneComponenti from './GestioneComponenti';
+import ModificaComponente from './ModificaComponente';
 
 
 function App() {
@@ -91,6 +92,11 @@ function App() {
 				path='/gestione-componenti'
 				exact
 				component={GestioneComponenti} />
+
+			<Route 
+				path='/modifica-componente/:id_componente'
+				exact
+				component={ModificaComponente} />
 
 			<Route 
 				path='/modifica-articolo/:id_articolo'

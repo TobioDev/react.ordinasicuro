@@ -51,7 +51,6 @@ const EliminaArticolo = (props) => {
     //Fine codice per snackbar ui-material ---------------
 
 
-
     let history = useHistory();
 
     useEffect(() => {
@@ -65,9 +64,6 @@ const EliminaArticolo = (props) => {
         }
   
     }, [])
-
-
-
 
     const onSubmit = data => {
         console.log(data);
@@ -109,7 +105,6 @@ const EliminaArticolo = (props) => {
                     </Alert>
                 </Snackbar>
 
-
                 <SezioneBoxed>
                     <div className="w-100">
                         <Link to='/pannello-controllo/'>
@@ -128,7 +123,7 @@ const EliminaArticolo = (props) => {
                             <Button.Group>
                                 <Button negative type="submit" loading={saving}>Elimina</Button>
                                 <Button.Or text='o' />
-                                <Button type="button">Annulla</Button>
+                                <Button type="button" onClick={()=>history.push('/pannello-controllo')}>Annulla</Button>
                             </Button.Group>
 
                         </Form>

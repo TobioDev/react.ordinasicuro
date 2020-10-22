@@ -19,7 +19,7 @@ const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
+            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 
@@ -56,12 +56,12 @@ const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}
                 <div className="w-100 mt4 mb2 flex items-start justify-between">
                     <div className="w-100 dn flex-l justify-start items-center">
                         <div className="flex items-center w-100" style={{justifyContent : 'space-evenly'}}>
-                        <Link to={'/modifica-articolo/' + randomNumber + id}>
+                        <Link to={'/modifica-componente/' + randomNumber + id}>
                             <Button variant="contained" startIcon={<CreateIcon />} style={{backgroundColor: '#17a2b8', color: 'white'}}>
                                 Modifica
                             </Button>
                         </Link>
-                        <Link to={'/elimina-articolo/' + randomNumber + id}>
+                        <Link to={'/elimina-componente/' + randomNumber + id}>
                             <Button variant="contained" color="secondary" startIcon={<DeleteIcon />}>
                                 Elimina
                             </Button>
@@ -73,12 +73,12 @@ const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}
                     </div>
                     <div className="w-100 flex dn-l justify-start items-center">
                         <div className="flex items-center w-100" style={{justifyContent : 'space-evenly'}}>
-                            <Link to={'/modifica-articolo/' + randomNumber + id}>
+                            <Link to={'/modifica-componente/' + randomNumber + id}>
                                 <IconButton style={{backgroundColor: '#17a2b8', color: 'white'}}>
                                     <CreateIcon />
                                 </IconButton>
                             </Link>
-                            <Link to={'/elimina-articolo/' + randomNumber + id}>
+                            <Link to={'/elimina-componente/' + randomNumber + id}>
                                 <IconButton  style={{backgroundColor: '#dc3545', color: 'white'}}>
                                     <DeleteIcon />
                                 </IconButton>
