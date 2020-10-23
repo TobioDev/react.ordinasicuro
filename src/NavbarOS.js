@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 
-import { Menu, Segment, Sidebar, Icon } from 'semantic-ui-react'
+import { Menu, Segment, Sidebar, Icon, Dropdown } from 'semantic-ui-react'
 
 import { AiOutlineMenu } from 'react-icons/ai';
 
@@ -19,6 +19,41 @@ const NavbarOS = ({loggato}) => {
             return (
                 <Fragment>
                     <Menu.Item as={Link} to="/pannello-controllo" name='PANNELLO DI CONTROLLO' onClick={apriChiudiMenu} />
+                    <Menu.Item>
+                        <Menu.Header>Gestisci</Menu.Header>
+                        <Menu.Menu>
+                            <Menu.Item
+                                name='Aggiungi Articolo'
+                                as={Link}
+                                to="/aggiungi-articolo/"
+                                onClick={apriChiudiMenu}
+                            />
+                            <Menu.Item
+                                name='Categorie'
+                                as={Link}
+                                to="/gestione-categorie/"
+                                onClick={apriChiudiMenu}
+                            />
+                            <Menu.Item
+                                name='Componenti'
+                                as={Link}
+                                to="/gestione-componenti/"
+                                onClick={apriChiudiMenu}
+                            />
+                            <Menu.Item
+                                name='Ordini'
+                                as={Link}
+                                to="/gestione-ordini/"
+                                onClick={apriChiudiMenu}
+                            />
+                            <Menu.Item
+                                name='Il tuo Profilo'
+                                as={Link}
+                                to="/gestione-profilo"
+                                onClick={apriChiudiMenu}
+                            />
+                        </Menu.Menu>
+                    </Menu.Item>
                     <Menu.Item as={Link} to="/logout" name='LOGOUT' onClick={apriChiudiMenu} />
                 </Fragment>
             )
