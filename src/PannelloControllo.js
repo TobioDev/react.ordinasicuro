@@ -104,13 +104,14 @@ const PannelloControllo = ({setLoggato}) => {
                     </div>
                     
                     <div className="w-100 flex-l dn items-center justify-end pr2 pt2" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
-                       <Button.Group widths='5' >
+                        <Button.Group widths='5' >
                             <Button positive onClick={() => historyPush('/aggiungi-articolo/')}>Aggiungi Prodotto</Button>
                             <Button>Gestisci Ordini</Button>
-                            <Button>Gestisci Categorie</Button>
+                            <Button color="yellow" style={{color: "black"}} onClick={() => historyPush('/gestione-categorie/')}>Gestisci Categorie</Button>
                             <Button color="blue" onClick={() => historyPush('/gestione-componenti/')}>Gestisci Componenti</Button>
                             <Button>Gestisci il tuo Profilo</Button>
-                        </Button.Group></div>
+                        </Button.Group>
+                    </div>
 
                     <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 </div>

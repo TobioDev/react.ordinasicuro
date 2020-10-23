@@ -13,20 +13,14 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 import { id } from 'date-fns/esm/locale';
 
-const EliminaComponente = (props) => {
-
-    window.scrollTo(0,0);
+const AggiungiCategoria = (props) => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
 
-    setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio);
-
     const [open, setOpen] = React.useState(false);
-    const [messaggioErrore, setMessaggioErrore] = React.useState('');
     const [saving, setSaving] = React.useState(false);
 
-    const [idComponente, setIdComponente] = useState('');
-
+    setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio);
 
     //Codice per snackbar ui-material ----------
     const useStyles = makeStyles((theme) => ({
@@ -51,6 +45,7 @@ const EliminaComponente = (props) => {
     }
     //Fine codice per snackbar ui-material ---------------
 
+    window.scrollTo(0,0);
 
     let history = useHistory();
 
@@ -61,37 +56,53 @@ const EliminaComponente = (props) => {
             history.push("/login/");
         }
         else{
+            // fetch('https://ordinasicuro.it/index.php/api/modifica_categoria_articolo/' + props.match.params.id_categoria_articolo )
+            // .then(response => response.json())
+            // .then(json => {
+
+            //     console.log(json);
+
+            //     if(json.get_categoria_articolo.id_negozio === JSON.parse(localStorage.getItem('infoUtente')).id_negozio){
+            //         setNome(json.get_categoria_articolo.nome.replace("\\\'", "\'"));
+            //         setIdCategoria(json.id);
+            //         setValue('id_categoria_articolo', json.get_categoria_articolo.id) 
+            //     }
             
+            // })
         }
-  
+    
     }, [])
+
 
     const onSubmit = data => {
         console.log(data);
         setSaving(true);
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: JSON.stringify(data)
-        };
-            fetch('https://ordinasicuro.it/api/elimina_componente_articolo_api/', requestOptions)
+        if(data.nome_categoria !== ''){
+
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(data)
+            };
+            fetch('https://ordinasicuro.it/api/crea_categoria_articolo/', requestOptions)
                 .then(response => response.text())
                 .then(dati => {
                     console.log(dati);
-                    if(dati==="ok" ){
 
+                    if( dati === 'ok'){
                         history.goBack();
-                        
-                    }
-                    else{
-                        
+                    }else{
                         setSaving(false);
                         setOpen(true);
-                        setMessaggioErrore('Si è verificato un errore nella rimozione di questo componente.');
                     }
                     
                 });
+
+        }
+        else{
+            alert("È necessario compilare ogni campo prima di proseguire con il salvataggio!");
+        }
 
         
     }
@@ -102,28 +113,31 @@ const EliminaComponente = (props) => {
             <div className="mt6">
                 <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error">
-                        {messaggioErrore}
+                        Si è verificato un errore nell'aggiunta della categoria.
                     </Alert>
                 </Snackbar>
+
 
                 <SezioneBoxed>
                     <div className="w-100">
                         <Link to='/gestione-componenti/'>
                             <Button icon labelPosition='left'>
                                 <Icon name='arrow left' />
-                                Torna alla Gestione dei Componenti
+                                Torna a Gestione Categorie
                             </Button>
                         </Link>
                         
-                        <h2>Vuoi davvero eliminare questo componente?</h2>
-                        <Form onSubmit={handleSubmit(onSubmit)} nome="formEliminaComponente" id="formEliminaComponente" enctype='multipart/form-data'>
-                            <input require ref={register} name="id_componente_articolo" id="id_componente_articolo" value={props.match.params.id_componente_articolo} type="hidden" />
-                            
-                            <Button.Group>
-                                <Button negative type="submit" loading={saving}>Elimina</Button>
-                                <Button.Or text='o' />
-                                <Button type="button" onClick={()=>history.push('/gestione-componenti')}>Annulla</Button>
-                            </Button.Group>
+                        <h2>Aggiungi una nuova Categoria</h2>
+                        <Form onSubmit={handleSubmit(onSubmit)} nome="formAggiungiCategoria" id="formAggiungiCategoria" enctype='multipart/form-data'>
+
+                            <Form.Field>
+                                <label>Nome:</label>
+                                <input require ref={register} name="nome_categoria_articolo" id="nome_categoria_articolo" placeholder='Nome della categoria' maxLength="60"/>
+                                <Label pointing>Max 60 caratteri</Label>
+                            </Form.Field>
+                            <Form.Field>
+                                <Button loading={saving} type="submit" color='green'>Salva</Button>
+                            </Form.Field>
 
                         </Form>
                     </div>
@@ -138,4 +152,4 @@ const EliminaComponente = (props) => {
     )
 }
 
-export default EliminaComponente
+export default AggiungiCategoria

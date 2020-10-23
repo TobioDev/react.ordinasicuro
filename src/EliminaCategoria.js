@@ -13,7 +13,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 import { id } from 'date-fns/esm/locale';
 
-const EliminaComponente = (props) => {
+const EliminaCategoria = (props) => {
 
     window.scrollTo(0,0);
 
@@ -25,7 +25,7 @@ const EliminaComponente = (props) => {
     const [messaggioErrore, setMessaggioErrore] = React.useState('');
     const [saving, setSaving] = React.useState(false);
 
-    const [idComponente, setIdComponente] = useState('');
+    const [idCategoria, setIdCategoria] = useState('');
 
 
     //Codice per snackbar ui-material ----------
@@ -75,7 +75,7 @@ const EliminaComponente = (props) => {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: JSON.stringify(data)
         };
-            fetch('https://ordinasicuro.it/api/elimina_componente_articolo_api/', requestOptions)
+            fetch('https://ordinasicuro.it/api/elimina_categoria_articolo_api/', requestOptions)
                 .then(response => response.text())
                 .then(dati => {
                     console.log(dati);
@@ -85,10 +85,21 @@ const EliminaComponente = (props) => {
                         
                     }
                     else{
-                        
-                        setSaving(false);
-                        setOpen(true);
-                        setMessaggioErrore('Si è verificato un errore nella rimozione di questo componente.');
+
+                        if(dati === 'errore-articoli-presenti'){
+
+                            setSaving(false);
+                            setOpen(true);
+                            setMessaggioErrore('Ci sono ancora dei prodotti che hanno impostata questa categoria. Per eliminare questa categoria devi prima eliminare tutti i prodotti collegati o cambiare loro categoria.');
+
+                        }
+                        else{
+
+                            setSaving(false);
+                            setOpen(true);
+                            setMessaggioErrore('Si è verificato un errore nella rimozione di questo componente.');
+
+                        }
                     }
                     
                 });
@@ -100,7 +111,7 @@ const EliminaComponente = (props) => {
     return (
         <Fragment>
             <div className="mt6">
-                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error">
                         {messaggioErrore}
                     </Alert>
@@ -111,13 +122,13 @@ const EliminaComponente = (props) => {
                         <Link to='/gestione-componenti/'>
                             <Button icon labelPosition='left'>
                                 <Icon name='arrow left' />
-                                Torna alla Gestione dei Componenti
+                                Torna alla Gestione delle Categorie
                             </Button>
                         </Link>
                         
-                        <h2>Vuoi davvero eliminare questo componente?</h2>
-                        <Form onSubmit={handleSubmit(onSubmit)} nome="formEliminaComponente" id="formEliminaComponente" enctype='multipart/form-data'>
-                            <input require ref={register} name="id_componente_articolo" id="id_componente_articolo" value={props.match.params.id_componente_articolo} type="hidden" />
+                        <h2>Vuoi davvero eliminare questa categoria?</h2>
+                        <Form onSubmit={handleSubmit(onSubmit)} nome="formEliminaCategoria" id="formEliminaCategoria" enctype='multipart/form-data'>
+                            <input require ref={register} name="id_categoria_articolo" id="id_categoria_articolo" value={props.match.params.id_categoria_articolo} type="hidden" />
                             
                             <Button.Group>
                                 <Button negative type="submit" loading={saving}>Elimina</Button>
@@ -138,4 +149,4 @@ const EliminaComponente = (props) => {
     )
 }
 
-export default EliminaComponente
+export default EliminaCategoria

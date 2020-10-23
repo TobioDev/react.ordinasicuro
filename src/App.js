@@ -25,6 +25,10 @@ import EliminaArticolo from './EliminaArticolo';
 import GestioneComponenti from './GestioneComponenti';
 import ModificaComponente from './ModificaComponente';
 import EliminaComponente from './EliminaComponente';
+import GestioneCategorie from './GestioneCategorie';
+import ModificaCategoria from './ModificaCategoria';
+import AggiungiCategoria from './AggiungiCategoria';
+import EliminaCategoria from './EliminaCategoria';
 
 
 function App() {
@@ -103,6 +107,26 @@ function App() {
 				path='/elimina-componente/:id_componente_articolo'
 				exact
 				component={EliminaComponente} />
+
+			<Route 
+				path='/gestione-categorie'
+				exact
+				component={GestioneCategorie} />
+
+			<Route 
+				path='/modifica-categoria/:id_categoria_articolo'
+				exact
+				component={ModificaCategoria} />
+
+			<Route 
+				path='/aggiungi-categoria/'
+				exact
+				component={AggiungiCategoria} />
+
+			<Route 
+				path='/elimina-categoria/:id_categoria_articolo'
+				exact
+				component={EliminaCategoria} />
 
 			<Route 
 				path='/modifica-articolo/:id_articolo'
