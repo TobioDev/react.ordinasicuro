@@ -61,7 +61,7 @@ const ModificaComponente = (props) => {
             history.push("/login/");
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/modifica_componente/' + props.match.params.id_componente )
+            fetch('https://ordinasicuro.it/index.php/api/modifica_componente/' + props.match.params.id_componente_articolo )
             .then(response => response.json())
             .then(json => {
 
