@@ -60,8 +60,8 @@ const GestioneCategorie = () => {
 
             <SezioneBoxed>
                 <div className="w-100 mt6">
-                <Button.Group horizontal labeled icon>
-                    <Link to='/pannello-controllo/'>
+                <Button.Group vertical labeled icon>
+                    <Link to='/pannello-controllo/' className="mb3">
                         <Button icon labelPosition='left'>
                             <Icon name='arrow left' />
                             Torna al Pannello di Controllo
