@@ -2,10 +2,11 @@ import React, { useState, Fragment, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import LoaderOS from './LoaderOS';
 
-import { Button, Icon, Menu, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, Menu, Dropdown, Input } from 'semantic-ui-react'
 
 import { HashLink as Link } from 'react-router-hash-link';
 import ListaArticoliPannello from './ListaArticoliPannello';
+import SezioneBoxed from './SezioneBoxed';
 
 
 
@@ -18,6 +19,7 @@ const PannelloControllo = ({setLoggato}) => {
     const [categorie, setCategorie] = useState([]);
     const [categorieArticoli, setCategorieArticoli] = useState([]);
     const [articoli, setArticoli] = useState([]);
+    const [articoliFiltrati, setArticoliFiltrati] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
 
@@ -41,6 +43,7 @@ const PannelloControllo = ({setLoggato}) => {
                 setCategorie(json.get_categorie);
                 setCategorieArticoli(json.get_categorie_articoli);
                 setArticoli(json.get_articoli);
+                setArticoliFiltrati(json.get_articoli)
                 setComponentiArticolo(json.get_componenti_articolo);
                 setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
                 setVisibilitaLoader(false);
@@ -80,6 +83,18 @@ const PannelloControllo = ({setLoggato}) => {
         elmnt.scrollIntoView();
     }
 
+    const handleRicerca = (e) => {
+        if(e.target.value === ""){
+            setArticoliFiltrati(articoli);
+        }
+        else{
+            let arrayTemporaneo = articoli.filter(articolo => articolo.nome.toLowerCase().includes(e.target.value.toLowerCase()) );
+            setArticoliFiltrati(arrayTemporaneo);
+        }
+        //console.log(e.target.value);
+       
+    }
+
     return (
     
         <Fragment>
@@ -93,27 +108,35 @@ const PannelloControllo = ({setLoggato}) => {
                     </Menu>
                 </div>
                 <div className="w-100 w-80-l">
-                    <div className="w-100 flex items-center justify-end pr2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
+                    <div className="w-100 flex flex-column items-end justify-end ph2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
+                        <Input icon placeholder='Cerca...' className="" >
+                            <input onChange={handleRicerca} />
+                            <Icon name='search' />
+                        </Input>  
                         <Dropdown
                             placeholder='Vai alla categoria...'
-                            className="dn-l"
+                            className="dn-l mt2"
                             onChange={handleChange}
                             selection
                             options={opzioniCategorieMobile(categorieArticoli)}
-                        />    
+                        />  
                     </div>
                     
-                    <div className="w-100 flex-l dn items-center justify-end pr2 pt2" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
+                    <div className="w-100 flex-l flex-column dn items-center justify-end pr2 pt2 pl2 bg-white" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
                         <Button.Group widths='5' >
                             <Button positive onClick={() => historyPush('/aggiungi-articolo/')}>Aggiungi Prodotto</Button>
                             <Button>Gestisci Ordini</Button>
                             <Button color="yellow" style={{color: "black"}} onClick={() => historyPush('/gestione-categorie/')}>Gestisci Categorie</Button>
                             <Button color="blue" onClick={() => historyPush('/gestione-componenti/')}>Gestisci Componenti</Button>
-                            <Button>Gestisci il tuo Profilo</Button>
+                            <Button onClick={() => historyPush('/gestione-profilo/')}>Gestisci il tuo Profilo</Button>
                         </Button.Group>
+                        <Input icon placeholder='Cerca...' className="mt2 w-100" >
+                            <input onChange={handleRicerca} />
+                            <Icon name='search' />
+                        </Input>
                     </div>
 
-                    <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+                    <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoliFiltrati} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
                 </div>
 
             </div>

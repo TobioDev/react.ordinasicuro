@@ -108,7 +108,7 @@ const Login = ({}) => {
 
                     <Input iconPosition='left' placeholder='email'>
                         <Icon name='user' />
-                        <input ref={register} name="email" id="email" />
+                        <input ref={register} name="email" id="email" type="email" />
                     </Input>
                     
                     <Input iconPosition='left' placeholder='password' className="mt3">

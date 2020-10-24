@@ -29,6 +29,7 @@ import GestioneCategorie from './GestioneCategorie';
 import ModificaCategoria from './ModificaCategoria';
 import AggiungiCategoria from './AggiungiCategoria';
 import EliminaCategoria from './EliminaCategoria';
+import GestioneProfilo from './GestioneProfilo';
 
 
 function App() {
@@ -107,6 +108,11 @@ function App() {
 				path='/elimina-componente/:id_componente_articolo'
 				exact
 				component={EliminaComponente} />
+
+				<Route 
+				path='/gestione-profilo'
+				exact
+				component={GestioneProfilo} />
 
 			<Route 
 				path='/gestione-categorie'

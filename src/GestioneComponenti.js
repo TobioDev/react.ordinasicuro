@@ -51,7 +51,7 @@ const GestioneComponenti = () => {
         window.history.pushState('dummy', null, null);
         window.addEventListener('popstate', chiudiModaleImg, { once: true });
         setAperturaModaleImg(true);
-        setUrlImgModale("https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/"+url);
+        setUrlImgModale("https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/"+url);
     }
 
     const chiudiModaleImg = () => setAperturaModaleImg(false);
