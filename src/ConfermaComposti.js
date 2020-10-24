@@ -54,7 +54,13 @@ const ConfermaComposti = (props) => {
                                                                                 .filter( associazioneComponenteArticolo => associazioneComponenteArticolo.id_articolo === articoloCompostoFiltrato.id)
                                                                                 .map( associazioneComponenteArticoloFiltrato => componentiArticolo
                                                                                                                                     .filter( componenteArticolo => componenteArticolo.id === associazioneComponenteArticoloFiltrato.id_componente)
-                                                                                                                                    .map( componenteFiltrato => arrayOpzioniComponenti.push({key: componenteFiltrato.id, text: componenteFiltrato.nome, value: componenteFiltrato.id}) )
+                                                                                                                                    .map( componenteFiltrato => {
+                                                                                                                                        let url_temp = '';
+                                                                                                                                        if(componenteFiltrato.url_immagine !== ''){
+                                                                                                                                            url_temp = 'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componenteFiltrato.url_immagine;
+                                                                                                                                        }
+                                                                                                                                        arrayOpzioniComponenti.push({key: componenteFiltrato.id, text: componenteFiltrato.nome, value: componenteFiltrato.id, image: { avatar: true, src: url_temp }})
+                                                                                                                                    } )
                                                                                 )}
                                             )
                                             let arraycomp = []            
