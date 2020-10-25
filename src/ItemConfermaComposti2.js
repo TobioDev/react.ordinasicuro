@@ -21,15 +21,20 @@ const ItemConfermaComposti2 = ({componente, numeroMaxComponenti, variabileSelezi
 
     const handleClickListItem = (e, {id}) => {
         if(arrayScelte.indexOf(id) === -1){
-            arrayScelteTemp = arrayScelte;
-            arrayScelteTemp.push(id);
-            setArrayScelte(arrayScelteTemp);
-            setValue("componenti-"+idArticolo+"-"+index, arrayScelteTemp);
-            console.log(arrayScelteTemp);
-            console.log('contr',arrayScelte)
-            setBackColor('#21ba45');
-            setTextColor('white');
-            setVariabileSelezionati(variabileSelezionati+1);
+            if(variabileSelezionati<numeroMaxComponenti){
+
+                arrayScelteTemp = arrayScelte;
+                arrayScelteTemp.push(id);
+                setArrayScelte(arrayScelteTemp);
+                setValue("componenti-"+idArticolo+"-"+index, arrayScelteTemp);
+                console.log(arrayScelteTemp);
+                console.log('contr',arrayScelte)
+                setBackColor('#21ba45');
+                setTextColor('white');
+                setVariabileSelezionati(variabileSelezionati+1);
+
+            }
+            
         }
         else{
             arrayScelteTemp = arrayScelte;
