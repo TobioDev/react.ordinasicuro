@@ -89,35 +89,48 @@ const ConfermaComposti2 = (props) => {
     let history = useHistory();
 
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
+        // console.log(Object.keys(data))
+        let variabileFormCompleto = true;
+        Object.keys(data).map(dato => {
+            // console.log('lenght', data[dato].length)
+            // console.log('comp', dato.includes('componenti'))
+            if(dato.includes('componenti') && data[dato].length === 0){
+                variabileFormCompleto = false;
+            }
+        });
+        // console.log('var',variabileFormCompleto)
         // let variabileFormCompleto = true;
-        // let arrayTotale = Object.entries(data);
-        // arrayTotale.map( campo => {if(campo[1]===0 || campo[1] === undefined){variabileFormCompleto = false}})
-        // if(variabileFormCompleto === false){
-        //     alert("Prima di procedere è necessario selezionare almeno un'opzione per ogni prodotto ordinato")
-        // }
-        // else{
-        //     const requestOptions = {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        //         body: JSON.stringify(arrayTotale)
-        //     };
-        //     fetch('https://ordinasicuro.it/api/aggiungi_associazioni_ordine_componente_articolo', requestOptions)
-        //     .then(response => response.json())
-        //     .then(dati => {
-        //         if(dati.presenza_errori===false){
-        //             history.push("/conferma-ordine/"+idOrdine);
+        
+        // console.log(arrayTotale);
+        //arrayTotale.map( campo => {if(campo[1]===0 || campo[1] === undefined){variabileFormCompleto = false; console.log(campo[1]); console.log('var',variabileFormCompleto);}})
+        if(variabileFormCompleto === false){
+            alert("Prima di procedere è necessario selezionare almeno un'opzione per ogni prodotto ordinato")
+        }
+        else{
+            let arrayTotale = Object.entries(data);
 
-        //         }
-        //         else{
-        //             //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-        //             alert("Si è verificato un errore durante l'invio del tuo ordine. Riprova di nuovo.")
-        //         }
-        //     });
-        // }
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(arrayTotale)
+            };
+            fetch('https://ordinasicuro.it/api/aggiungi_associazioni_ordine_componente_articolo', requestOptions)
+            .then(response => response.json())
+            .then(dati => {
+                if(dati.presenza_errori===false){
+                    history.push("/conferma-ordine/"+idOrdine);
+
+                }
+                else{
+                    //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                    alert("Si è verificato un errore durante l'invio del tuo ordine. Riprova di nuovo.")
+                }
+            });
+        }
         // //console.log(variabileFormCompleto);
         // console.log(arrayTotale)
-        // //console.log(data)
+        //console.log(data)
     }
 
     return (

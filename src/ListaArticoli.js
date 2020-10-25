@@ -65,7 +65,7 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
                     if(dati.presenza_errori===false){
 
                         if(dati.presenza_composti===true){
-                            history.push("/conferma-composti/"+dati.id_ordine_creato);
+                            history.push("/conferma-composti2/"+dati.id_ordine_creato);
                         }
                         else{
                             history.push("/conferma-ordine/"+dati.id_ordine_creato);

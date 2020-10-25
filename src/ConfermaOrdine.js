@@ -72,7 +72,7 @@ const ConfermaOrdine = (props) => {
 
     let history = useHistory();
 
-    console.log(infoOrdine.confermato);
+    //console.log(infoOrdine.confermato);
 
     if(infoOrdine.confermato==='1'){
         

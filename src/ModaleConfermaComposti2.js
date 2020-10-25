@@ -10,7 +10,7 @@ const ModaleConfermaComposti2 = ({infoArticolo, idArticolo, numeroMaxComponenti,
     const [variabileSelezionati, setVariabileSelezionati] = useState(0);
     //setValue("componenti-"+idArticolo+"-"+index, []);
 
-    console.log('index', index);
+    //console.log('index', index);
 
     let arrayScelteTemp = [];
     //console.log('negato');

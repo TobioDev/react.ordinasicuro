@@ -11,6 +11,8 @@ const ItemConfermaComposti2 = ({componente, numeroMaxComponenti, variabileSelezi
     //let arrayScelteTemp = [];
     //console.log('negato');
 
+    let visibilita = '';
+
 
     useEffect( () => {
         if(getValues("componenti-"+idArticolo+"-"+index).indexOf(componente.id) !== -1){
@@ -55,11 +57,16 @@ const ItemConfermaComposti2 = ({componente, numeroMaxComponenti, variabileSelezi
     //useEffect( () => {register("componenti-"+idArticolo+"-"+index);},[register])
     //useEffect( () => {setValue("componenti-"+idArticolo+"-"+index, []); console.log('negato');},[])
 
+    if(componente.url_immagine === ''){
+
+        visibilita = 'none';
+
+    }
 
     return (
         
         <List.Item key={componente.id} id={componente.id} onClick={handleClickListItem} style={{backgroundColor: backColor}}>
-            <Image avatar src={'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componente.url_immagine} />
+            <Image avatar style={{display: visibilita }} src={'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componente.url_immagine} />
             <List.Content>
                 <List.Header style={{ color: textColor}}>{componente.nome}</List.Header>
             </List.Content>

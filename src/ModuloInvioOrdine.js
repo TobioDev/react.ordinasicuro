@@ -21,40 +21,65 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
     const [campoFormModificato, setCampoFormModificato] = useState('');
     const [modalitaOrdine, setModalitaOrdine] = useState('domicilio');
 
+    console.log('modulo');
+
     useEffect(() => {
 
-        if(localStorage.getItem('infoOrdine') !== null){
+        // console.log('effect')
 
-            let info = JSON.parse(localStorage.getItem('infoOrdine'))
+        // console.log('getitem',localStorage.getItem('infoOrdine'));
 
-            let presenzaUndefined = false;
-            [info].map( element => {
-                    if(element === undefined){
-                        presenzaUndefined = true;
-                    }
-                }
-            )
+        // let info = JSON.parse(localStorage.getItem('infoOrdine'))
 
-            if(presenzaUndefined=== false){
+        // console.log('info', info);
 
-                document.getElementById("nome").value = info.nome;
-                setValue("nome", info.nome);
-                document.getElementById("cognome").value = info.cognome;
-                setValue("cognome", info.cognome);
-                document.getElementById("indirizzo").value = info.indirizzo;
-                setValue("indirizzo", info.indirizzo);
-                document.getElementById("telefono").value = info.telefono;
-                setValue("telefono", info.telefono);
-                document.getElementById("email").value = info.email;
-                setValue("email", info.email);
+        // if(info !== null && info !== undefined ){
 
-            }
+        //     console.log('elseee1');
+
+        //     let presenzaUndefined = false;
+        //     [info].map( element => {
+        //         console.log([info])
+        //         console.log('element', element);
+        //             if(element === undefined){
+        //                 presenzaUndefined = true;
+        //             }
+        //         }
+        //     )
+
+        //     if(presenzaUndefined=== false){
+
+        //         document.getElementById("nome").value = info.nome;
+        //         setValue("nome", info.nome);
+        //         document.getElementById("cognome").value = info.cognome;
+        //         setValue("cognome", info.cognome);
+        //         document.getElementById("indirizzo").value = info.indirizzo;
+        //         setValue("indirizzo", info.indirizzo);
+        //         document.getElementById("telefono").value = info.telefono;
+        //         setValue("telefono", info.telefono);
+        //         document.getElementById("email").value = info.email;
+        //         setValue("email", info.email);
+
+        //     }
             
             
 
-        }
+        // }
+        // else{
+        //     console.log(' elseeee')
+        //         document.getElementById("nome").value = '';
+        //         setValue("nome", '');
+        //         document.getElementById("cognome").value = '';
+        //         setValue("cognome", '');
+        //         document.getElementById("indirizzo").value = '';
+        //         setValue("indirizzo", '');
+        //         document.getElementById("telefono").value = '';
+        //         setValue("telefono", '');
+        //         document.getElementById("email").value = '';
+        //         setValue("email", '');
+        // }
 
-    }, [])
+    },[])
 
 
     //Opzioni modalità consegna/asporto
@@ -95,7 +120,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
     let history = useHistory();
 
     const onSubmit = data => {
-        //console.log(data);
+        console.log(data);
 
         if(typeof data.orario !== 'undefined'){
 
@@ -109,6 +134,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
             fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
                 .then(response => response.json())
                 .then(dati => {
+                    console.log(dati);
                     if(dati.presenza_errori===false){
                         //alert('Successo!');
                         history.push("/ordine-inviato/");
