@@ -6,10 +6,11 @@ import { useHistory } from "react-router-dom";
 import { Step, Icon, Form, Button} from 'semantic-ui-react'
 import SezioneBoxed from './SezioneBoxed';
 import ItemConfermaComposti from './ItemConfermaComposti';
+import ModaleConfermaComposti2 from './ModaleConfermaComposti2';
 
-const ConfermaComposti = (props) => {
+const ConfermaComposti2 = (props) => {
 
-    const { register, handleSubmit, setValue} = useForm();
+    const { register, handleSubmit, setValue, getValues} = useForm();
 
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
@@ -55,11 +56,12 @@ const ConfermaComposti = (props) => {
                                                                                 .map( associazioneComponenteArticoloFiltrato => componentiArticolo
                                                                                                                                     .filter( componenteArticolo => componenteArticolo.id === associazioneComponenteArticoloFiltrato.id_componente)
                                                                                                                                     .map( componenteFiltrato => {
-                                                                                                                                        let url_temp = '';
-                                                                                                                                        if(componenteFiltrato.url_immagine !== ''){
-                                                                                                                                            url_temp = 'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componenteFiltrato.url_immagine;
-                                                                                                                                        }
-                                                                                                                                        arrayOpzioniComponenti.push({key: componenteFiltrato.id, text: componenteFiltrato.nome, value: componenteFiltrato.id, image: { avatar: true, src: url_temp }})
+                                                                                                                                        arrayOpzioniComponenti.push(componenteFiltrato);
+                                                                                                                                        // let url_temp = '';
+                                                                                                                                        // if(componenteFiltrato.url_immagine !== ''){
+                                                                                                                                        //     url_temp = 'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componenteFiltrato.url_immagine;
+                                                                                                                                        // }
+                                                                                                                                        // arrayOpzioniComponenti.push({key: componenteFiltrato.id, text: componenteFiltrato.nome, value: componenteFiltrato.id, image: { avatar: true, src: url_temp }})
                                                                                                                                     } )
                                                                                 )}
                                             )
@@ -69,7 +71,7 @@ const ConfermaComposti = (props) => {
                                                         <div className="pa3 ba b--black-30 br3 mb3" key={articoloOrdinatoComposto.id+index}>
                                                             <h4>{index+1} - {nome}</h4>
                                                             <p>{descrizione}</p>
-                                                            <ItemConfermaComposti idArticolo={articoloOrdinatoComposto.id_articolo} arrayOpzioniComponenti={arrayOpzioniComponenti} index={index} setValue={setValue} register={register}/>
+                                                            <ModaleConfermaComposti2 idArticolo={articoloOrdinatoComposto.id_articolo} arrayOpzioniComponenti={arrayOpzioniComponenti} index={index} setValue={setValue} register={register} getValues={getValues}/>
                                                             {/* <Dropdown onChange={handleChange} name={"componenti-"+articoloOrdinatoComposto.id_articolo+"-"+index} id={"componenti"+articoloOrdinatoComposto.id_articolo} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} required/> */}
                                                         </div> 
                                                     )
@@ -88,7 +90,6 @@ const ConfermaComposti = (props) => {
     let history = useHistory();
 
     const onSubmit = data => {
-
         console.log(data);
         // let variabileFormCompleto = true;
         // let arrayTotale = Object.entries(data);
@@ -122,7 +123,7 @@ const ConfermaComposti = (props) => {
 
     return (
         <Fragment>
-            <SezioneBoxed className="mt6 mb4">
+            <SezioneBoxed className="mt6 mb3">
                 <Step.Group stackable="tablet" size="tiny">
                     <Step completed >
                         <Icon name='credit card' />
@@ -140,7 +141,7 @@ const ConfermaComposti = (props) => {
                     </Step>
                 </Step.Group>
                 <p className="tc">Alcuni dei tuoi prodotti hanno delle opzioni o dei componenti fra cui scegliere <span role="img" aria-label="down">👇🏻</span> </p>
-                <Form onSubmit={handleSubmit(onSubmit)} nome="formComponenti" id="formComponenti">
+                <Form onSubmit={handleSubmit(onSubmit)} nome="formComponenti" id="formComponenti" className="mb4 w-90">
                     <input ref={register} type="hidden" id="idOrdine" name="idOrdine" value={idOrdine}/>
                     {stampaSelectComponenti}
                 </Form>
@@ -158,4 +159,4 @@ const ConfermaComposti = (props) => {
     
 }
 
-export default ConfermaComposti
+export default ConfermaComposti2

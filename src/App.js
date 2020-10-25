@@ -30,6 +30,7 @@ import ModificaCategoria from './ModificaCategoria';
 import AggiungiCategoria from './AggiungiCategoria';
 import EliminaCategoria from './EliminaCategoria';
 import GestioneProfilo from './GestioneProfilo';
+import ConfermaComposti2 from './ConfermaComposti2';
 
 
 function App() {
@@ -179,6 +180,11 @@ function App() {
 				path='/conferma-composti/:id_ordine'
 				exact
 				component={ConfermaComposti} />
+
+			<Route 
+				path='/conferma-composti2/:id_ordine'
+				exact
+				component={ConfermaComposti2} />
 
 			<Route 
 				path='/ordine-inviato'
