@@ -44,13 +44,17 @@ const ConfermaComposti2 = (props) => {
                                     .map( (articoloOrdinatoComposto, i) => {
                                         let nome='';
                                         let descrizione='';
+                                        let numeroMaxComponenti='';
+                                        let infoArticolo={};
                                         let arrayOpzioniComponenti = [];
                                         let quantita = articoloOrdinatoComposto.quantita;
                                         articoliComposti
                                             .filter( articoloComposto => articoloComposto.id === articoloOrdinatoComposto.id_articolo)
                                             .map(articoloCompostoFiltrato => {
+                                                                            infoArticolo= articoloCompostoFiltrato;
                                                                             nome = articoloCompostoFiltrato.nome;
                                                                             descrizione = articoloCompostoFiltrato.descrizione;
+                                                                            numeroMaxComponenti = articoloCompostoFiltrato.numero_max_componenti;
                                                                             associazioniComponenteArticolo
                                                                                 .filter( associazioneComponenteArticolo => associazioneComponenteArticolo.id_articolo === articoloCompostoFiltrato.id)
                                                                                 .map( associazioneComponenteArticoloFiltrato => componentiArticolo
@@ -68,12 +72,7 @@ const ConfermaComposti2 = (props) => {
                                             let arraycomp = []            
                                                 for (let index = 0; index < quantita; index++) {
                                                     arraycomp.push(
-                                                        <div className="pa3 ba b--black-30 br3 mb3" key={articoloOrdinatoComposto.id+index}>
-                                                            <h4>{index+1} - {nome}</h4>
-                                                            <p>{descrizione}</p>
-                                                            <ModaleConfermaComposti2 idArticolo={articoloOrdinatoComposto.id_articolo} arrayOpzioniComponenti={arrayOpzioniComponenti} index={index} setValue={setValue} register={register} getValues={getValues}/>
-                                                            {/* <Dropdown onChange={handleChange} name={"componenti-"+articoloOrdinatoComposto.id_articolo+"-"+index} id={"componenti"+articoloOrdinatoComposto.id_articolo} placeholder='Seleziona le opzioni per questo prodotto' fluid multiple selection clearable options={arrayOpzioniComponenti} required/> */}
-                                                        </div> 
+                                                            <ModaleConfermaComposti2 idArticolo={articoloOrdinatoComposto.id_articolo} infoArticolo={infoArticolo} numeroMaxComponenti={numeroMaxComponenti} arrayOpzioniComponenti={arrayOpzioniComponenti} index={index} setValue={setValue} register={register} getValues={getValues}/>
                                                     )
                                                     
                                                     

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 
 import { Dropdown, Button, Icon, Image, Modal, List } from 'semantic-ui-react'
 
-const ItemConfermaComposti2 = ({componente, register, setValue, getValues, index, idArticolo, arrayScelte, setArrayScelte, arrayScelteTemp}) => {
+const ItemConfermaComposti2 = ({componente, numeroMaxComponenti, variabileSelezionati, setVariabileSelezionati, register, setValue, getValues, index, idArticolo, arrayScelte, setArrayScelte, arrayScelteTemp}) => {
 
     //const [arrayScelte, setArrayScelte] = useState([]);
     const [backColor, setBackColor] = useState('');
@@ -29,6 +29,7 @@ const ItemConfermaComposti2 = ({componente, register, setValue, getValues, index
             console.log('contr',arrayScelte)
             setBackColor('#21ba45');
             setTextColor('white');
+            setVariabileSelezionati(variabileSelezionati+1);
         }
         else{
             arrayScelteTemp = arrayScelte;
@@ -38,6 +39,7 @@ const ItemConfermaComposti2 = ({componente, register, setValue, getValues, index
             setValue("componenti-"+idArticolo+"-"+index, arrayScelteTemp);
             setBackColor('');
             setTextColor('');
+            setVariabileSelezionati(variabileSelezionati-1);
             //console.log(arrayScelteTemp);
             //console.log('filtr',arrayScelteTemp)
 
