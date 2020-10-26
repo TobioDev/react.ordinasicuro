@@ -20,13 +20,22 @@ import  './ArticoloPannello.css'
 
 const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, setValue, componentiArticolo, associazioniComponenteArticolo, avviaModaleImg }) => {
 
+    const [varVisibilita, setVarVisibilita] = useState(true);
 
+    let randomNumber = Math.floor(1000 + Math.random() * 9000);
 
     //Per registrare valore Dropdown Semantic UI
     // const handleChange = (e, { name, value }) => {setValue(name, value)}
     // useEffect( (id) => {register("componenti"+id);},[register])
 
     useEffect( () => {
+
+        if(visibilita === '1'){
+            setVarVisibilita(true);
+        }
+        else if (visibilita === '0'){
+            setVarVisibilita(false);
+        }
         
     },[])
 
@@ -50,6 +59,55 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
         }
     }
 
+    const handleChangeVisibilita = () => {
+
+        fetch('https://ordinasicuro.it/index.php/api/change_visibilita_articolo/' + randomNumber + id + '/')
+        .then(response => response.text())
+        .then(risp => {
+            console.log(risp);
+            if(risp === 'ok'){
+                setVarVisibilita(!varVisibilita);
+            }
+            else{
+                alert("Errore nell\'aggiornamento della visibilita. Riprovare più tardi");
+            }
+                }
+        );
+
+    }
+
+
+    const stampaBottoneVisibilita = (v) => {
+        if(v){
+
+        return <Button onClick={handleChangeVisibilita} variant="contained" startIcon={<VisibilityIcon />}>
+                    Visibile
+                </Button>
+
+        }
+        else {
+
+            return <Button onClick={handleChangeVisibilita} style={{backgroundColor: '#ffc107', color: 'black'}} variant="contained" startIcon={<VisibilityOffIcon />}>
+                    Non Visibile
+                </Button>
+        }
+    }
+
+    const stampaBottoneVisibilitaMobile = (v) => {
+        if(v){
+
+        return <IconButton onClick={handleChangeVisibilita} style={{backgroundColor: '#e0e0e0', color: 'black'}}>
+                    <VisibilityIcon />
+                </IconButton>
+
+        }
+        else {
+
+            return <IconButton onClick={handleChangeVisibilita} style={{backgroundColor: '#ffc107', color: 'black'}} variant="contained">
+                    <VisibilityOffIcon />
+                </IconButton>
+        }
+    }
 
 
 
@@ -64,8 +122,6 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
             return '€ '+prezzo
         }
     }
-
-    let randomNumber = Math.floor(1000 + Math.random() * 9000);
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -110,9 +166,7 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
                         <Button variant="contained" startIcon={<LinkIcon />}>
                             Condividi
                         </Button>
-                        <Button variant="contained" startIcon={<VisibilityIcon />}>
-                            Visibile
-                        </Button>
+                        {stampaBottoneVisibilita(varVisibilita)}
                         </div>
                     </div>
                     <div className="w-100 flex dn-l justify-start items-center">
@@ -135,9 +189,7 @@ const ArticoloPannello = ({id, visibilita, nome, tipologia, id_categoria_articol
                             <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
                                 <LinkIcon />
                             </IconButton>
-                            <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
-                                <VisibilityIcon />
-                            </IconButton>
+                            {stampaBottoneVisibilitaMobile(varVisibilita)}
                         </div>
                     </div>
                 </div>
