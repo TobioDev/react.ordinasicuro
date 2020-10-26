@@ -44,11 +44,11 @@ const ModaleConfermaComposti2 = ({infoArticolo, idArticolo, numeroMaxComponenti,
     useEffect( () => {register("componenti-"+ idArticolo +"-"+index); console.log('dentro', infoArticolo)},[register])
     useEffect( () => {setValue("componenti-"+ idArticolo +"-"+index, []); console.log('negato');},[])
 
-    const stampaListaComponenti = arrayOpzioniComponenti.map(componente => (
-
-        <ItemConfermaComposti2 componente={componente} numeroMaxComponenti={numeroMaxComponenti} variabileSelezionati={variabileSelezionati} setVariabileSelezionati={setVariabileSelezionati} setValue={setValue} getValues={getValues} index={index} infoArticolo={infoArticolo} idArticolo={idArticolo} arrayScelte={arrayScelte} setArrayScelte={setArrayScelte} arrayScelteTemp={arrayScelteTemp}></ItemConfermaComposti2>
-
-    )
+    const stampaListaComponenti = arrayOpzioniComponenti.map(componente => {
+        if(componente.visibilita==='1'){
+            return <ItemConfermaComposti2 componente={componente} numeroMaxComponenti={numeroMaxComponenti} variabileSelezionati={variabileSelezionati} setVariabileSelezionati={setVariabileSelezionati} setValue={setValue} getValues={getValues} index={index} infoArticolo={infoArticolo} idArticolo={idArticolo} arrayScelte={arrayScelte} setArrayScelte={setArrayScelte} arrayScelteTemp={arrayScelteTemp}></ItemConfermaComposti2>
+        }
+    }
 )
 
 

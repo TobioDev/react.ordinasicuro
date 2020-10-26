@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 
 import { useHistory } from "react-router-dom";
 import { HashLink as Link } from 'react-router-hash-link';
@@ -15,7 +15,20 @@ import LinkIcon from '@material-ui/icons/Link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}) => {
+const ComponentePannello = ({avviaModaleImg, id, nome, visibilita, id_negozio, url_immagine}) => {
+
+    const [varVisibilita, setVarVisibilita] = useState(true);
+
+    useEffect( () => {
+
+        if(visibilita === '1'){
+            setVarVisibilita(true);
+        }
+        else if (visibilita === '0'){
+            setVarVisibilita(false);
+        }
+
+    },[])
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
@@ -40,6 +53,56 @@ const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}
 
     const classes = useStyles();
     //##############################################################
+
+    const handleChangeVisibilita = () => {
+
+        fetch('https://ordinasicuro.it/index.php/api/change_visibilita_componente/' + randomNumber + id + '/')
+        .then(response => response.text())
+        .then(risp => {
+            console.log(risp);
+            if(risp === 'ok'){
+                setVarVisibilita(!varVisibilita);
+            }
+            else{
+                alert("Errore nell\'aggiornamento della visibilita. Riprovare più tardi");
+            }
+                }
+        );
+
+    }
+
+
+    const stampaBottoneVisibilita = (v) => {
+        if(v){
+
+        return <Button onClick={handleChangeVisibilita} variant="contained" startIcon={<VisibilityIcon />}>
+                    Visibile
+                </Button>
+
+        }
+        else {
+
+            return <Button onClick={handleChangeVisibilita} style={{backgroundColor: '#ffc107', color: 'black'}} variant="contained" startIcon={<VisibilityOffIcon />}>
+                    Non Visibile
+                </Button>
+        }
+    }
+
+    const stampaBottoneVisibilitaMobile = (v) => {
+        if(v){
+
+        return <IconButton onClick={handleChangeVisibilita} style={{backgroundColor: '#e0e0e0', color: 'black'}}>
+                    <VisibilityIcon />
+                </IconButton>
+
+        }
+        else {
+
+            return <IconButton onClick={handleChangeVisibilita} style={{backgroundColor: '#ffc107', color: 'black'}} variant="contained">
+                    <VisibilityOffIcon />
+                </IconButton>
+        }
+    }
 
     return (
         <Fragment>
@@ -66,9 +129,7 @@ const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}
                                 Elimina
                             </Button>
                         </Link>
-                        <Button variant="contained" startIcon={<VisibilityIcon />}>
-                            Visibile
-                        </Button>
+                        {stampaBottoneVisibilita(varVisibilita)}
                         </div>
                     </div>
                     <div className="w-100 flex dn-l justify-start items-center">
@@ -83,9 +144,7 @@ const ComponentePannello = ({avviaModaleImg, id, nome, id_negozio, url_immagine}
                                     <DeleteIcon />
                                 </IconButton>
                             </Link>
-                            <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
-                                <VisibilityIcon />
-                            </IconButton>
+                            {stampaBottoneVisibilitaMobile(varVisibilita)}
                         </div>
                     </div>
                 </div>

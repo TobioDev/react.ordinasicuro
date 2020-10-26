@@ -64,6 +64,7 @@ const GestioneComponenti = () => {
                                                             avviaModaleImg={avviaModaleImg}
                                                             id={componente.id} 
                                                             nome={componente.nome}
+                                                            visibilita={componente.visibilita}
                                                             id_negozio={componente.id_negozio} 
                                                             url_immagine={componente.url_immagine} 
                                                         />
