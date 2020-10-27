@@ -1,23 +1,31 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import { useForm } from "react-hook-form"
 
-import { useHistory } from "react-router-dom";
-
-import SezioneBoxed from './SezioneBoxed'
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react'
 import ArticoloPannello from './ArticoloPannello';
 
 
-const ListaArticoliPannello = ({idNegozio, abbonamentoUtente, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
+const ListaArticoliPannello = ({articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
 
-    const { register, handleSubmit, setValue, watch, errors} = useForm();
+    console.log('STAMPO LISTA');
+
+    const { register, setValue, errors} = useForm();
     const [ aperturaModale, setAperturaModale ] = useState(false);
     const [ aperturaModaleImg, setAperturaModaleImg ] = useState(false);
     const [ titoloModale, setTitoloModale] = useState('');
     const [ messaggioModale, setMessaggioModale] = useState('');
     const [ urlImgModale, setUrlImgModale] = useState('');
 
-    let history = useHistory();     
+    //const [ stampaArticoliPerCategoria, setStampaArticoliPerCategoria] = useState('');
+
+
+    // useEffect((stampaArticoliPerCategoria)=> {
+
+    //     setStampaArticoliPerCategoria( 
+
+    //     )
+
+    // }, [articoli])
 
 
     const avviaModale = (titolo, testo) => {
@@ -39,44 +47,48 @@ const ListaArticoliPannello = ({idNegozio, abbonamentoUtente, articoli, categori
     const chiudiModaleImg = () => setAperturaModaleImg(false);
 
     const stampaArticoliPerCategoria = categorieArticoli
-                                        .map( categoriaArticolo => (
-                                            <div className="w-100 mv4 ph3" key={categoriaArticolo.id} >
-                                                <h1>{categoriaArticolo.nome}</h1>
-                                                <a id={"categoria-"+categoriaArticolo.nome} style={{"position": "relative", "top":"-160px"}}></a>
-                                                {articoli
-                                                    .filter( articolo => articolo.id_categoria_articolo === categoriaArticolo.id)
-                                                    .map( articoloFiltrato => {
+    .map( categoriaArticolo => (
+        (<div className="w-100 mv4 ph3" key={categoriaArticolo.id} >
+            <h1>{categoriaArticolo.nome}</h1>
+            <a id={"categoria-"+categoriaArticolo.nome} style={{"position": "relative", "top":"-160px"}}></a>
+            {articoli
+                .filter( articolo => articolo.id_categoria_articolo === categoriaArticolo.id)
+                .map( articoloFiltrato => {
 
-                                                        return (
+                    console.log('stampo prodotto');
+                    return (
 
-                                                            <ArticoloPannello
-                                                                key={articoloFiltrato.id} 
-                                                                register={register}
-                                                                setValue={setValue}
-                                                                avviaModaleImg={avviaModaleImg}
-                                                                id={articoloFiltrato.id} 
-                                                                visibilita={articoloFiltrato.visibilita} 
-                                                                nome={articoloFiltrato.nome} 
-                                                                tipologia={articoloFiltrato.tipologia} 
-                                                                id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
-                                                                descrizione = {articoloFiltrato.descrizione} 
-                                                                unita_misura = {articoloFiltrato.unita_misura} 
-                                                                prezzo = {articoloFiltrato.prezzo} 
-                                                                url_immagine = {articoloFiltrato.url_immagine}
-                                                                componentiArticolo = {componentiArticolo}
-                                                                associazioniComponenteArticolo = {associazioniComponenteArticolo}
-                                                            />
+                        <ArticoloPannello
+                            key={articoloFiltrato.id} 
+                            register={register}
+                            setValue={setValue}
+                            avviaModaleImg={avviaModaleImg}
+                            id={articoloFiltrato.id} 
+                            visibilita={articoloFiltrato.visibilita} 
+                            nome={articoloFiltrato.nome} 
+                            tipologia={articoloFiltrato.tipologia} 
+                            id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
+                            descrizione = {articoloFiltrato.descrizione} 
+                            unita_misura = {articoloFiltrato.unita_misura} 
+                            prezzo = {articoloFiltrato.prezzo} 
+                            url_immagine = {articoloFiltrato.url_immagine}
+                            componentiArticolo = {componentiArticolo}
+                            associazioniComponenteArticolo = {associazioniComponenteArticolo}
+                        />
 
-                                                        )
+                    )
 
-                                                        
 
-                                                    }                                                    
 
-                                                )}
-                                            </div>                                            
-                                            
-                                        ))
+                }                                                    
+
+            )}
+        </div>  )                                          
+
+    ))
+
+
+    
     
 
     return (

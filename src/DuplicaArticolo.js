@@ -17,6 +17,8 @@ const formDataImmagine = new FormData();
 
 const DuplicaArticolo = (props) => {
 
+    window.scrollTo(0,0);
+
     const { register, handleSubmit, setValue, getValues} = useForm();
 
     setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio);
@@ -320,7 +322,7 @@ const DuplicaArticolo = (props) => {
                             </Button>
                         </Link>
                         
-                        <h2>Modifica il prodotto che hai selezionato</h2>
+                        <h2>Inserisci un nuovo prodotto:</h2>
                         <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaArticolo" id="formModificaArticolo" enctype='multipart/form-data'>
                             {stampaImmagine(urlImmagine)}
                             <Form.Field>

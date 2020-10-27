@@ -31,6 +31,7 @@ import AggiungiCategoria from './AggiungiCategoria';
 import EliminaCategoria from './EliminaCategoria';
 import GestioneProfilo from './GestioneProfilo';
 import ConfermaComposti2 from './ConfermaComposti2';
+import PannelloControllo2 from './PannelloControllo2';
 
 
 function App() {
@@ -93,6 +94,13 @@ function App() {
 				exact
 				render={() => (
 					<PannelloControllo setLoggato={setLoggato} />
+				)} />
+
+			<Route 
+				path='/pannello-controllo2'
+				exact
+				render={() => (
+					<PannelloControllo2 setLoggato={setLoggato} />
 				)} />
 
 			<Route 

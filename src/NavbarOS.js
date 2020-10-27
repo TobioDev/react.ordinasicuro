@@ -5,12 +5,23 @@ import { Menu, Segment, Sidebar, Icon, Dropdown } from 'semantic-ui-react'
 import { AiOutlineMenu } from 'react-icons/ai';
 
 import { HashLink as Link } from 'react-router-hash-link';
+import { useHistory } from "react-router-dom";
 
 const NavbarOS = ({loggato}) => {
     const [menuVisibilita, setMenuVisibilita] = useState(false);
 
+    let history = useHistory();
+
     const apriChiudiMenu = () => {
         setMenuVisibilita(!menuVisibilita);
+    }
+
+    const posizionePannello = (posizioneY) => {
+        localStorage.setItem('posizionePannello', posizioneY);
+    }
+
+    const pushHistory = (indirizzo) => {
+        history.push(indirizzo);
     }
 
     const stampaLoginLogout = loginLogout => {
@@ -18,7 +29,7 @@ const NavbarOS = ({loggato}) => {
         if(loginLogout){
             return (
                 <Fragment>
-                    <Menu.Item as={Link} to="/pannello-controllo" name='PANNELLO DI CONTROLLO' onClick={apriChiudiMenu} />
+                    <Menu.Item name='PANNELLO DI CONTROLLO' onClick={() => { apriChiudiMenu(); posizionePannello(0); pushHistory("/pannello-controllo", 0); }} />
                     <Menu.Item>
                         <Menu.Header>Gestisci</Menu.Header>
                         <Menu.Menu>
@@ -54,7 +65,8 @@ const NavbarOS = ({loggato}) => {
                             />
                         </Menu.Menu>
                     </Menu.Item>
-                    <Menu.Item as={Link} to="/logout" name='LOGOUT' onClick={apriChiudiMenu} />
+                    <Menu.Item name='LOGOUT' onClick={() => {posizionePannello(0); apriChiudiMenu(); pushHistory("/logout"); }} />
+                    
                 </Fragment>
             )
         }
@@ -71,8 +83,8 @@ const NavbarOS = ({loggato}) => {
         if(loggato){
             return (
                 <Fragment>
-                    <Menu.Item as={Link} to="/pannello-controllo" name='PANNELLO DI CONTROLLO' />
-                    <Menu.Item as={Link} to="/logout" name='LOGOUT' />
+                    <Menu.Item onClick={() => {posizionePannello(0); pushHistory("/pannello-controllo", 0)}} name='PANNELLO DI CONTROLLO' />
+                    <Menu.Item onClick={() => {posizionePannello(0); pushHistory("/logout", 0)}} name='LOGOUT' />
                 </Fragment>
             )
         }

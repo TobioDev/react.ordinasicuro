@@ -61,7 +61,7 @@ const ModificaArticolo = (props) => {
     }
     //Fine codice per snackbar ui-material ---------------
 
-
+    window.scrollTo(0,0);
 
     let history = useHistory();
 

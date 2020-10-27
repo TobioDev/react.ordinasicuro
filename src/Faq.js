@@ -33,8 +33,8 @@ const Faq = () => {
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 0}>
             <p>
-              Utilizzando il Menu Digitale Ordina Sicuro potrai evitare inutili spese per menu usa e getta o nella igienizzazione dei tuoi normali menu cartacei.
-              In questo modo potrai reinvestire le tue risorse in attività e servizi che ti permettano di rilanciare la tua impresa.
+              Utilizzando il Menu Digitale Ordina Sicuro potrai evitare inutili spese per menu usa e getta o nella igienizzazione dei tuoi normali menu cartacei. Inoltre avrai uno strumento immediato per ricevere gli ordini dei tuoi clienti.
+              In questo modo potrai reinvestire le tue risorse in attività e servizi per rilanciare la tua impresa.
             </p>
           </Accordion.Content>
 
@@ -52,19 +52,7 @@ const Faq = () => {
             </p>
           </Accordion.Content>
 
-          <Accordion.Title
-            active={activeIndex === 2}
-            index={2}
-            onClick={handleClick}
-          >
-            <Icon name='dropdown' />
-            Il servizio è a pagamento?
-          </Accordion.Title>
-          <Accordion.Content active={activeIndex === 2}>
-            <p>
-            No, il servizio di Menu Digitale è totalmente GRATIS per il primo mese. Al termine del periodo gratuito sarete voi a comunicarci se avete intenzione di attivare un abbonamento mensile pari a € 19,90/mese inviandoci una mail all'indirizzo info@ordinasicuro.it. Nel caso non ci dovesse arrivare nessuna vostra comunicazione riguardo la volontà di attivare l'abbonamento, il vostro menù sarà semplicemente sospeso e ci metteremo in contatto con voi per decidere come proseguire.
-            </p>
-          </Accordion.Content>
+
           <Accordion.Title
             active={activeIndex === 3}
             index={3}
@@ -75,7 +63,7 @@ const Faq = () => {
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 3}>
             <p>
-            Certo, è possibile attivare la <b>gestione per asporto e consegna a domicilio</b> in modo tale da renderti <b>completamente autonomo</b> e senza pagare enormi commissioni del 20/30% su ogni ordine che ricevi come impongono altri servizi. Il modulo per asporto e domicilio è attivabile con ZERO COMMISSIONI e un singolo abbonamento mensile pari a € 19,90.
+            Certo, è possibile attivare la <b>gestione per asporto e consegna a domicilio</b> in modo tale da renderti <b>completamente autonomo</b> e senza pagare enormi commissioni del 20/30% su ogni ordine che ricevi come impongono altri servizi. Il modulo per asporto e domicilio è attivabile con ZERO COMMISSIONI.
             </p>
           </Accordion.Content>
         </Accordion>
