@@ -15,8 +15,9 @@ const GestioneOrdini = () => {
     const [ aperturaModaleImg, setAperturaModaleImg ] = useState(false);
     //const [nome, setNome] = useState(['']);
 
-
     let history = useHistory();
+
+    let randomNumber = Math.floor(1000 + Math.random() * 9000);
 
     useEffect(() => {
 
@@ -66,7 +67,7 @@ const GestioneOrdini = () => {
                                                     <Table.Cell>{ordineFiltrato.nome} {ordineFiltrato.cognome}</Table.Cell>
                                                     <Table.Cell>{ordineFiltrato.data_ora}</Table.Cell>
                                                     <Table.Cell collapsing textAlign='right'>
-                                                        <Button>Visualizza Ordine</Button>
+                                                        <Button onClick={() => {history.push('/info-ordine/'+ randomNumber + ordineFiltrato.id)}}>Visualizza Ordine</Button>
                                                     </Table.Cell>
                                                 </Table.Row>
                                         )

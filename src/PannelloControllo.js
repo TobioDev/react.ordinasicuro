@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import LoaderOS from './LoaderOS';
 
-import { Button, Icon, Menu, Dropdown, Input, List, Image } from 'semantic-ui-react'
+import { Button, Icon, Menu, Dropdown, Input, List, Image, Table } from 'semantic-ui-react'
 
 import { HashLink as Link } from 'react-router-hash-link';
 import ListaArticoliPannello from './ListaArticoliPannello';
@@ -28,6 +28,8 @@ const PannelloControllo = ({setLoggato}) => {
     const [parolaRicerca, setParolaRicerca] = useState('');
 
     let history = useHistory();
+
+    window.scrollTo(0,0);
 
     useEffect(() => {
 
@@ -82,17 +84,17 @@ const PannelloControllo = ({setLoggato}) => {
     }
 
 
-    const stampaItemListaCategorie = categorie => (
-        categorie.map ( categoria => 
-                                <List.Item>
-                                    <List.Content floated='right'>
-                                        <Button onClick={() => {azzeraPosizioneCategoria(); history.push('/gestione-articoli-categoria/'+categoria.id)}}>Visualizza Articoli</Button>
-                                    </List.Content>
-                                    
-                                    <List.Content><h3>{categoria.nome}</h3></List.Content>
-                                    </List.Item>
+    const stampaRigheTabella = categorieArticoliFiltrate.map( categoria => {
+
+        return (<Table.Row>
+                    <Table.Cell>{categoria.nome}</Table.Cell>
+                    <Table.Cell collapsing textAlign='right'>
+                        <Button onClick={() => {azzeraPosizioneCategoria(); history.push('/gestione-articoli-categoria/'+categoria.id)}}>Visualizza Articoli</Button>
+                    </Table.Cell>
+                </Table.Row>
         )
-    )
+
+    })
 
     const opzioniCategorieMobile = (categorieArticoli) => {
         let arrayOpzioniCategorie = [];
@@ -210,9 +212,17 @@ const PannelloControllo = ({setLoggato}) => {
                     <SezioneBoxed>
                         <div className="w-100">
                             <h2>Seleziona quale categoria visualizzare:</h2>
-                            <List divided verticalAlign='middle'>
-                                {stampaItemListaCategorie(categorieArticoliFiltrate)}
-                            </List>
+                            <Table celled striped>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell colSpan='2'>Categorie degli Articoli</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+
+                                <Table.Body>
+                                    {stampaRigheTabella}
+                                </Table.Body>
+                            </Table>
                         </div>
                         
                     </SezioneBoxed>
