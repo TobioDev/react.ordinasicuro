@@ -107,12 +107,10 @@ const EliminaArticolo = (props) => {
 
                 <SezioneBoxed>
                     <div className="w-100">
-                        <Link to='/pannello-controllo/'>
-                            <Button icon labelPosition='left'>
-                                <Icon name='arrow left' />
-                                Torna al Pannello di Controllo
-                            </Button>
-                        </Link>
+                        <Button onClick={()=> history.goBack()} icon labelPosition='left'>
+                            <Icon name='arrow left' />
+                            Torna indietro
+                        </Button>
                         
                         <h2>Vuoi davvero eliminare questo prodotto?</h2>
                         <Form onSubmit={handleSubmit(onSubmit)} nome="formEliminaArticolo" id="formEliminaArticolo" enctype='multipart/form-data'>

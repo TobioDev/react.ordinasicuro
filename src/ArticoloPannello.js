@@ -18,7 +18,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import  './ArticoloPannello.css'
 
-const ArticoloPannello = ({id, visibilita, nome, descrizione, unita_misura, prezzo, url_immagine, avviaModaleImg }) => {
+const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizione, unita_misura, prezzo, url_immagine, avviaModaleImg }) => {
 
     const [varVisibilita, setVarVisibilita] = useState(true);
 
@@ -96,8 +96,9 @@ const ArticoloPannello = ({id, visibilita, nome, descrizione, unita_misura, prez
 
     const pushHistory = (indirizzo) => {
 
-        localStorage.setItem('posizionePannello', window.pageYOffset);
-        console.log('pos', window.pageYOffset);
+        localStorage.setItem('posizioneCategoria', window.pageYOffset);
+        localStorage.setItem('ultimaCategoria', idCategoriaArticolo );
+        //console.log('pos', window.pageYOffset);
         history.push(indirizzo);
 
     }

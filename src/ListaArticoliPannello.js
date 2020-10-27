@@ -96,6 +96,7 @@ const ListaArticoliPannello = ({articoli}) => {
                 key={articolo.id} 
                 avviaModaleImg={avviaModaleImg}
                 id={articolo.id} 
+                idCategoriaArticolo={articolo.id_categoria_articolo} 
                 visibilita={articolo.visibilita} 
                 nome={articolo.nome} 
                 tipologia={articolo.tipologia} 

@@ -29,7 +29,7 @@ const NavbarOS = ({loggato}) => {
         if(loginLogout){
             return (
                 <Fragment>
-                    <Menu.Item name='PANNELLO DI CONTROLLO' onClick={() => { apriChiudiMenu(); posizionePannello(0); pushHistory("/pannello-controllo", 0); }} />
+                    <Menu.Item name='PANNELLO DI CONTROLLO' onClick={() => { apriChiudiMenu(); pushHistory("/pannello-controllo", 0); }} />
                     <Menu.Item>
                         <Menu.Header>Gestisci</Menu.Header>
                         <Menu.Menu>
@@ -65,7 +65,7 @@ const NavbarOS = ({loggato}) => {
                             />
                         </Menu.Menu>
                     </Menu.Item>
-                    <Menu.Item name='LOGOUT' onClick={() => {posizionePannello(0); apriChiudiMenu(); pushHistory("/logout"); }} />
+                    <Menu.Item name='LOGOUT' onClick={() => {apriChiudiMenu(); pushHistory("/logout"); }} />
                     
                 </Fragment>
             )
@@ -83,8 +83,8 @@ const NavbarOS = ({loggato}) => {
         if(loggato){
             return (
                 <Fragment>
-                    <Menu.Item onClick={() => {posizionePannello(0); pushHistory("/pannello-controllo", 0)}} name='PANNELLO DI CONTROLLO' />
-                    <Menu.Item onClick={() => {posizionePannello(0); pushHistory("/logout", 0)}} name='LOGOUT' />
+                    <Menu.Item onClick={() => {pushHistory("/pannello-controllo", 0)}} name='PANNELLO DI CONTROLLO' />
+                    <Menu.Item onClick={() => {pushHistory("/logout", 0)}} name='LOGOUT' />
                 </Fragment>
             )
         }

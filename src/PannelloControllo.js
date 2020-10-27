@@ -77,12 +77,16 @@ const PannelloControllo = ({setLoggato}) => {
 
     const historyPush = (indirizzo) => history.push(indirizzo);
 
+    const azzeraPosizioneCategoria = () => {
+        localStorage.setItem('posizioneCategoria', '0');
+    }
+
 
     const stampaItemListaCategorie = categorie => (
         categorie.map ( categoria => 
                                 <List.Item>
                                     <List.Content floated='right'>
-                                        <Button onClick={() => history.push('/gestione-articoli-categoria/'+categoria.id)}>Visualizza Articoli</Button>
+                                        <Button onClick={() => {azzeraPosizioneCategoria(); history.push('/gestione-articoli-categoria/'+categoria.id)}}>Visualizza Articoli</Button>
                                     </List.Content>
                                     
                                     <List.Content><h3>{categoria.nome}</h3></List.Content>
@@ -120,8 +124,6 @@ const PannelloControllo = ({setLoggato}) => {
             setArticoliFiltrati(arrayTemporaneo);
             window.scrollTo(0,0);
         }
-        //console.log(e.target.value);
-       
     }
 
     const handleRicercaCategorie = (termine) => {
@@ -134,8 +136,6 @@ const PannelloControllo = ({setLoggato}) => {
             setCategorieArticoliFiltrate(arrayTemporaneo);
             window.scrollTo(0,0);
         }
-        //console.log(e.target.value);
-       
     }
 
     return (
@@ -144,37 +144,44 @@ const PannelloControllo = ({setLoggato}) => {
             <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
 
             <div className="w-100 flex flex-row items-start justify-center mt6">
-                <div className="w-20 dn flex-l items-start justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
+                <div className="w-20 dn flex-l  justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
                     <Menu vertical>
                         <Menu.Item active><b className="f3">Azioni Rapide</b></Menu.Item>
                         {/* {stampaSubmenuCategorieDesktop(categorieArticoli)} */}
+                        <Menu.Item as={Link}
+                                    key={'pannello-controllo'}
+                                    to={'/pannello-controllo'}  
+                                    name= 'Pannello Controllo'
+                                >
+                                    Home <Icon name='home' />
+                        </Menu.Item>
                         <Menu.Item as={Link}
                                     key={'aggiungi-prodotto'}
                                     to={'/aggiungi-articolo'}  
                                     name= 'Aggiungi Articolo'
                                 >
-                                    Aggiungi Prodotto
+                                    Aggiungi Prodotto <Icon name='plus' />
                         </Menu.Item>
                         <Menu.Item as={Link}
                                     key={'gestione-ordini'}
                                     to={'/gestione-ordini'}  
                                     name= 'Gestione Ordini'
                                 >
-                                    Gestione Ordini
+                                    Gestione Ordini <Icon name='paper plane' />
                         </Menu.Item>
                         <Menu.Item as={Link}
                                     key={'gestione-categorie'}
                                     to={'/gestione-categorie'}  
                                     name= 'Gestione Categorie'
                                 >
-                                    Gestione Categorie
+                                    Gestione Categorie <Icon name='list' />
                         </Menu.Item>
                         <Menu.Item as={Link}
                                     key={'gestione-componenti'}
                                     to={'/gestione-componenti'}  
                                     name= 'Gestione Componenti'
                                 >
-                                    Gestione Componenti
+                                    Gestione Componenti <Icon name='chart pie' />
                         </Menu.Item>  
                     </Menu>
                 </div>
