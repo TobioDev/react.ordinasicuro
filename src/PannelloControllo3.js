@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import LoaderOS from './LoaderOS';
 
-import { Button, Icon, Menu, Dropdown, Input, List, Image } from 'semantic-ui-react'
+import { Button, Icon, Menu, Dropdown, Input } from 'semantic-ui-react'
 
 import { HashLink as Link } from 'react-router-hash-link';
 import ListaArticoliPannello from './ListaArticoliPannello';
@@ -10,7 +10,7 @@ import SezioneBoxed from './SezioneBoxed';
 
 
 
-const PannelloControllo2 = ({setLoggato}) => {
+const PannelloControllo3 = ({setLoggato}) => {
 
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
     const [datiRicevuti, setDatiRicevuti] = useState(false);
@@ -19,7 +19,6 @@ const PannelloControllo2 = ({setLoggato}) => {
     const [infoUtenteNegozio, setInfoUtenteNegozio] = useState([]);
     const [categorie, setCategorie] = useState([]);
     const [categorieArticoli, setCategorieArticoli] = useState([]);
-    const [categorieArticoliFiltrate, setCategorieArticoliFiltrate] = useState([]);
     const [articoli, setArticoli] = useState([]);
     const [articoliFiltrati, setArticoliFiltrati] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
@@ -46,14 +45,13 @@ const PannelloControllo2 = ({setLoggato}) => {
                 setInfoUtenteNegozio(json.get_utente);
                 setCategorie(json.get_categorie);
                 setCategorieArticoli(json.get_categorie_articoli);
-                setCategorieArticoliFiltrate(json.get_categorie_articoli);
                 setArticoli(json.get_articoli);
                 setArticoliFiltrati(json.get_articoli)
                 setComponentiArticolo(json.get_componenti_articolo);
                 setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
                 setVisibilitaLoader(false);
                 console.log(json);
-                //setDatiRicevuti(true);
+                setDatiRicevuti(true);
                     }
             );
         }
@@ -68,12 +66,12 @@ const PannelloControllo2 = ({setLoggato}) => {
 
     }
 
-    // useEffect(()=>{
-    //     if(localStorage.getItem('posizionePannello') !== null){
-    //         console.log('mo scrollo');
-    //         window.scrollTo(0, localStorage.getItem('posizionePannello') );
-    //     }
-    // })
+      useEffect(()=>{
+        if(localStorage.getItem('posizionePannello') !== null){
+            console.log('mo scrollo');
+            window.scrollTo(0, localStorage.getItem('posizionePannello') );
+        }
+      })
 
       const historyPush = (indirizzo) => history.push(indirizzo);
 
@@ -86,18 +84,6 @@ const PannelloControllo2 = ({setLoggato}) => {
                                 >
                                     {categoria.nome}
                                 </Menu.Item>)
-    )
-
-    const stampaItemListaCategorie = categorie => (
-        categorie.map ( categoria => 
-                                <List.Item>
-                                    <List.Content floated='right'>
-                                        <Button>Visualizza Articoli</Button>
-                                    </List.Content>
-                                    
-                                    <List.Content><h3>{categoria.nome}</h3></List.Content>
-                                    </List.Item>
-        )
     )
 
     const opzioniCategorieMobile = (categorieArticoli) => {
@@ -134,20 +120,6 @@ const PannelloControllo2 = ({setLoggato}) => {
        
     }
 
-    const handleRicercaCategorie = (termine) => {
-        if(termine === ""){
-            setCategorieArticoliFiltrate(categorieArticoli);
-            window.scrollTo(0,0);
-        }
-        else{
-            let arrayTemporaneo = categorieArticoli.filter(categoria => categoria.nome.toLowerCase().includes(termine.toLowerCase()) );
-            setCategorieArticoliFiltrate(arrayTemporaneo);
-            window.scrollTo(0,0);
-        }
-        //console.log(e.target.value);
-       
-    }
-
     return (
     
         <Fragment>
@@ -156,70 +128,40 @@ const PannelloControllo2 = ({setLoggato}) => {
             <div className="w-100 flex flex-row items-start justify-center mt6">
                 <div className="w-20 dn flex-l items-start justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
                     <Menu vertical>
-                        <Menu.Item active><b className="f3">Azioni Rapide</b></Menu.Item>
-                        {/* {stampaSubmenuCategorieDesktop(categorieArticoli)} */}
-                        <Menu.Item as={Link}
-                                    key={'aggiungi-prodotto'}
-                                    to={'/aggiungi-articolo'}  
-                                    name= 'Aggiungi Articolo'
-                                >
-                                    Aggiungi Prodotto
-                        </Menu.Item>
-                        <Menu.Item as={Link}
-                                    key={'gestione-ordini'}
-                                    to={'/gestione-ordini'}  
-                                    name= 'Gestione Ordini'
-                                >
-                                    Gestione Ordini
-                        </Menu.Item>
-                        <Menu.Item as={Link}
-                                    key={'gestione-categorie'}
-                                    to={'/gestione-categorie'}  
-                                    name= 'Gestione Categorie'
-                                >
-                                    Gestione Categorie
-                        </Menu.Item>
-                        <Menu.Item as={Link}
-                                    key={'gestione-componenti'}
-                                    to={'/gestione-componenti'}  
-                                    name= 'Gestione Componenti'
-                                >
-                                    Gestione Componenti
-                        </Menu.Item>  
+                        <Menu.Item active><b className="f3">Categorie</b></Menu.Item>
+                        {stampaSubmenuCategorieDesktop(categorieArticoli)}  
                     </Menu>
                 </div>
                 <div className="w-100 w-80-l">
                     <div className="w-100 flex flex-column items-end justify-end ph2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
-                        <Input onChange={(e) => handleRicercaCategorie(e.target.value)} icon='search' placeholder='Cerca...' className="mt2" /> 
-                        {/* <Dropdown
+                        <Input icon placeholder='Cerca...' className="" >
+                            <input onChange={handleRicerca} />
+                            <Icon name='search' />
+                        </Input>  
+                        <Dropdown
                             placeholder='Vai alla categoria...'
                             className="dn-l mt2"
                             onChange={handleChange}
                             selection
                             options={opzioniCategorieMobile(categorieArticoli)}
-                        />   */}
+                        />  
                     </div>
                     
                     <div className="w-100 flex-l flex-column dn items-center justify-end pr2 pt2 pl2 bg-white" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
-                        {/* <Button.Group widths='5' >
+                        <Button.Group widths='5' >
                             <Button positive onClick={() => historyPush('/aggiungi-articolo/')}>Aggiungi Prodotto</Button>
                             <Button>Gestisci Ordini</Button>
                             <Button color="yellow" style={{color: "black"}} onClick={() => historyPush('/gestione-categorie/')}>Gestisci Categorie</Button>
                             <Button color="blue" onClick={() => historyPush('/gestione-componenti/')}>Gestisci Componenti</Button>
                             <Button onClick={() => historyPush('/gestione-profilo/')}>Gestisci il tuo Profilo</Button>
-                        </Button.Group> */}
-                        <Input onChange={(e) => handleRicercaCategorie(e.target.value)} icon='search' placeholder='Cerca...' className="mt2 w-100" />
+                        </Button.Group>
+                        <Input placeholder='Cerca...' className="mt2 w-100" >
+                            <input  onChange={handleScritturaRicerca}/>
+                            <Icon onClick={() => handleRicerca(parolaRicerca)} name='search' inverted circular link />
+                        </Input>
                     </div>
-                    <SezioneBoxed>
-                        <div className="w-100">
-                            <h2>Seleziona quale categoria visualizzare:</h2>
-                            <List divided verticalAlign='middle'>
-                                {stampaItemListaCategorie(categorieArticoliFiltrate)}
-                            </List>
-                        </div>
-                        
-                    </SezioneBoxed>
-                    
+
+                    {stampaListaArticoli(datiRicevuti)}
                 </div>
 
             </div>
@@ -229,4 +171,4 @@ const PannelloControllo2 = ({setLoggato}) => {
     )
 }
 
-export default PannelloControllo2
+export default PannelloControllo3

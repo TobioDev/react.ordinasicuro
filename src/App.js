@@ -31,7 +31,7 @@ import AggiungiCategoria from './AggiungiCategoria';
 import EliminaCategoria from './EliminaCategoria';
 import GestioneProfilo from './GestioneProfilo';
 import ConfermaComposti2 from './ConfermaComposti2';
-import PannelloControllo2 from './PannelloControllo2';
+import GestioneArticoliCategoria from './GestioneArticoliCategoria';
 
 
 function App() {
@@ -97,11 +97,9 @@ function App() {
 				)} />
 
 			<Route 
-				path='/pannello-controllo2'
+				path='/gestione-articoli-categoria/:id_categoria_articolo'
 				exact
-				render={() => (
-					<PannelloControllo2 setLoggato={setLoggato} />
-				)} />
+				component={GestioneArticoliCategoria} />
 
 			<Route 
 				path='/gestione-componenti'

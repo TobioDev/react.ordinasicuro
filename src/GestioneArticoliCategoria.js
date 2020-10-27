@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import LoaderOS from './LoaderOS';
 
-import { Button, Icon, Menu, Dropdown, Input, List, Image } from 'semantic-ui-react'
+import { Button, Icon, Menu, Dropdown, Input } from 'semantic-ui-react'
 
 import { HashLink as Link } from 'react-router-hash-link';
 import ListaArticoliPannello from './ListaArticoliPannello';
@@ -10,7 +10,9 @@ import SezioneBoxed from './SezioneBoxed';
 
 
 
-const PannelloControllo = ({setLoggato}) => {
+const GestioneArticoliCategoria = (props) => {
+
+    window.scrollTo(0,0);
 
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
     const [datiRicevuti, setDatiRicevuti] = useState(false);
@@ -19,7 +21,6 @@ const PannelloControllo = ({setLoggato}) => {
     const [infoUtenteNegozio, setInfoUtenteNegozio] = useState([]);
     const [categorie, setCategorie] = useState([]);
     const [categorieArticoli, setCategorieArticoli] = useState([]);
-    const [categorieArticoliFiltrate, setCategorieArticoliFiltrate] = useState([]);
     const [articoli, setArticoli] = useState([]);
     const [articoliFiltrati, setArticoliFiltrati] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
@@ -38,22 +39,20 @@ const PannelloControllo = ({setLoggato}) => {
   
         }
         else{
-            setLoggato(true);
-            fetch('https://ordinasicuro.it/index.php/api/categorie_articoli_da_negozio/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio )
+            fetch('https://ordinasicuro.it/index.php/api/articoli_da_categoria/' + props.match.params.id_categoria_articolo )
             .then(response => response.json())
             .then(json => {
                 // setInfoNegozio(json.get_negozio);
                 // setInfoUtenteNegozio(json.get_utente);
-                setCategorie(json.get_categorie);
-                setCategorieArticoli(json.get_categorie_articoli);
-                setCategorieArticoliFiltrate(json.get_categorie_articoli);
-                // setArticoli(json.get_articoli);
-                // setArticoliFiltrati(json.get_articoli)
+                // setCategorie(json.get_categorie);
+                // setCategorieArticoli(json.get_categorie_articoli);
+                setArticoli(json.get_articoli_da_categoria);
+                setArticoliFiltrati(json.get_articoli_da_categoria);
                 // setComponentiArticolo(json.get_componenti_articolo);
                 // setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
                 setVisibilitaLoader(false);
                 console.log(json);
-                //setDatiRicevuti(true);
+                setDatiRicevuti(true);
                     }
             );
         }
@@ -63,32 +62,20 @@ const PannelloControllo = ({setLoggato}) => {
     const stampaListaArticoli = (v) => {
 
         if(v){
-            return <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoliFiltrati} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+            return <ListaArticoliPannello idNegozio={JSON.parse(localStorage.getItem('infoUtente')).id_negozio} articoli={articoliFiltrati} />
         }
 
     }
 
-    // useEffect(()=>{
+    //   useEffect(()=>{
     //     if(localStorage.getItem('posizionePannello') !== null){
     //         console.log('mo scrollo');
     //         window.scrollTo(0, localStorage.getItem('posizionePannello') );
     //     }
-    // })
+    //   })
 
-    const historyPush = (indirizzo) => history.push(indirizzo);
+      const historyPush = (indirizzo) => history.push(indirizzo);
 
-
-    const stampaItemListaCategorie = categorie => (
-        categorie.map ( categoria => 
-                                <List.Item>
-                                    <List.Content floated='right'>
-                                        <Button onClick={() => history.push('/gestione-articoli-categoria/'+categoria.id)}>Visualizza Articoli</Button>
-                                    </List.Content>
-                                    
-                                    <List.Content><h3>{categoria.nome}</h3></List.Content>
-                                    </List.Item>
-        )
-    )
 
     const opzioniCategorieMobile = (categorieArticoli) => {
         let arrayOpzioniCategorie = [];
@@ -124,27 +111,13 @@ const PannelloControllo = ({setLoggato}) => {
        
     }
 
-    const handleRicercaCategorie = (termine) => {
-        if(termine === ""){
-            setCategorieArticoliFiltrate(categorieArticoli);
-            window.scrollTo(0,0);
-        }
-        else{
-            let arrayTemporaneo = categorieArticoli.filter(categoria => categoria.nome.toLowerCase().includes(termine.toLowerCase()) );
-            setCategorieArticoliFiltrate(arrayTemporaneo);
-            window.scrollTo(0,0);
-        }
-        //console.log(e.target.value);
-       
-    }
-
     return (
     
         <Fragment>
             <LoaderOS visibilita={visibilitaLoader} frase="Stiamo raccogliendo tutte le informazioni..."/>
 
             <div className="w-100 flex flex-row items-start justify-center mt6">
-                <div className="w-20 dn flex-l items-start justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
+            <div className="w-20 dn flex-l items-start justify-center pt7 pl2" style={{'position' : "sticky", "top" : "0"}}>
                     <Menu vertical>
                         <Menu.Item active><b className="f3">Azioni Rapide</b></Menu.Item>
                         {/* {stampaSubmenuCategorieDesktop(categorieArticoli)} */}
@@ -180,7 +153,7 @@ const PannelloControllo = ({setLoggato}) => {
                 </div>
                 <div className="w-100 w-80-l">
                     <div className="w-100 flex flex-column items-end justify-end ph2 pt2 dn-l" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
-                        <Input onChange={(e) => handleRicercaCategorie(e.target.value)} icon='search' placeholder='Cerca...' className="mt2" /> 
+                        <Input onChange={(e) => handleRicerca(e.target.value)} icon='search' placeholder='Cerca...' className="mt2" /> 
                         {/* <Dropdown
                             placeholder='Vai alla categoria...'
                             className="dn-l mt2"
@@ -189,7 +162,7 @@ const PannelloControllo = ({setLoggato}) => {
                             options={opzioniCategorieMobile(categorieArticoli)}
                         />   */}
                     </div>
-                    
+
                     <div className="w-100 flex-l flex-column dn items-center justify-end pr2 pt2 pl2 bg-white" style={{"position" : "sticky", "top" : "100px", "zIndex":'1'}}>
                         {/* <Button.Group widths='5' >
                             <Button positive onClick={() => historyPush('/aggiungi-articolo/')}>Aggiungi Prodotto</Button>
@@ -198,18 +171,22 @@ const PannelloControllo = ({setLoggato}) => {
                             <Button color="blue" onClick={() => historyPush('/gestione-componenti/')}>Gestisci Componenti</Button>
                             <Button onClick={() => historyPush('/gestione-profilo/')}>Gestisci il tuo Profilo</Button>
                         </Button.Group> */}
-                        <Input onChange={(e) => handleRicercaCategorie(e.target.value)} icon='search' placeholder='Cerca...' className="mt2 w-100" />
+                        <Input onChange={(e) => handleRicerca(e.target.value)} icon='search' placeholder='Cerca...' className="mt2 w-100" />
                     </div>
                     <SezioneBoxed>
                         <div className="w-100">
-                            <h2>Seleziona quale categoria visualizzare:</h2>
-                            <List divided verticalAlign='middle'>
-                                {stampaItemListaCategorie(categorieArticoliFiltrate)}
-                            </List>
+                            <Link to='/pannello-controllo/'>
+                                <Button icon labelPosition='left'>
+                                    <Icon name='arrow left' />
+                                    Torna al Pannello di Controllo
+                                </Button>
+                            </Link>
+                            <h2>Articoli della categoria selezionata:</h2>
+                            {stampaListaArticoli(datiRicevuti)}
                         </div>
-                        
+
                     </SezioneBoxed>
-                    
+
                 </div>
 
             </div>
@@ -219,4 +196,4 @@ const PannelloControllo = ({setLoggato}) => {
     )
 }
 
-export default PannelloControllo
+export default GestioneArticoliCategoria
