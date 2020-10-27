@@ -32,6 +32,7 @@ import EliminaCategoria from './EliminaCategoria';
 import GestioneProfilo from './GestioneProfilo';
 import ConfermaComposti2 from './ConfermaComposti2';
 import GestioneArticoliCategoria from './GestioneArticoliCategoria';
+import GestioneOrdini from './GestioneOrdini';
 
 
 function App() {
@@ -116,10 +117,15 @@ function App() {
 				exact
 				component={EliminaComponente} />
 
-				<Route 
+			<Route 
 				path='/gestione-profilo'
 				exact
 				component={GestioneProfilo} />
+
+			<Route 
+				path='/gestione-ordini'
+				exact
+				component={GestioneOrdini} />
 
 			<Route 
 				path='/gestione-categorie'
