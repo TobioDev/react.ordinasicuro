@@ -184,7 +184,14 @@ const PannelloControllo = ({setLoggato}) => {
                                     name= 'Gestione Componenti'
                                 >
                                     Gestione Componenti <Icon name='chart pie' />
-                        </Menu.Item>  
+                        </Menu.Item> 
+                        <Menu.Item as={Link}
+                                    key={'gestione-profilo'}
+                                    to={'/gestione-profilo'}  
+                                    name= 'Gestione Profilo'
+                                >
+                                    Gestione Profilo <Icon name='user' />
+                        </Menu.Item>   
                     </Menu>
                 </div>
                 <div className="w-100 w-80-l">

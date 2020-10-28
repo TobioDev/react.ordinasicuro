@@ -9,7 +9,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon, Checkbox} from 'semantic-ui-react'
+import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon, Checkbox, Menu} from 'semantic-ui-react'
 import ComponentePannello from './ComponentePannello';
 
 
@@ -166,58 +166,114 @@ const GestioneProfilo = () => {
                 </Alert>
             </Snackbar>
 
-            <SezioneBoxed>
-                <div className="w-100 mt6">
-                    <Link to='/pannello-controllo/'>
-                        <Button icon labelPosition='left'>
-                            <Icon name='arrow left' />
-                            Torna al Pannello di Controllo
-                        </Button>
-                    </Link>
+            <div className="w-100 flex flex-row items-start justify-center mt6">
 
-                    <h2 >Il tuo profilo - {nome}</h2>
-                    <p>In questa pagina puoi modificare le informazioni principali del tuo negozio. <br/> Una volta effettuate le modifiche premi il bottone "Salva" in fondo alla pagina per non perdere le modifiche effettuate!</p>
+                <div className="w-20 dn flex-l  justify-center pt6 pl2" style={{'position' : "sticky", "top" : "0"}}>
+                    <Menu vertical>
+                        <Menu.Item active><b className="f3">Azioni Rapide</b></Menu.Item>
+                        {/* {stampaSubmenuCategorieDesktop(categorieArticoli)} */}
+                        <Menu.Item as={Link}
+                                    key={'pannello-controllo'}
+                                    to={'/pannello-controllo'}  
+                                    name= 'Pannello Controllo'
+                                >
+                                    Home <Icon name='home' />
+                        </Menu.Item>
+                        <Menu.Item as={Link}
+                                    key={'aggiungi-prodotto'}
+                                    to={'/aggiungi-articolo'}  
+                                    name= 'Aggiungi Articolo'
+                                >
+                                    Aggiungi Prodotto <Icon name='plus' />
+                        </Menu.Item>
+                        <Menu.Item as={Link}
+                                    key={'gestione-ordini'}
+                                    to={'/gestione-ordini'}  
+                                    name= 'Gestione Ordini'
+                                >
+                                    Gestione Ordini <Icon name='paper plane' />
+                        </Menu.Item>
+                        <Menu.Item as={Link}
+                                    key={'gestione-categorie'}
+                                    to={'/gestione-categorie'}  
+                                    name= 'Gestione Categorie'
+                                >
+                                    Gestione Categorie <Icon name='list' />
+                        </Menu.Item>
+                        <Menu.Item as={Link}
+                                    key={'gestione-componenti'}
+                                    to={'/gestione-componenti'}  
+                                    name= 'Gestione Componenti'
+                                >
+                                    Gestione Componenti <Icon name='chart pie' />
+                        </Menu.Item>
+                        <Menu.Item as={Link}
+                                    key={'gestione-profilo'}
+                                    to={'/gestione-profilo'}  
+                                    name= 'Gestione Profilo'
+                                >
+                                    Gestione Profilo <Icon name='user' />
+                        </Menu.Item>  
+                    </Menu>
+                </div>
+                <div className="w-100 w-80-l">
 
-                    <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaProfilo" id="formModificaProfilo" enctype='multipart/form-data'>
-                        <Form.Field>
-                            <label><h3>Visibilità del tuo negozio:</h3></label>
-                            <Checkbox ref={register} name="visibile" id="visibile" checked={visibile} onChange={handleVisibile} toggle className="mt2"/>
-                            <br />
-                            <Label pointing>Scegli se rendere il tuo negozio visibile a tutti o se nasconderlo momentaneamente</Label>
-                        </Form.Field>
-                        <Form.Field>
-                            <label><h3>La tua descrizione:</h3></label>
-                            <textarea required ref={register} name="descrizione" id="descrizione" placeholder='Descrizione del tuo negozio' defaultValue={descrizione} maxLength="900"/>
-                            <br />
-                            <Label pointing>Aggiungi qui la descrizione del tuo negozio (max 900 caratteri)</Label>
-                        </Form.Field>
-                        <Form.Field>
-                            <label><h3>La tua zone di consegna:</h3></label>
-                            <textarea required ref={register} name="zone_consegna" id="zone_consegna" placeholder='Le tue zone di consegna' defaultValue={zoneConsegna} maxLength="900"/>
-                            <br />
-                            <Label pointing>Aggiungi qui le zone dove effettui la consegna (max 900 caratteri)</Label>
-                        </Form.Field>
-                        <Form.Field>
-                            <label><h3>Descrivi testualmente i tuoi orari di consegna:</h3></label>
-                            <textarea required ref={register} name="orari_consegna" id="orari_consegna" placeholder='I tuoi orari di consegna' defaultValue={orariConsegna} maxLength="900"/>
-                            <br />
-                            <Label pointing>Aggiungi qui gli orari in cui effettui la consegna (max 900 caratteri)</Label>
-                        </Form.Field>
-                        <Form.Field>
-                            <label><h3>Modalità Asporto:</h3></label>
-                            <Checkbox ref={register} name="asporto" id="asporto" checked={asporto} onChange={handleAsporto} toggle className="mt2"/>
-                            <br />
-                            <Label pointing>Scegli se abilitare la funzione per permettere ai tuoi clienti di richiedere l'Asporto</Label>
-                        </Form.Field>
+                <SezioneBoxed>
+                        <div className="w-100 mb5">
+                            <Link to='/pannello-controllo/'>
+                                <Button icon labelPosition='left'>
+                                    <Icon name='arrow left' />
+                                    Torna al Pannello di Controllo
+                                </Button>
+                            </Link>
 
-                        <Form.Field>
-                            <Button loading={saving} type="submit" color='green'>Salva</Button>
-                        </Form.Field>
+                            <h2 >Il tuo profilo - {nome}</h2>
+                            <p>In questa pagina puoi modificare le informazioni principali del tuo negozio. <br/> Una volta effettuate le modifiche premi il bottone "Salva" in fondo alla pagina per non perdere le modifiche effettuate!</p>
 
-                        </Form>
+                            <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaProfilo" id="formModificaProfilo" enctype='multipart/form-data'>
+                                <Form.Field>
+                                    <label><h3>Visibilità del tuo negozio:</h3></label>
+                                    <Checkbox ref={register} name="visibile" id="visibile" checked={visibile} onChange={handleVisibile} toggle className="mt2"/>
+                                    <br />
+                                    <Label pointing>Scegli se rendere il tuo negozio visibile a tutti o se nasconderlo momentaneamente</Label>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label><h3>La tua descrizione:</h3></label>
+                                    <textarea required ref={register} name="descrizione" id="descrizione" placeholder='Descrizione del tuo negozio' defaultValue={descrizione} maxLength="900"/>
+                                    <br />
+                                    <Label pointing>Aggiungi qui la descrizione del tuo negozio (max 900 caratteri)</Label>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label><h3>La tua zone di consegna:</h3></label>
+                                    <textarea required ref={register} name="zone_consegna" id="zone_consegna" placeholder='Le tue zone di consegna' defaultValue={zoneConsegna} maxLength="900"/>
+                                    <br />
+                                    <Label pointing>Aggiungi qui le zone dove effettui la consegna (max 900 caratteri)</Label>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label><h3>Descrivi testualmente i tuoi orari di consegna:</h3></label>
+                                    <textarea required ref={register} name="orari_consegna" id="orari_consegna" placeholder='I tuoi orari di consegna' defaultValue={orariConsegna} maxLength="900"/>
+                                    <br />
+                                    <Label pointing>Aggiungi qui gli orari in cui effettui la consegna (max 900 caratteri)</Label>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label><h3>Modalità Asporto:</h3></label>
+                                    <Checkbox ref={register} name="asporto" id="asporto" checked={asporto} onChange={handleAsporto} toggle className="mt2"/>
+                                    <br />
+                                    <Label pointing>Scegli se abilitare la funzione per permettere ai tuoi clienti di richiedere l'Asporto</Label>
+                                </Form.Field>
+
+                                <Form.Field>
+                                    <Button loading={saving} type="submit" color='green'>Salva</Button>
+                                </Form.Field>
+
+                                </Form>
+                        </div>
+
+                    </SezioneBoxed>
+
                 </div>
 
-            </SezioneBoxed>
+            </div>
             
             
             

@@ -98,6 +98,13 @@ const GestioneCategorie = () => {
                                     name= 'Gestione Componenti'
                                 >
                                     Gestione Componenti <Icon name='chart pie' />
+                        </Menu.Item>
+                        <Menu.Item as={Link}
+                                    key={'gestione-profilo'}
+                                    to={'/gestione-profilo'}  
+                                    name= 'Gestione Profilo'
+                                >
+                                    Gestione Profilo <Icon name='user' />
                         </Menu.Item>  
                     </Menu>
                 </div>
