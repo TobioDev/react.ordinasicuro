@@ -11,7 +11,7 @@ const ConsigliCovid = () => {
 			</div>
 
 			<div className="flex flex-wrap justify-center items-center">
-				<img className="pa2 w-40-l w-100" src="https://ordinasicuro.it/img/covid/lavare_mani.png" alt=""/>
+				<img className="pa2 w-40-l w-100" src="https://ordinasicuro.it/670914_920408/lib/img/covid/lavare_mani.png" alt=""/>
 			</div>
 		</Fragment>
 

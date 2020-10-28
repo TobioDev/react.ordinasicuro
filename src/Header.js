@@ -46,7 +46,7 @@ const Header = () => {
 							
 						</div>
 						<div>
-							<Link to="#attivita"><img src="https://ordinasicuro.it/img/arrow_bouncing.gif" className="w4-l w3" alt=""/></Link>
+							<Link to="#attivita"><img src="https://ordinasicuro.it/670914_920408/lib/img/arrow_bouncing.gif" className="w4-l w3" alt=""/></Link>
 						</div>
 					</div>
 				</div>

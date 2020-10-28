@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import SezioneBoxed from './SezioneBoxed'
 
-import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon, Table} from 'semantic-ui-react'
+import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon, Table, List} from 'semantic-ui-react'
 
 import { useHistory } from "react-router-dom";
 import { HashLink as Link } from 'react-router-hash-link';
@@ -30,7 +30,7 @@ const InfoOrdine = (props) => {
             history.push("/login/");
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/info_ordine_api/' + props.match.params.id_ordine )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/info_ordine_api/' + props.match.params.id_ordine )
             .then(response => response.json())
             .then(json => {
                 setOrdine(json.get_ordine);
@@ -59,20 +59,44 @@ const InfoOrdine = (props) => {
         {
             articoliNegozio.filter(articoloNegozio => articoloNegozio.id === articoloOrdinato.id_articolo)
             .map(articoloNegozioFiltrato => {
-                let testocomponenti = '';
+                let testoComponentiFinale = '';
                 if(articoloNegozioFiltrato.tipologia==='composto'){
-                    associazioniOrdineComponenteArticolo.filter( associazioneFiltrata => associazioneFiltrata.id_articolo === articoloNegozioFiltrato.id)
+                    for (let index = 1; index <= articoloOrdinato.quantita; index++) {
+                        let testoComponenti = '';
+                        associazioniOrdineComponenteArticolo.filter( associazioneFiltrata => {
+                            // console.log('condizione1', associazioneFiltrata.id_articolo === articoloNegozioFiltrato.id)
+                            // console.log('condizione2', associazioneFiltrata.replica === index)
+                            console.log('assIdArticolo', associazioneFiltrata.id_articolo)
+                            console.log('artFiltrID', articoloNegozioFiltrato.id )
+                            console.log('index', typeof( index) )
+                            console.log('replica', typeof(associazioneFiltrata.replica) )
+
+
+
+                            return associazioneFiltrata.id_articolo === articoloNegozioFiltrato.id && associazioneFiltrata.replica === index.toString()
+
+                        })
                                                         .map(associazioneFiltrata => {
                                                             componenti.filter(componente => componente.id === associazioneFiltrata.id_componente)
                                                                         .map(componenteFiltrato => {
-                                                                            
+                                                                            testoComponenti += componenteFiltrato.nome + ',';
+                                                                            console.log('testoComponenti', testoComponenti)
                                                                         })
                                                         })
+                        testoComponentiFinale = <Fragment> {testoComponentiFinale}<List.Item><List.Content><List.Header>{index}</List.Header><List.Description>{testoComponenti}</List.Description></List.Content></List.Item></Fragment>;
+                        
+                    }
                 }
                 return (
                     <Fragment>
                         <Table.Cell>{articoloOrdinato.quantita} {articoloNegozioFiltrato.unita_misura}</Table.Cell>
-                        <Table.Cell>{articoloNegozioFiltrato.nome}</Table.Cell>
+                        <Table.Cell>{articoloNegozioFiltrato.nome} (€ {articoloNegozioFiltrato.prezzo})</Table.Cell>
+                        <Table.Cell>
+                            <List bulleted>
+                                {testoComponentiFinale}
+                            </List>
+                        </Table.Cell>
+                        <Table.Cell>€ {articoloNegozioFiltrato.prezzo*articoloOrdinato.quantita}</Table.Cell>
                     </Fragment>
                     
                 )

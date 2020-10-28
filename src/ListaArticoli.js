@@ -33,7 +33,7 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
         window.history.pushState('dummy', null, null);
         window.addEventListener('popstate', chiudiModaleImg, { once: true });
         setAperturaModaleImg(true);
-        setUrlImgModale("https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/"+url);
+        setUrlImgModale("https://www.ordinasicuro.it/670914_920408/lib/img_articoli/img_articoli_compressed/"+url);
     }
 
     const chiudiModale = () => setAperturaModale(false);
@@ -59,7 +59,7 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
                 body: JSON.stringify(arrayTotale)
             };
             // console.log('body',requestOptions.body)
-            fetch('https://ordinasicuro.it/api/crea_ordine', requestOptions)
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/crea_ordine', requestOptions)
                 .then(response => response.json())
                 .then(dati => {
                     if(dati.presenza_errori===false){
@@ -95,56 +95,62 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
                                                     .filter( articolo => articolo.id_categoria_articolo === categoriaArticolo.id)
                                                     .map( articoloFiltrato => {
 
-                                                        if(abbonamentoUtente!=='2' && abbonamentoUtente!=='0'){
+                                                        if(articoloFiltrato.visibilita === '1'){
 
-                                                            return (
+                                                            if(abbonamentoUtente!=='2' && abbonamentoUtente!=='0'){
 
-                                                                <Articolo
-                                                                    key={articoloFiltrato.id} 
-                                                                    register={register}
-                                                                    setValue={setValue}
-                                                                    avviaModaleImg={avviaModaleImg}
-                                                                    id={articoloFiltrato.id} 
-                                                                    visibilita={articoloFiltrato.visibilita} 
-                                                                    nome={articoloFiltrato.nome} 
-                                                                    tipologia={articoloFiltrato.tipologia} 
-                                                                    id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
-                                                                    descrizione = {articoloFiltrato.descrizione} 
-                                                                    unita_misura = {articoloFiltrato.unita_misura} 
-                                                                    prezzo = {articoloFiltrato.prezzo} 
-                                                                    url_immagine = {articoloFiltrato.url_immagine}
-                                                                    componentiArticolo = {componentiArticolo}
-                                                                    associazioniComponenteArticolo = {associazioniComponenteArticolo}
-                                                                />
+                                                                return (
 
-                                                            )
+                                                                    <Articolo
+                                                                        key={articoloFiltrato.id} 
+                                                                        register={register}
+                                                                        setValue={setValue}
+                                                                        avviaModaleImg={avviaModaleImg}
+                                                                        id={articoloFiltrato.id} 
+                                                                        visibilita={articoloFiltrato.visibilita} 
+                                                                        nome={articoloFiltrato.nome} 
+                                                                        tipologia={articoloFiltrato.tipologia} 
+                                                                        id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
+                                                                        descrizione = {articoloFiltrato.descrizione} 
+                                                                        unita_misura = {articoloFiltrato.unita_misura} 
+                                                                        prezzo = {articoloFiltrato.prezzo} 
+                                                                        url_immagine = {articoloFiltrato.url_immagine}
+                                                                        componentiArticolo = {componentiArticolo}
+                                                                        associazioniComponenteArticolo = {associazioniComponenteArticolo}
+                                                                    />
+
+                                                                )
+
+                                                            }
+                                                            else{
+
+                                                                return (
+
+                                                                    <ArticoloBase
+                                                                        key={articoloFiltrato.id} 
+                                                                        register={register}
+                                                                        setValue={setValue}
+                                                                        avviaModaleImg={avviaModaleImg}
+                                                                        id={articoloFiltrato.id} 
+                                                                        visibilita={articoloFiltrato.visibilita} 
+                                                                        nome={articoloFiltrato.nome} 
+                                                                        tipologia={articoloFiltrato.tipologia} 
+                                                                        id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
+                                                                        descrizione = {articoloFiltrato.descrizione} 
+                                                                        unita_misura = {articoloFiltrato.unita_misura} 
+                                                                        prezzo = {articoloFiltrato.prezzo} 
+                                                                        url_immagine = {articoloFiltrato.url_immagine}
+                                                                        componentiArticolo = {componentiArticolo}
+                                                                        associazioniComponenteArticolo = {associazioniComponenteArticolo}
+                                                                    />
+
+                                                                )
+
+                                                            }
 
                                                         }
-                                                        else{
 
-                                                            return (
-
-                                                                <ArticoloBase
-                                                                    key={articoloFiltrato.id} 
-                                                                    register={register}
-                                                                    setValue={setValue}
-                                                                    avviaModaleImg={avviaModaleImg}
-                                                                    id={articoloFiltrato.id} 
-                                                                    visibilita={articoloFiltrato.visibilita} 
-                                                                    nome={articoloFiltrato.nome} 
-                                                                    tipologia={articoloFiltrato.tipologia} 
-                                                                    id_categoria_articolo = {articoloFiltrato.id_categoria_articolo} 
-                                                                    descrizione = {articoloFiltrato.descrizione} 
-                                                                    unita_misura = {articoloFiltrato.unita_misura} 
-                                                                    prezzo = {articoloFiltrato.prezzo} 
-                                                                    url_immagine = {articoloFiltrato.url_immagine}
-                                                                    componentiArticolo = {componentiArticolo}
-                                                                    associazioniComponenteArticolo = {associazioniComponenteArticolo}
-                                                                />
-
-                                                            )
-
-                                                        }
+                                                        
 
                                                         
 

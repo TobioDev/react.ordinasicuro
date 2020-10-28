@@ -27,7 +27,7 @@ const GestioneComponenti = () => {
 
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/componenti_articoli_da_negozio/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/componenti_articoli_da_negozio/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio )
             .then(response => response.json())
             .then(json => {
                 // setInfoNegozio(json.get_negozio);
@@ -51,7 +51,7 @@ const GestioneComponenti = () => {
         window.history.pushState('dummy', null, null);
         window.addEventListener('popstate', chiudiModaleImg, { once: true });
         setAperturaModaleImg(true);
-        setUrlImgModale("https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/"+url);
+        setUrlImgModale("https://www.ordinasicuro.it/670914_920408/lib/img_componenti/img_componenti_compressed/"+url);
     }
 
     const chiudiModaleImg = () => setAperturaModaleImg(false);

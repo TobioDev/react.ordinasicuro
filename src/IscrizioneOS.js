@@ -29,7 +29,7 @@ const IscrizioneOS = () => {
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 			body: JSON.stringify(data)
 		};
-		fetch('https://ordinasicuro.it/api/contatta', requestOptions)
+		fetch('https://ordinasicuro.it/670914_920408/lib/api/contatta', requestOptions)
 			.then(response => response.json())
 			//.then(text => console.log(text))
 			.then(dati => {
@@ -67,7 +67,7 @@ const IscrizioneOS = () => {
 
 
 			<a id="iscrizione" style={{"position": "relative", "top":"-150px"}}></a>
-			<div className="mv4" style={{backgroundImage:'url("https://ordinasicuro.it/img/map-image.png")'}}>
+			<div className="mv4" style={{backgroundImage:'url("https://ordinasicuro.it/670914_920408/lib/img/map-image.png")'}}>
 				<div className="flex justify-center items-center flex-column">
 					<h1 className="tc mb0 white">AGGIUNGI IL TUO NEGOZIO A ORDINA SICURO</h1>
 					<h2 className="tc b f4 fw2 white mt0 lh-copy">Inviaci la tua richiesta di iscrizione per essere aggiunto a Ordina Sicuro</h2>

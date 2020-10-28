@@ -9,7 +9,7 @@ const Card = ({nome, categoria, url_logo, citta, id_negozio}) =>{
 
 		<div className="tc bg-washed-blue dib pa3 ma2 grow bw2 card">
 			<Link to={"/negozio/"+id_negozio}>
-				<img src={`https://ordinasicuro.it/img_negozi/${url_logo}`} className="db" alt="" />
+				<img src={`https://ordinasicuro.it/670914_920408/lib/img_negozi/${url_logo}`} className="db" alt="" />
 				<div className="pa2 bt b--black-20">
 				<h2 className="f3 black db link hover-blue">{nome}</h2>
 				<p style={{backgroundColor:"#ffc107"}} className="link b roboto w-auto tc ph3 pv1 db bg-animate bg-dark-blue hover-bg-blue black f6 br1">{categoria}</p>

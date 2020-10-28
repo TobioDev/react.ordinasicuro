@@ -41,9 +41,9 @@ const HeaderNegozio = ({infoNegozio, categorie,infoUtenteNegozio}) => {
 	let urlBackground = "";
 
 	if(infoNegozio.url_background !== ''){
-		urlBackground = "https://ordinasicuro.it/img_negozi/background/"+infoNegozio.url_background;
+		urlBackground = "https://ordinasicuro.it/670914_920408/lib/img_negozi/background/"+infoNegozio.url_background;
 	}
-	else { urlBackground = "https://ordinasicuro.it/img/header-bg.jpg" }
+	else { urlBackground = "https://ordinasicuro.it/670914_920408/lib/img/header-bg.jpg" }
 
 	let visibilitaBottoni = 'flex';
 
@@ -91,7 +91,7 @@ const HeaderNegozio = ({infoNegozio, categorie,infoUtenteNegozio}) => {
 
 							</div>
 							<div>
-								<img src="https://ordinasicuro.it/img/arrow_bouncing.gif" className="w4-l w3" alt=""/>
+								<img src="https://ordinasicuro.it/670914_920408/lib/img/arrow_bouncing.gif" className="w4-l w3" alt=""/>
 							</div>
 						</div>
 					</div>

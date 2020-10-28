@@ -40,7 +40,7 @@ const ListaArticoliPannello = ({articoli}) => {
         window.history.pushState('dummy', null, null);
         window.addEventListener('popstate', chiudiModaleImg, { once: true });
         setAperturaModaleImg(true);
-        setUrlImgModale("https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/"+url);
+        setUrlImgModale("https://www.ordinasicuro.it/670914_920408/lib/img_articoli/img_articoli_compressed/"+url);
     }
 
     const chiudiModale = () => setAperturaModale(false);

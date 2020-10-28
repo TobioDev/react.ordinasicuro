@@ -131,7 +131,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(data)
             };
-            fetch('https://ordinasicuro.it/api/conferma_ordine', requestOptions)
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/conferma_ordine', requestOptions)
                 .then(response => response.json())
                 .then(dati => {
                     console.log(dati);

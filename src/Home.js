@@ -20,10 +20,10 @@ const Home = () => {
 
     //Passare array vuoto alla fine se si vuole simulare il comportamento di componentDidMount 
     useEffect(() => {
-        fetch('https://ordinasicuro.it/index.php/api/negozi_home')
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/negozi_home')
             .then(response => response.json())
             .then(json => setNegoziHome(json));
-        fetch('https://ordinasicuro.it/index.php/api/categorie')
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/categorie')
             .then(response => response.json())
             .then(json => setCategorie(json));
     }, []);

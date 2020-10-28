@@ -40,7 +40,7 @@ const Articolo = ({id, visibilita, nome, tipologia, id_categoria_articolo, descr
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
+            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/670914_920408/lib/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 

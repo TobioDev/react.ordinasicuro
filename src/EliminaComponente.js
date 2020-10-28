@@ -75,7 +75,7 @@ const EliminaComponente = (props) => {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: JSON.stringify(data)
         };
-            fetch('https://ordinasicuro.it/api/elimina_componente_articolo_api/', requestOptions)
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/elimina_componente_articolo_api/', requestOptions)
                 .then(response => response.text())
                 .then(dati => {
                     console.log(dati);
@@ -122,7 +122,7 @@ const EliminaComponente = (props) => {
                             <Button.Group>
                                 <Button negative type="submit" loading={saving}>Elimina</Button>
                                 <Button.Or text='o' />
-                                <Button type="button" onClick={()=>history.push('/gestione-componenti')}>Annulla</Button>
+                                <Button type="button" onClick={()=>history.goBack()}>Annulla</Button>
                             </Button.Group>
 
                         </Form>

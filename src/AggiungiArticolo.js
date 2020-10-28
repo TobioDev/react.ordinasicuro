@@ -75,7 +75,7 @@ const AggiungiArticolo = (props) => {
             history.push("/login/");
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/aggiungi_articolo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio + '/' )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/aggiungi_articolo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio + '/' )
             .then(response => response.json())
             .then(json => {
 
@@ -163,7 +163,7 @@ const AggiungiArticolo = (props) => {
 
     const eliminaImmagine = () => {
 
-        fetch('https://ordinasicuro.it/index.php/api/elimina_immagine_articolo/' + idArticolo )
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/elimina_immagine_articolo/' + idArticolo )
         .then(response => response.text())
         .then(risp => {
 
@@ -220,7 +220,7 @@ const AggiungiArticolo = (props) => {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(data)
             };
-            fetch('https://ordinasicuro.it/api/crea_articolo/', requestOptions)
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/crea_articolo/', requestOptions)
                 .then(response => response.json())
                 .then(dati => {
                     console.log(dati);
@@ -235,7 +235,7 @@ const AggiungiArticolo = (props) => {
                             method: 'POST',
                             body: formDataImmagine
                         };
-                        fetch('https://ordinasicuro.it/api/aggiorna_immagine_articolo/' + dati.id_articolo_inserito + '/', requestOptionsImmagine)
+                        fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_immagine_articolo/' + dati.id_articolo_inserito + '/', requestOptionsImmagine)
                                 .then(response => response.text())
                                 .then(dati => {
                                     console.log('aggiornamento immagine', dati);

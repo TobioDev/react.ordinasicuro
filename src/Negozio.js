@@ -24,7 +24,7 @@ const Negozio = (props) => {
 
         window.scrollTo(0,0);
 
-        fetch('https://ordinasicuro.it/index.php/api/negozio/' + props.match.params.id_negozio)
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/negozio/' + props.match.params.id_negozio)
             .then(response => response.json())
             .then(json => {
                 setInfoNegozio(json.get_negozio);

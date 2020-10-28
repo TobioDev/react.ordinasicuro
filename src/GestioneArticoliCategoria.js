@@ -39,7 +39,7 @@ const GestioneArticoliCategoria = (props) => {
   
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/articoli_da_categoria/' + props.match.params.id_categoria_articolo )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/articoli_da_categoria/' + props.match.params.id_categoria_articolo )
             .then(response => response.json())
             .then(json => {
                 // setInfoNegozio(json.get_negozio);

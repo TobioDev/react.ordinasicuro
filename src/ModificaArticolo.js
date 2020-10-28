@@ -72,7 +72,7 @@ const ModificaArticolo = (props) => {
             history.push("/login/");
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/modifica_articolo/' + props.match.params.id_articolo )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/modifica_articolo/' + props.match.params.id_articolo )
             .then(response => response.json())
             .then(json => {
 
@@ -160,7 +160,7 @@ const ModificaArticolo = (props) => {
 
     const eliminaImmagine = () => {
 
-        fetch('https://ordinasicuro.it/index.php/api/elimina_immagine_articolo/' + idArticolo )
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/elimina_immagine_articolo/' + idArticolo )
         .then(response => response.text())
         .then(risp => {
 
@@ -183,7 +183,7 @@ const ModificaArticolo = (props) => {
             return (
                 <Form.Field>
                     <label>Immagine articolo:</label>
-                    <Image src={'https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/' + urlImmagine} size='small' />
+                    <Image src={'https://www.ordinasicuro.it/670914_920408/lib/img_articoli/img_articoli_compressed/' + urlImmagine} size='small' />
                     <Button type="button" color='red' onClick={() => setOpenModaleImmagine(true)}>Elimina Immagine</Button>
                 </Form.Field>
             
@@ -232,7 +232,7 @@ const ModificaArticolo = (props) => {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(data)
             };
-            fetch('https://ordinasicuro.it/api/aggiorna_articolo/', requestOptions)
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_articolo/', requestOptions)
                 .then(response => response.text())
                 .then(dati => {
                     console.log(dati);
@@ -242,7 +242,7 @@ const ModificaArticolo = (props) => {
                             method: 'POST',
                             body: formDataImmagine
                         };
-                        fetch('https://ordinasicuro.it/api/aggiorna_immagine_articolo/' + idArticolo + '/', requestOptionsImmagine)
+                        fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_immagine_articolo/' + idArticolo + '/', requestOptionsImmagine)
                                 .then(response => response.text())
                                 .then(dati => {
                                     console.log('aggiornamento immagine', dati);

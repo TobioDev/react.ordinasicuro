@@ -32,7 +32,7 @@ const ComponentePannello = ({avviaModaleImg, id, nome, visibilita, id_negozio, u
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
+            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/670914_920408/lib/img_componenti/img_componenti_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 
@@ -56,7 +56,7 @@ const ComponentePannello = ({avviaModaleImg, id, nome, visibilita, id_negozio, u
 
     const handleChangeVisibilita = () => {
 
-        fetch('https://ordinasicuro.it/index.php/api/change_visibilita_componente/' + randomNumber + id + '/')
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/change_visibilita_componente/' + randomNumber + id + '/')
         .then(response => response.text())
         .then(risp => {
             console.log(risp);

@@ -24,7 +24,7 @@ const GestioneCategorie = () => {
 
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/categorie_articoli_da_negozio/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/categorie_articoli_da_negozio/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio )
             .then(response => response.json())
             .then(json => {
                 // setInfoNegozio(json.get_negozio);

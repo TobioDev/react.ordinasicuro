@@ -66,7 +66,7 @@ const ItemConfermaComposti2 = ({componente, numeroMaxComponenti, variabileSelezi
     return (
         
         <List.Item key={componente.id} id={componente.id} onClick={handleClickListItem} style={{backgroundColor: backColor}}>
-            <Image avatar style={{display: visibilita }} src={'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componente.url_immagine} />
+            <Image avatar style={{display: visibilita }} src={'https://www.ordinasicuro.it/670914_920408/lib/img_componenti/img_componenti_compressed/'+componente.url_immagine} />
             <List.Content>
                 <List.Header style={{ color: textColor}}>{componente.nome}</List.Header>
             </List.Content>

@@ -56,7 +56,7 @@ const AggiungiCategoria = (props) => {
             history.push("/login/");
         }
         else{
-            // fetch('https://ordinasicuro.it/index.php/api/modifica_categoria_articolo/' + props.match.params.id_categoria_articolo )
+            // fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/modifica_categoria_articolo/' + props.match.params.id_categoria_articolo )
             // .then(response => response.json())
             // .then(json => {
 
@@ -85,7 +85,7 @@ const AggiungiCategoria = (props) => {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: JSON.stringify(data)
             };
-            fetch('https://ordinasicuro.it/api/crea_categoria_articolo/', requestOptions)
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/crea_categoria_articolo/', requestOptions)
                 .then(response => response.text())
                 .then(dati => {
                     console.log(dati);

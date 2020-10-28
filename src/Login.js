@@ -59,7 +59,7 @@ const Login = ({}) => {
             body: JSON.stringify(data)
         };
 
-        fetch('https://ordinasicuro.it/api/login', requestOptions)
+        fetch('https://ordinasicuro.it/670914_920408/lib/api/login', requestOptions)
             .then(response => response.json())
             .then(dati => {
                 if(dati.get_utente==null){

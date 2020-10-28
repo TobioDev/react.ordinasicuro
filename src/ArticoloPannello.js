@@ -40,13 +40,13 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
 
     const link_img = (url_immagine) => {
         if(url_immagine!== ''){
-            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
+            return <img style={{width:"85px", height: "85px"}} className="fl mr3 img-articolo br3 pointer" src={"https://www.ordinasicuro.it/670914_920408/lib/img_articoli/img_articoli_compressed/" + url_immagine } onClick={() => avviaModaleImg(url_immagine)} alt="" />
         }
     }
 
     const handleChangeVisibilita = () => {
 
-        fetch('https://ordinasicuro.it/index.php/api/change_visibilita_articolo/' + randomNumber + id + '/')
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/change_visibilita_articolo/' + randomNumber + id + '/')
         .then(response => response.text())
         .then(risp => {
             console.log(risp);

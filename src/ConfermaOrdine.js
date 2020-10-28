@@ -31,7 +31,7 @@ const ConfermaOrdine = (props) => {
 
         window.scrollTo(0,0);
 
-        fetch('https://ordinasicuro.it/index.php/api/info_ordine/' + idOrdine)
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/info_ordine/' + idOrdine)
             .then(response => response.json())
             .then(json => {
                 setInfoNegozio(json.get_negozio);

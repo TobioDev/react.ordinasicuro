@@ -6,7 +6,7 @@ import Home from './Home'
 import './App.css';
 import 'animate.css/animate.css' 
 
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import NavbarOS from './NavbarOS';
 import Negozio from './Negozio';
 import ConfermaOrdine from './ConfermaOrdine';
@@ -218,6 +218,31 @@ function App() {
 				path='/cookie-policy'
 				exact
 				component={CookiePolicy} />
+
+			{/* Redirect siti web */}
+			<Route exact path="/season">
+				{<Redirect to="/negozio/13" />}
+			</Route>
+
+			<Route exact path="/negozio/8/farmerk-market-ristorante">
+				{<Redirect to="/negozio/8" />}
+			</Route>
+
+			<Route exact path="/negozio/14/la-chiccheria">
+				{<Redirect to="/negozio/14" />}
+			</Route>
+
+			<Route exact path="/negozio/9/cooperativa-il-talento">
+				{<Redirect to="/negozio/9" />}
+			</Route>
+
+			<Route exact path="/negozio/9/cooperativa-il-talento">
+				{<Redirect to="/negozio/9" />}
+			</Route>
+
+			<Route exact path="/negozio/2/farmer-market">
+				{<Redirect to="/negozio/2" />}
+			</Route>
 
 		</Fragment>
 

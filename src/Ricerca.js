@@ -20,7 +20,7 @@ const Ricerca = (props) => {
 
     const nuovaRicerca = () => {
 
-        fetch('https://ordinasicuro.it/index.php/api/ricerca/' + termineNuovaRicerca)
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/ricerca/' + termineNuovaRicerca)
         .then(response => response.json())
         //.then( text => console.log(text))
         .then(json => {
@@ -54,7 +54,7 @@ const Ricerca = (props) => {
 
         window.scrollTo(0,0);
 
-        fetch('https://ordinasicuro.it/index.php/api/ricerca/' + termineRicerca)
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/ricerca/' + termineRicerca)
             .then(response => response.json())
             //.then( text => console.log(text))
             .then(json => {

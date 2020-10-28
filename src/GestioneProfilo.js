@@ -69,7 +69,7 @@ const GestioneProfilo = () => {
 
         }
         else{
-            fetch('https://ordinasicuro.it/index.php/api/get_profilo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio +'/' )
+            fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/get_profilo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio +'/' )
             .then(response => response.json())
             .then(json => {
                 setInfoNegozio(json.get_negozio);
@@ -141,7 +141,7 @@ const GestioneProfilo = () => {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: JSON.stringify(data)
         };
-        fetch('https://ordinasicuro.it/api/aggiorna_profilo/', requestOptions)
+        fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_profilo/', requestOptions)
             .then(response => response.text())
             .then(dati => {
                 console.log(dati);

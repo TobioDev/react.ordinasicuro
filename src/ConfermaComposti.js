@@ -24,7 +24,7 @@ const ConfermaComposti = (props) => {
 
         window.scrollTo(0,0);
 
-        fetch('https://ordinasicuro.it/index.php/api/info_componenti/' + props.match.params.id_ordine)
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/info_componenti/' + props.match.params.id_ordine)
             .then(response => response.json())
             .then(json => {
                 setComponentiArticolo(json.get_componenti_articolo_da_negozio);
@@ -57,7 +57,7 @@ const ConfermaComposti = (props) => {
                                                                                                                                     .map( componenteFiltrato => {
                                                                                                                                         let url_temp = '';
                                                                                                                                         if(componenteFiltrato.url_immagine !== ''){
-                                                                                                                                            url_temp = 'https://www.ordinasicuro.it/img_componenti/img_componenti_compressed/'+componenteFiltrato.url_immagine;
+                                                                                                                                            url_temp = 'https://www.ordinasicuro.it/670914_920408/lib/img_componenti/img_componenti_compressed/'+componenteFiltrato.url_immagine;
                                                                                                                                         }
                                                                                                                                         arrayOpzioniComponenti.push({key: componenteFiltrato.id, text: componenteFiltrato.nome, value: componenteFiltrato.id, image: { avatar: true, src: url_temp }})
                                                                                                                                     } )
@@ -102,7 +102,7 @@ const ConfermaComposti = (props) => {
         //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         //         body: JSON.stringify(arrayTotale)
         //     };
-        //     fetch('https://ordinasicuro.it/api/aggiungi_associazioni_ordine_componente_articolo', requestOptions)
+        //     fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiungi_associazioni_ordine_componente_articolo', requestOptions)
         //     .then(response => response.json())
         //     .then(dati => {
         //         if(dati.presenza_errori===false){
