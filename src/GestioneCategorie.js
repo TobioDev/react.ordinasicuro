@@ -49,7 +49,8 @@ const GestioneCategorie = () => {
                                                             key={categoria.id} 
                                                             id={categoria.id} 
                                                             nome={categoria.nome}
-                                                            id_negozio={categoria.id_negozio} 
+                                                            id_negozio={categoria.id_negozio}
+                                                            posizione={categoria.ordine} 
                                                         />
                                                     )
                                                 )

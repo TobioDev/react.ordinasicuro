@@ -15,7 +15,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-const CategoriaPannello = ({id, nome, id_negozio}) => {
+const CategoriaPannello = ({id, nome, id_negozio, posizione}) => {
 
     let escapeNome = nome.replace("\\\'", "\'")
 
@@ -34,6 +34,45 @@ const CategoriaPannello = ({id, nome, id_negozio}) => {
 
     const classes = useStyles();
     //##############################################################
+
+    const handlePosizione = (e) => {
+
+        if(e.target.value!== ''){
+
+            const formDataPosizione = new FormData();
+
+            formDataPosizione.append('id_categoria_articolo', id);
+            formDataPosizione.append('nuova_posizione', e.target.value);
+
+            console.log(formDataPosizione.get('id_categoria_articolo'));
+            console.log(formDataPosizione.get('nuova_posizione'));
+
+            const requestOptionsPosizione = {
+                method: 'POST',
+                body: formDataPosizione
+            };
+
+
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_ordine_categoria/', requestOptionsPosizione)
+                .then(response => response.text())
+                .then(dati => {
+                    console.log(dati);
+                    if(dati==="ok"){
+                        console.log('aggiornato');
+
+                    }
+                    else{
+
+                        console.log('errore');
+
+
+                    }
+
+                });
+
+        }
+
+    }
 
     return (
         <Fragment>
@@ -85,6 +124,7 @@ const CategoriaPannello = ({id, nome, id_negozio}) => {
                 <Divider/>
                 <div className="w-100 mv2 flex items-start justify-end">
                     {/* <p className="w-40 f5 titolo flex justify-end"><b>{prezzoUnita()}</b></p> */}
+                    <p>Posizione di visualizzazione nel tuo negozio: <input type="number" onChange={(e)=>handlePosizione(e)} step="1" placeholder={posizione} style={{width: "50px"}}></input></p>
                 </div>
 
             </div>
