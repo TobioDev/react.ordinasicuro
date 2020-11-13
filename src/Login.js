@@ -93,11 +93,11 @@ const Login = ({}) => {
     return (
 
         <SezioneBoxed>
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          Credenziali errate!
-        </Alert>
-      </Snackbar>
+          <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+              Credenziali errate!
+            </Alert>
+          </Snackbar>
             
 
             <Form onSubmit={handleSubmit(onSubmit)} nome="formLogin" id="formLogin">
