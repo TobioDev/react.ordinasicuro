@@ -15,15 +15,19 @@ import LinkIcon from '@material-ui/icons/Link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
+import { useSnackbar } from 'notistack';
+
+
 const CategoriaPannello = ({id, nome, id_negozio, posizione}) => {
 
+    const { enqueueSnackbar } = useSnackbar();
+
     let escapeNome = nome.replace("\\\'", "\'")
-
     let history = useHistory();
-
     let randomNumber = Math.floor(1000 + Math.random() * 9000);
 
     //Stile per Material UI ##########################################
+    //##################################################################
     const useStyles = makeStyles((theme) => ({
         root: {
           '& > *': {
@@ -33,6 +37,7 @@ const CategoriaPannello = ({id, nome, id_negozio, posizione}) => {
     }));
 
     const classes = useStyles();
+    //##################################################################
     //##############################################################
 
     const handlePosizione = (e) => {
@@ -58,12 +63,18 @@ const CategoriaPannello = ({id, nome, id_negozio, posizione}) => {
                 .then(dati => {
                     console.log(dati);
                     if(dati==="ok"){
-                        console.log('aggiornato');
+                        let message = "Posizione aggiornata!"
+                        enqueueSnackbar(message, { 
+                            variant: 'success',
+                        });
 
                     }
                     else{
 
-                        console.log('errore');
+                        let message = "Errore nell'aggiornamento della posizione!"
+                        enqueueSnackbar(message, { 
+                            variant: 'error',
+                        });
 
 
                     }
