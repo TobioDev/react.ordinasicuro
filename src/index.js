@@ -6,6 +6,8 @@ import App from './App';
 import 'tachyons';
 import 'semantic-ui-css/semantic.min.css'
 
+import { SnackbarProvider } from 'notistack';
+
 
 import { BrowserRouter } from 'react-router-dom'
 
@@ -14,7 +16,9 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <SnackbarProvider maxSnack={3}>
+        <App />
+      </SnackbarProvider>
     </BrowserRouter> 
   </React.StrictMode>,
   document.getElementById('root')

@@ -11,10 +11,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { HashLink as Link } from 'react-router-hash-link';
 
+import { useSnackbar } from 'notistack';
+
 import { id } from 'date-fns/esm/locale';
 
 const ModificaArticolo = (props) => {
 
+    window.scrollTo(0,0);
+    let history = useHistory();
+
+    const { enqueueSnackbar } = useSnackbar();
     const { register, handleSubmit, setValue, getValues} = useForm();
 
     setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio);
@@ -60,10 +66,6 @@ const ModificaArticolo = (props) => {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
     //Fine codice per snackbar ui-material ---------------
-
-    window.scrollTo(0,0);
-
-    let history = useHistory();
 
     useEffect(() => {
 
@@ -221,9 +223,14 @@ const ModificaArticolo = (props) => {
 
 
     const onSubmit = data => {
-        console.log(data);
-        console.log(data.nuova_immagine_articolo);
+        // console.log(data);
+        // console.log(data.nuova_immagine_articolo);
         setSaving(true);
+        let message = "Attendere, salvataggio in corso..."
+        enqueueSnackbar(message, { 
+            autoHideDuration: 2000,
+            variant: 'success',
+        });
 
         if(data.nome_articolo !== '' &&  data.descrizione_articolo !== '' && data.unita_misura_articolo !== '' && data.prezzo_articolo !== '' ){
 
@@ -251,7 +258,11 @@ const ModificaArticolo = (props) => {
                                     }
                                     else{
                                         setSaving(false);
-                                        setOpen(true);
+                                        //setOpen(true);
+                                        let message = "Si è verificato un errore nel salvataggio del tuo prodotto. Riprovare più tardi."
+                                        enqueueSnackbar(message, { 
+                                            variant: 'error',
+                                        });
                                     }
                                 });
                     }
@@ -260,7 +271,11 @@ const ModificaArticolo = (props) => {
                             history.goBack();
                         }else{
                             setSaving(false);
-                            setOpen(true);
+                            //setOpen(true);
+                            let message = "Si è verificato un errore nel salvataggio del tuo prodotto. Riprovare più tardi."
+                            enqueueSnackbar(message, { 
+                                variant: 'error',
+                            });
                         }
                         
                     }
@@ -279,11 +294,11 @@ const ModificaArticolo = (props) => {
     return (
         <Fragment>
             <div className="mt6">
-                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                {/* <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error">
                         Si è verificato un errore nel salvataggio del tuo prodotto.
                     </Alert>
-                </Snackbar>
+                </Snackbar> */}
 
                 <Modal
                     closeIcon

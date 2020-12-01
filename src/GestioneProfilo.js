@@ -9,16 +9,17 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon, Checkbox, Menu} from 'semantic-ui-react'
+import { Button, Form, List, Label, Icon, Checkbox, Menu, Modal, Dropdown} from 'semantic-ui-react'
 import ComponentePannello from './ComponentePannello';
-
 
 const GestioneProfilo = () => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
+    const { register:registerDomicilio, handleSubmit:handleSubmitDomicilio, setValue:setValueDomicilio, getValues:getValuesDomicilio} = useForm();
 
     const [saving, setSaving] = React.useState(false);
     const [open, setOpen] = React.useState(false);
+    const [openModaleDomicilio, setOpenModaleDomicilio] = React.useState(false);
 
     const [infoNegozio, setInfoNegozio] = useState({});
     const [nome, setNome] = useState('');
@@ -27,14 +28,20 @@ const GestioneProfilo = () => {
     const [zoneConsegna, setZoneConsegna] = useState('');
     const [asporto, setAsporto] = useState(false);
     const [visibile, setVisibile] = useState(false);
-    const [fasceDomicilio, setFasceDomicilio] = useState({});
-    const [fasceAsporto, setFasceAsporto] = useState({});
+    const [fasceDomicilio, setFasceDomicilio] = useState([]);
+    const [fasceAsporto, setFasceAsporto] = useState([]);
+    const [giorniSelezionatiDomicilio, setGiorniSelezionatiDomicilio] = useState([]);
 
-    setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio );
+    const arrayGiorni = [{key: 1, text: "Lunedì", value: 1}, {key: 2, text: "Martedì", value: 2}, {key: 3, text: "Mercoledì", value: 3}, {key: 4, text: "Giovedì", value: 4}, {key: 5, text: "Venerdì", value: 5}, {key: 6, text: "Sabato", value: 6}, {key: 7, text: "Domenica", value: 7}];
+
+    const handleChangeGiorni= (e, {value} ) => {
+        
+        setGiorniSelezionatiDomicilio(value);
+        setValueDomicilio("giorni", JSON.stringify(value));
+
+    }
 
     let history = useHistory();
-
-    window.scrollTo(0,0);
 
     //Codice per snackbar ui-material ----------
     const useStyles = makeStyles((theme) => ({
@@ -62,6 +69,8 @@ const GestioneProfilo = () => {
 
     useEffect(() => {
 
+        window.scrollTo(0,0);
+
         if(localStorage.getItem('infoUtente') === null){
 
             localStorage.removeItem('infoUtente');
@@ -69,6 +78,8 @@ const GestioneProfilo = () => {
 
         }
         else{
+            setValue('id_negozio', JSON.parse(localStorage.getItem('infoUtente')).id_negozio );
+
             fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/get_profilo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio +'/' )
             .then(response => response.json())
             .then(json => {
@@ -130,6 +141,13 @@ const GestioneProfilo = () => {
         setAsporto(!asporto);
 
     }
+
+    const displayFasceAsporto = fasceAsporto.map( 
+        fascia => (
+        <List.Item as='li'>{fascia.inizio.substring(0,5)} - {fascia.fine.substring(0,5)} / {fascia['1']==='1' && (<>Lunedì - </>)} {fascia['2']==='1' && (<>Martedì - </>)} {fascia['3']==='1' && (<>Mercoledì - </>)} {fascia['4']==='1' && (<>Giovedì - </>)} {fascia['5']==='1' && (<>Venerdì - </>)} {fascia['6']==='1' && (<>Sabato - </>)} {fascia['7']==='1' && (<>Domenica</>)} </List.Item>
+        )
+        
+    )
         
 
     const onSubmit = data => {
@@ -153,6 +171,34 @@ const GestioneProfilo = () => {
                 }
                 
             });
+
+        
+    }
+
+    const onSubmitDomicilio = data => {
+        console.log(data);
+
+        //alla fine chiudo il modale dell'aggiunta Fascia Domicilio
+        setOpenModaleDomicilio(false);
+        // setSaving(true);
+
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        //     body: JSON.stringify(data)
+        // };
+        // fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_profilo/', requestOptions)
+        //     .then(response => response.text())
+        //     .then(dati => {
+        //         console.log(dati);
+        //         if( dati === 'ok'){
+        //             history.goBack();
+        //         }else{
+        //             setSaving(false);
+        //             setOpen(true);
+        //         }
+                
+        //     });
 
         
     }
@@ -230,7 +276,7 @@ const GestioneProfilo = () => {
                             <h2 >Il tuo profilo - {nome}</h2>
                             <p>In questa pagina puoi modificare le informazioni principali del tuo negozio. <br/> Una volta effettuate le modifiche premi il bottone "Salva" in fondo alla pagina per non perdere le modifiche effettuate!</p>
 
-                            <Form onSubmit={handleSubmit(onSubmit)} nome="formModificaProfilo" id="formModificaProfilo" enctype='multipart/form-data'>
+                            <Form onSubmit={handleSubmit(onSubmit)} name="formModificaProfilo" id="formModificaProfilo" enctype='multipart/form-data'>
                                 <Form.Field>
                                     <label><h3>Visibilità del tuo negozio:</h3></label>
                                     <Checkbox ref={register} name="visibile" id="visibile" checked={visibile} onChange={handleVisibile} toggle className="mt2"/>
@@ -260,6 +306,56 @@ const GestioneProfilo = () => {
                                     <Checkbox ref={register} name="asporto" id="asporto" checked={asporto} onChange={handleAsporto} toggle className="mt2"/>
                                     <br />
                                     <Label pointing>Scegli se abilitare la funzione per permettere ai tuoi clienti di richiedere l'Asporto</Label>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label><h3>Fasce orarie consegna a domicilio:</h3></label>
+                                    <List as='ul'>
+                                        {displayFasceAsporto}
+                                    </List>
+                                    
+                                    <Modal
+                                        onClose={() => setOpenModaleDomicilio(false)}
+                                        onOpen={() => setOpenModaleDomicilio(true)}
+                                        open={openModaleDomicilio}
+                                        trigger={<Button primary type="button">Inserisci una nuova fascia per la consegna a domicilio</Button>}
+                                    >
+                                        <Modal.Header>Nuova fascia per consegna a domicilio</Modal.Header>
+                                        <Modal.Content>
+                                            <Form onSubmit={handleSubmitDomicilio(onSubmitDomicilio)} name="formFasciaDomicilio" id="formFasciaDomicilio" enctype='multipart/form-data'>
+                                                <Form.Field>
+                                                    <label><h3>Ora di inizio:</h3></label>
+                                                    <input type="time" name="inizio_domicilio" id="inizio_domicilio" ref={registerDomicilio} step="1800"></input>
+                                                    <br />
+                                                </Form.Field>
+                                                <Form.Field>
+                                                    <label><h3>Ora di fine:</h3></label>
+                                                    <input type="time" name="fine_domicilio" ref={registerDomicilio}></input>
+                                                    <br />
+                                                </Form.Field>
+                                                <Form.Field>
+                                                <label><h3>In quali giorni è valida questa fascia oraria?</h3></label>
+                                                </Form.Field>
+                                                <Dropdown ref={registerDomicilio} fluid multiple selection options={arrayGiorni} value={giorniSelezionatiDomicilio} onChange={handleChangeGiorni} />
+                                            </Form>
+                                            
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='black' onClick={() => setOpenModaleDomicilio(false)}>
+                                            Annulla
+                                            </Button>
+                                            <Button
+                                            content="Aggiungi fascia"
+                                            labelPosition='right'
+                                            icon='checkmark'
+                                            //Strana soluzione per avere funzioni multiple nell'onclick con handleSubmit
+                                            // onClick={handleSubmitDomicilio( data =>{onSubmitDomicilio(data); setOpenModaleDomicilio(false) }) } 
+                                            onClick={handleSubmitDomicilio(onSubmitDomicilio)}
+                                            positive
+                                            />
+                                        </Modal.Actions>
+                                        </Modal>
+                                    <br />
+                                    <Label pointing>Inserisci qui le fasce orarie in cui sei disposto a consegnare a domicilio</Label>
                                 </Form.Field>
 
                                 <Form.Field>

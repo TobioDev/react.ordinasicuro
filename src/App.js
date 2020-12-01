@@ -65,6 +65,7 @@ function App() {
 			<Helmet>
                 <meta charSet="utf-8" />
                 <title>Ordina Sicuro - Menu e Vetrina Digitale</title>
+				<meta name="description" content="Ordina Sicuro è menu digitale con QR-Code e vetrina digitale per i tuoi prodotti. Scarica ora l'app per il tuo smartphone."></meta>
                 <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
 				<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
 				<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"></link>
