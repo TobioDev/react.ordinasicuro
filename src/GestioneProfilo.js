@@ -178,27 +178,29 @@ const GestioneProfilo = () => {
     const onSubmitDomicilio = data => {
         console.log(data);
 
-        //alla fine chiudo il modale dell'aggiunta Fascia Domicilio
-        setOpenModaleDomicilio(false);
+        
         // setSaving(true);
 
-        // const requestOptions = {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        //     body: JSON.stringify(data)
-        // };
-        // fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_profilo/', requestOptions)
-        //     .then(response => response.text())
-        //     .then(dati => {
-        //         console.log(dati);
-        //         if( dati === 'ok'){
-        //             history.goBack();
-        //         }else{
-        //             setSaving(false);
-        //             setOpen(true);
-        //         }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: JSON.stringify(data)
+        };
+        fetch('https://ordinasicuro.it/670914_920408/lib/api/crea_fascia_domicilio/', requestOptions)
+            .then(response => response.text())
+            .then(dati => {
+                console.log(dati);
+                // if( dati === 'ok'){
+                //     history.goBack();
+                // }else{
+                //     setSaving(false);
+                //     setOpen(true);
+                // }
                 
-        //     });
+            });
+
+        //alla fine chiudo il modale dell'aggiunta Fascia Domicilio
+        setOpenModaleDomicilio(false);
 
         
     }
