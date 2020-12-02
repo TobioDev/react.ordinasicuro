@@ -8,6 +8,8 @@ import SezioneBoxed from './SezioneBoxed';
 import ItemRiepilogoOrdine from './ItemRiepilogoOrdine';
 import ModuloInvioOrdine from './ModuloInvioOrdine';
 
+import moment from 'moment';
+
 const ConfermaOrdine = (props) => {
     
     const [infoNegozio, setInfoNegozio] = useState([]);
@@ -21,11 +23,13 @@ const ConfermaOrdine = (props) => {
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
     const [associazioniOrdineComponenteArticolo, setAssociazioniOrdineComponenteArticolo] = useState([]);
-    const [oraInizioDomicilio, setoraInizioDomicilio] = useState('');
-    const [oraFineDomicilio, setoraFineDomicilio] = useState('');
+    const [fasceDomicilio, setFasceDomicilio] = useState([]);
 
-    const idOrdine = props.match.params.id_ordine              
+    const idOrdine = props.match.params.id_ordine
+    
+    var arrayOrariDomicilio = [];
 
+    let prezzoTotaleOrdine = 0;
 
     useEffect(() => {
 
@@ -39,21 +43,65 @@ const ConfermaOrdine = (props) => {
                 setArticoliOrdinati(json.get_articoli_ordinati);
                 setInfoArticoliOrdinati(json.get_info_articoli_ordinati);
                 setCategorieArticoli(json.get_categorie_articoli);
-                setoraInizioDomicilio();
-                setoraFineDomicilio();
                 setOraInizioAsporto(json.ora_inizio_asporto);
                 setOraFineAsporto(json.ora_fine_asporto);
                 setComponentiArticolo(json.get_componenti_articolo);
                 setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
                 setAssociazioniOrdineComponenteArticolo(json.get_associazioni_ordine_componente_articolo);
+                setFasceDomicilio(json.get_fasce_domicilio);
                 setVisibilitaLoader(false)
                 console.log(json);
-                    }
+
+                }
             );
 
     }, []);
 
-    let prezzoTotaleOrdine = 0;
+    if(fasceDomicilio.length>0){
+
+        fasceDomicilio.map( fascia => {
+            //creo array con ore,minuti,secondi per inizio della fascia
+            let inizio = fascia.inizio.split(':');
+            let inizio_ora = parseInt(inizio[0])
+            let inizio_minuti = parseInt(inizio[1])
+            //creo array con ore,minuti,secondi per fine della fascia
+            let fine = fascia.fine.split(':');
+            let fine_ora = parseInt(inizio[0])
+            let fine_minuti = parseInt(inizio[1])
+
+            const start = moment(fascia.inizio,"HH:mm:ss");
+            const end = moment(fascia.fine,"HH:mm:ss");
+
+            //ORO COLATO
+            //###################################
+            do {
+                arrayOrariDomicilio.push(moment(start).format('HH:mm'));
+            } while (start.add(30, 'minutes').diff(end) <= 0);
+            //######################
+
+        })
+
+    }
+    else{
+
+        const start = moment('00:00:00',"HH:mm:ss");
+        const end = moment("23:59:00","HH:mm:ss");
+
+        //ORO COLATO
+        //###################################
+        do {
+            arrayOrariDomicilio.push(moment(start).format('HH:mm'));
+        } while (start.add(30, 'minutes').diff(end) <= 0);
+        //######################
+
+    }
+
+    
+
+    //metto le ore nell'array in ordine crescente
+    arrayOrariDomicilio = arrayOrariDomicilio.sort();
+
+    
 
     const stampaElementiRiassunto = articoliOrdinati
                                     .map( articoloOrdinato => 
@@ -116,7 +164,7 @@ const ConfermaOrdine = (props) => {
                     <Header as='h3' block textAlign="center" className="w-100">
                         COMPLETA L'ORDINE CON I TUOI DATI
                     </Header>
-                    <ModuloInvioOrdine infoNegozio={infoNegozio} idOrdine={idOrdine} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto}/>
+                    <ModuloInvioOrdine infoNegozio={infoNegozio} idOrdine={idOrdine} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto} arrayOrariDomicilio = {arrayOrariDomicilio}/>
                 </SezioneBoxed>    
             </Fragment>
         )

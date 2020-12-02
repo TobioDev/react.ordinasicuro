@@ -11,7 +11,7 @@ import it from "date-fns/locale/it";
 // import setMinutes from 'date-fns/setMinutes'
 // import getHours from 'date-fns/setMinutes'
 
-const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsporto}) => {
+const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsporto, arrayOrariDomicilio}) => {
 
     registerLocale("it", it);
 
@@ -81,8 +81,14 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
 
     },[])
 
+    //Opzioni per orari fasce consegna a domicilio
+    let options_fasce_domicilio = []
+    arrayOrariDomicilio.map( orario => {
+        options_fasce_domicilio.push( { key: orario, text: orario, value: orario+":00" } )
+    })
+    console.log({options_fasce_domicilio})
 
-    //Opzioni modalità consegna/asporto
+    //Opzioni modalità consegna/asporto per SELECT
     let options = []
     if(infoNegozio.asporto==='1'){
         options = [ { key: 'domicilio', text: 'A domicilio', value: 'domicilio' }, { key: 'asporto', text: 'Asporto', value: 'asporto' },]
@@ -107,11 +113,17 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
         setCampoFormModificato(name);
         setValue(name, value);
     }
-    const handleChangeHookFormDatepicker = ( date ) => {
-        console.log(date);
-        setStartDate(date);
-        setValue('orario', date.toTimeString().split(' ')[0]);
-    }
+    // const handleChangeHookFormDatepicker = ( date ) => {
+    //     console.log(date);
+    //     setStartDate(date);
+    //     setValue('orario', date.toTimeString().split(' ')[0]);
+    // }
+
+    // const handleChangeOrario = ( e ) => {
+    //     console.log(e.target.value);
+    //     // setStartDate(date);
+    //     // setValue('orario', date.toTimeString().split(' ')[0]);
+    // }
 
     useEffect( (campoFormModificato) => {
         register({campoFormModificato});
@@ -120,34 +132,38 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
     let history = useHistory();
 
     const onSubmit = data => {
-        console.log(data);
+        
 
-        if(typeof data.orario !== 'undefined'){
+        if(data.orario !== undefined && data.tipologia_consegna !== undefined){
+            console.log(data);
 
-            localStorage.setItem('infoOrdine', JSON.stringify(data));
+            // localStorage.setItem('infoOrdine', JSON.stringify(data));
 
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: JSON.stringify(data)
-            };
-            fetch('https://ordinasicuro.it/670914_920408/lib/api/conferma_ordine', requestOptions)
-                .then(response => response.json())
-                .then(dati => {
-                    console.log(dati);
-                    if(dati.presenza_errori===false){
-                        //alert('Successo!');
-                        history.push("/ordine-inviato/");
-                    }
-                    else{
-                        //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                        alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-                    }
-                });
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            //     body: JSON.stringify(data)
+            // };
+            // fetch('https://ordinasicuro.it/670914_920408/lib/api/conferma_ordine', requestOptions)
+            //     .then(response => response.json())
+            //     .then(dati => {
+            //         console.log(dati);
+            //         if(dati.presenza_errori===false){
+            //             //alert('Successo!');
+            //             history.push("/ordine-inviato/");
+            //         }
+            //         else{
+            //             //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+            //             alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+            //         }
+            //     });
 
-        }else{
-            alert("Completa tutti i campi richiesti prima di procedere.")
         }
+        else{
+            alert('Compilare tutti i campi richiesti prima di procedere!')
+        }
+
+        
 
         
     }
@@ -220,6 +236,10 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                         required
                     />
                     <Form.Field>
+                        <label>{fraseOrario}</label>
+                        <Select placeholder='Scegli un orario' selection options={options_fasce_domicilio} name="orario" id="orario" required onChange={handleChangeHookForm}/>
+                    </Form.Field>
+                    {/* <Form.Field>
                         <label>{fraseOrario}*</label>
                         <DatePicker
                             // onChange={date => setStartDate(date)}
@@ -244,7 +264,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                             id="orario"
                             required
                         />
-                    </Form.Field>
+                    </Form.Field> */}
                 </Form.Group>
                 <Form.Field>
                     <TextArea 
