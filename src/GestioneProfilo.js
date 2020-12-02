@@ -12,14 +12,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Form, List, Label, Icon, Checkbox, Menu, Modal, Dropdown} from 'semantic-ui-react'
 import ComponentePannello from './ComponentePannello';
 
+import { useSnackbar } from 'notistack';
+
 const GestioneProfilo = () => {
 
     const { register, handleSubmit, setValue, getValues} = useForm();
     const { register:registerDomicilio, handleSubmit:handleSubmitDomicilio, setValue:setValueDomicilio, getValues:getValuesDomicilio} = useForm();
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const [saving, setSaving] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    const [openModaleDomicilio, setOpenModaleDomicilio] = React.useState(false);
+    const [openModaleDomicilio, setOpenModaleDomicilio] = useState(false);
+    const [openModaleCancellaDomicilio, setOpenModaleCancellaDomicilio] = useState(false);
+
+    const [fasciaDomicilioDaCancellare, setFasciaDomicilioDaCancellare] = useState('');
 
     const [infoNegozio, setInfoNegozio] = useState({});
     const [nome, setNome] = useState('');
@@ -115,9 +122,6 @@ const GestioneProfilo = () => {
 
     }, [])
 
-    console.log('check', asporto);
-
-
     const handleVisibile = () => {
 
         if(visibile===false){
@@ -142,9 +146,58 @@ const GestioneProfilo = () => {
 
     }
 
-    const displayFasceAsporto = fasceAsporto.map( 
+    const eliminaFasciaDomicilio = (id_fascia_domicilio) => {
+
+        let formData = new FormData();
+        formData.append('id_fascia_domicilio', id_fascia_domicilio);
+        
+        //per usare formData non devo utilizzare Header nè il json stringify sul body
+        const requestOptions = {
+            method: 'POST',
+            body: formData
+        };
+        fetch('https://ordinasicuro.it/670914_920408/lib/api/elimina_fascia_domicilio/', requestOptions)
+            .then(response => response.text())
+            .then(dati => {
+                console.log(dati);
+                if( dati === 'ok'){
+                    let message = "Fascia Domicilio eliminata."
+                    enqueueSnackbar(message, { 
+                        autoHideDuration: 2000,
+                        variant: 'success',
+                    });
+
+                    //Faccio il fetch delle info profil oper aggiornare la visualizzazione delle fasce domicilio
+                    fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/get_profilo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio +'/' )
+                    .then(response => response.json())
+                    .then(json => {
+                        setFasceDomicilio(json.get_fasce_domicilio);
+                    })
+
+                    setOpenModaleCancellaDomicilio(false);
+
+                }else{
+                    let message = "Errore nell'eliminazione della fascia. Riprovare più tardi"
+                    enqueueSnackbar(message, { 
+                        autoHideDuration: 2000,
+                        variant: 'error',
+                    });
+                }
+                
+            });
+
+    }
+
+    const displayFasceDomicilio = fasceDomicilio.map( 
         fascia => (
-        <List.Item as='li'>{fascia.inizio.substring(0,5)} - {fascia.fine.substring(0,5)} / {fascia['1']==='1' && (<>Lunedì - </>)} {fascia['2']==='1' && (<>Martedì - </>)} {fascia['3']==='1' && (<>Mercoledì - </>)} {fascia['4']==='1' && (<>Giovedì - </>)} {fascia['5']==='1' && (<>Venerdì - </>)} {fascia['6']==='1' && (<>Sabato - </>)} {fascia['7']==='1' && (<>Domenica</>)} </List.Item>
+            <Fragment>
+
+                <List.Item as='li'>
+                    {fascia.inizio.substring(0,5)} - {fascia.fine.substring(0,5)} / {fascia['1']==='1' && (<>Lunedì - </>)} {fascia['2']==='1' && (<>Martedì - </>)} {fascia['3']==='1' && (<>Mercoledì - </>)} {fascia['4']==='1' && (<>Giovedì - </>)} {fascia['5']==='1' && (<>Venerdì - </>)} {fascia['6']==='1' && (<>Sabato - </>)} {fascia['7']==='1' && (<>Domenica</>)}  <Button negative type="button" icon="trash" size="mini" style={{marginLeft: "10px"}} onClick={()=>{setFasciaDomicilioDaCancellare(fascia.id); setOpenModaleCancellaDomicilio(true);}}/>
+                </List.Item>
+
+            </Fragment>
+            
         )
         
     )
@@ -177,30 +230,60 @@ const GestioneProfilo = () => {
 
     const onSubmitDomicilio = data => {
         console.log(data);
+        console.log(data.giorni);
 
-        
-        // setSaving(true);
+        //devo aggiungere il conrtollo undefined per data.giorni perchè non viene aggiunto in automatico il valore giorni a data dal form, trattandosi di una select di semantic UI
+        if( (data.giorni !=='' && data.giorni!==undefined) && data.inizio_domicilio !=='' && data.fine_domicilio !==''){
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: JSON.stringify(data)
-        };
-        fetch('https://ordinasicuro.it/670914_920408/lib/api/crea_fascia_domicilio/', requestOptions)
-            .then(response => response.text())
-            .then(dati => {
-                console.log(dati);
-                // if( dati === 'ok'){
-                //     history.goBack();
-                // }else{
-                //     setSaving(false);
-                //     setOpen(true);
-                // }
-                
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(data)
+            };
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/crea_fascia_domicilio/', requestOptions)
+                .then(response => response.text())
+                .then(dati => {
+                    console.log(dati);
+                    if( dati === 'ok'){
+
+                        let message = "Nuova fascia aggiunta!"
+                        enqueueSnackbar(message, { 
+                            autoHideDuration: 2000,
+                            variant: 'success',
+                        });
+
+                        //Faccio il fetch delle info profil oper aggiornare la visualizzazione delle fasce domicilio
+                        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/get_profilo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio +'/' )
+                        .then(response => response.json())
+                        .then(json => {
+                            setFasceDomicilio(json.get_fasce_domicilio);
+                        })
+
+                        //alla fine chiudo il modale dell'aggiunta Fascia Domicilio
+                        setOpenModaleDomicilio(false);
+
+                    }else{
+                        let message = "Errore nell'aggiunta della fascia. Riprovare più tardi"
+                        enqueueSnackbar(message, { 
+                            autoHideDuration: 2000,
+                            variant: 'error',
+                        });
+                    }
+
+                });
+
+        }
+        else{
+
+            let message = "Attenzione! Aggiungere tutte le info richieste!"
+            enqueueSnackbar(message, { 
+                autoHideDuration: 2000,
+                variant: 'error',
             });
 
-        //alla fine chiudo il modale dell'aggiunta Fascia Domicilio
-        setOpenModaleDomicilio(false);
+        }        
+
+        
 
         
     }
@@ -312,8 +395,31 @@ const GestioneProfilo = () => {
                                 <Form.Field>
                                     <label><h3>Fasce orarie consegna a domicilio:</h3></label>
                                     <List as='ul'>
-                                        {displayFasceAsporto}
+                                        {displayFasceDomicilio}
                                     </List>
+
+                                    <Modal
+                                        onClose={() => setOpenModaleCancellaDomicilio(false)}
+                                        onOpen={() => setOpenModaleCancellaDomicilio(true)}
+                                        open={openModaleCancellaDomicilio}
+                                        >
+                                        <Modal.Header>Elimina fascia oraria</Modal.Header>
+                                        <Modal.Content>
+                                            <p>Vuoi davvero eliminare questa fascia oraria per la consegna a domicilio?</p>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='black' onClick={() => setOpenModaleCancellaDomicilio(false)}>
+                                            Annulla
+                                            </Button>
+                                            <Button
+                                            content="Elimina questa fascia"
+                                            labelPosition='right'
+                                            icon='checkmark'
+                                            onClick={() => eliminaFasciaDomicilio(fasciaDomicilioDaCancellare)}
+                                            negative
+                                            />
+                                        </Modal.Actions>
+                                    </Modal>
                                     
                                     <Modal
                                         onClose={() => setOpenModaleDomicilio(false)}
@@ -324,6 +430,7 @@ const GestioneProfilo = () => {
                                         <Modal.Header>Nuova fascia per consegna a domicilio</Modal.Header>
                                         <Modal.Content>
                                             <Form onSubmit={handleSubmitDomicilio(onSubmitDomicilio)} name="formFasciaDomicilio" id="formFasciaDomicilio" enctype='multipart/form-data'>
+                                                <input type="hidden" ref={registerDomicilio} name="id_negozio" id="id_negozio" value={JSON.parse(localStorage.getItem('infoUtente')).id_negozio}/>
                                                 <Form.Field>
                                                     <label><h3>Ora di inizio:</h3></label>
                                                     <input type="time" name="inizio_domicilio" id="inizio_domicilio" ref={registerDomicilio} step="1800"></input>
@@ -355,7 +462,7 @@ const GestioneProfilo = () => {
                                             positive
                                             />
                                         </Modal.Actions>
-                                        </Modal>
+                                    </Modal>
                                     <br />
                                     <Label pointing>Inserisci qui le fasce orarie in cui sei disposto a consegnare a domicilio</Label>
                                 </Form.Field>
