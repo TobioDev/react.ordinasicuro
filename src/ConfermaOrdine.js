@@ -54,19 +54,25 @@ const ConfermaOrdine = (props) => {
 
     }, []);
 
+    console.log({fasceDomicilio})
     if(fasceDomicilio.length>0){
 
-        fasceDomicilio.map( fascia => {
+        let giorno_settimana_numero = moment().isoWeekday()
+        console.log({giorno_settimana_numero})
 
-            let start = moment(fascia.inizio,"HH:mm:ss");
-            let end = moment(fascia.fine,"HH:mm:ss");
+        fasceDomicilio
+            .filter( fascia =>{return fascia[giorno_settimana_numero] === '1'})
+            .map( fascia_filtrata => {
 
-            //ORO COLATO
-            //###################################
-            do {
-                arrayOrariDomicilio.push(moment(start).format('HH:mm'));
-            } while (start.add(30, 'minutes').diff(end) <= 0);
-            //######################
+                let start = moment(fascia_filtrata.inizio,"HH:mm:ss");
+                let end = moment(fascia_filtrata.fine,"HH:mm:ss");
+
+                //ORO COLATO
+                //###################################
+                do {
+                    arrayOrariDomicilio.push(moment(start).format('HH:mm'));
+                } while (start.add(30, 'minutes').diff(end) <= 0);
+                //######################
 
         })
 

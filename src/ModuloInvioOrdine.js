@@ -89,7 +89,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, arrayOrariDomicilio, arrayOr
             options_fasce_domicilio.push( { key: orario, text: orario, value: orario+":00" } )
         })
     }
-    console.log({options_fasce_domicilio})
+    //console.log({options_fasce_domicilio})
 
     //Opzioni per orari fasce asporto
     let options_fasce_asporto = []
