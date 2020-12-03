@@ -18,8 +18,6 @@ const ConfermaOrdine = (props) => {
     const [articoliOrdinati, setArticoliOrdinati] = useState([]);
     const [infoArticoliOrdinati, setInfoArticoliOrdinati] = useState([]);
     const [visibilitaLoader, setVisibilitaLoader] = useState(true);
-    const [oraInizioAsporto, setOraInizioAsporto] = useState('');
-    const [oraFineAsporto, setOraFineAsporto] = useState('');
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
     const [associazioniOrdineComponenteArticolo, setAssociazioniOrdineComponenteArticolo] = useState([]);
@@ -28,6 +26,7 @@ const ConfermaOrdine = (props) => {
     const idOrdine = props.match.params.id_ordine
     
     var arrayOrariDomicilio = [];
+    var arrayOrariAsporto = [];
 
     let prezzoTotaleOrdine = 0;
 
@@ -43,8 +42,6 @@ const ConfermaOrdine = (props) => {
                 setArticoliOrdinati(json.get_articoli_ordinati);
                 setInfoArticoliOrdinati(json.get_info_articoli_ordinati);
                 setCategorieArticoli(json.get_categorie_articoli);
-                setOraInizioAsporto(json.ora_inizio_asporto);
-                setOraFineAsporto(json.ora_fine_asporto);
                 setComponentiArticolo(json.get_componenti_articolo);
                 setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
                 setAssociazioniOrdineComponenteArticolo(json.get_associazioni_ordine_componente_articolo);
@@ -60,17 +57,9 @@ const ConfermaOrdine = (props) => {
     if(fasceDomicilio.length>0){
 
         fasceDomicilio.map( fascia => {
-            //creo array con ore,minuti,secondi per inizio della fascia
-            let inizio = fascia.inizio.split(':');
-            let inizio_ora = parseInt(inizio[0])
-            let inizio_minuti = parseInt(inizio[1])
-            //creo array con ore,minuti,secondi per fine della fascia
-            let fine = fascia.fine.split(':');
-            let fine_ora = parseInt(inizio[0])
-            let fine_minuti = parseInt(inizio[1])
 
-            const start = moment(fascia.inizio,"HH:mm:ss");
-            const end = moment(fascia.fine,"HH:mm:ss");
+            let start = moment(fascia.inizio,"HH:mm:ss");
+            let end = moment(fascia.fine,"HH:mm:ss");
 
             //ORO COLATO
             //###################################
@@ -82,24 +71,37 @@ const ConfermaOrdine = (props) => {
         })
 
     }
-    else{
+    // else{
 
-        const start = moment('00:00:00',"HH:mm:ss");
-        const end = moment("23:59:00","HH:mm:ss");
+    //     let start = moment('00:00:00',"HH:mm:ss");
+    //     let end = moment("23:59:00","HH:mm:ss");
 
-        //ORO COLATO
-        //###################################
-        do {
-            arrayOrariDomicilio.push(moment(start).format('HH:mm'));
-        } while (start.add(30, 'minutes').diff(end) <= 0);
-        //######################
+    //     //ORO COLATO
+    //     //###################################
+    //     do {
+    //         arrayOrariDomicilio.push(moment(start).format('HH:mm'));
+    //     } while (start.add(30, 'minutes').diff(end) <= 0);
+    //     //######################
 
-    }
-
-    
+    // }
 
     //metto le ore nell'array in ordine crescente
     arrayOrariDomicilio = arrayOrariDomicilio.sort();
+    
+
+    //per ora nell'asporto metto tutte e 24 le ore
+    let start_asporto = moment('00:00:00',"HH:mm:ss");
+    let end_asporto = moment("23:59:00","HH:mm:ss");
+
+    //ORO COLATO
+    //###################################
+    do {
+        arrayOrariAsporto.push(moment(start_asporto).format('HH:mm'));
+    } while (start_asporto.add(30, 'minutes').diff(end_asporto) <= 0);
+    //######################
+
+    //metto le ore nell'array in ordine crescente
+    arrayOrariAsporto = arrayOrariAsporto.sort();
 
     
 
@@ -164,7 +166,13 @@ const ConfermaOrdine = (props) => {
                     <Header as='h3' block textAlign="center" className="w-100">
                         COMPLETA L'ORDINE CON I TUOI DATI
                     </Header>
-                    <ModuloInvioOrdine infoNegozio={infoNegozio} idOrdine={idOrdine} oraInizioAsporto={oraInizioAsporto} oraFineAsporto={oraFineAsporto} arrayOrariDomicilio = {arrayOrariDomicilio}/>
+                    <ModuloInvioOrdine 
+                        infoNegozio={infoNegozio} 
+                        idOrdine={idOrdine} 
+                        arrayOrariDomicilio = {arrayOrariDomicilio}
+                        arrayOrariAsporto = {arrayOrariAsporto}
+                        fasceDomicilio = {fasceDomicilio}
+                    />
                 </SezioneBoxed>    
             </Fragment>
         )

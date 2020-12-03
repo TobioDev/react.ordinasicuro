@@ -11,7 +11,7 @@ import it from "date-fns/locale/it";
 // import setMinutes from 'date-fns/setMinutes'
 // import getHours from 'date-fns/setMinutes'
 
-const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsporto, arrayOrariDomicilio}) => {
+const ModuloInvioOrdine = ({ infoNegozio, idOrdine, arrayOrariDomicilio, arrayOrariAsporto, fasceDomicilio}) => {
 
     registerLocale("it", it);
 
@@ -20,6 +20,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
     const [fraseOrario, setFraseOrario] = useState("Quando vuoi ricevere l'ordine?");
     const [campoFormModificato, setCampoFormModificato] = useState('');
     const [modalitaOrdine, setModalitaOrdine] = useState('domicilio');
+    const [optionsSelezionatePerOrari, setOptionsSelezionatePerOrari] = useState([]);
 
     console.log('modulo');
 
@@ -83,27 +84,42 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
 
     //Opzioni per orari fasce consegna a domicilio
     let options_fasce_domicilio = []
-    arrayOrariDomicilio.map( orario => {
-        options_fasce_domicilio.push( { key: orario, text: orario, value: orario+":00" } )
-    })
+    if(arrayOrariDomicilio.length>0){
+        arrayOrariDomicilio.map( orario => {
+            options_fasce_domicilio.push( { key: orario, text: orario, value: orario+":00" } )
+        })
+    }
     console.log({options_fasce_domicilio})
+
+    //Opzioni per orari fasce asporto
+    let options_fasce_asporto = []
+    arrayOrariAsporto.map( orario => {
+        options_fasce_asporto.push( { key: orario, text: orario, value: orario+":00" } )
+    })
 
     //Opzioni modalità consegna/asporto per SELECT
     let options = []
-    if(infoNegozio.asporto==='1'){
-        options = [ { key: 'domicilio', text: 'A domicilio', value: 'domicilio' }, { key: 'asporto', text: 'Asporto', value: 'asporto' },]
+    if(infoNegozio.asporto==='1' && arrayOrariDomicilio.length>0){
+        options = [ { key: 'domicilio', text: 'A domicilio', value: 'domicilio' }, { key: 'asporto', text: 'Asporto', value: 'asporto' }]
     }
-    else{
+    else if (infoNegozio.asporto==='1'){
+        options = [ { key: 'asporto', text: 'Asporto', value: 'asporto' }]
+    }
+    else if(arrayOrariDomicilio.length>0){
         options = [ { key: 'domicilio', text: 'A domicilio', value: 'domicilio' }]
     }
+
+
     const handleChangeModalita = (e, { name, value }) => {
         if(value==='domicilio'){
             setModalitaOrdine('domicilio')
             setFraseOrario("Quando vuoi ricevere l'ordine?")
+            setOptionsSelezionatePerOrari(options_fasce_domicilio)
         }
         else{
             setModalitaOrdine('asporto')
             setFraseOrario("Quando vuoi ritirare l'ordine?")
+            setOptionsSelezionatePerOrari(options_fasce_asporto)
         }
         setValue('tipologia_consegna', value);
     }
@@ -237,7 +253,7 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, oraInizioAsporto, oraFineAsp
                     />
                     <Form.Field>
                         <label>{fraseOrario}</label>
-                        <Select placeholder='Scegli un orario' selection options={options_fasce_domicilio} name="orario" id="orario" required onChange={handleChangeHookForm}/>
+                        <Select placeholder='Scegli un orario' selection options={optionsSelezionatePerOrari} name="orario" id="orario" required onChange={handleChangeHookForm}/>
                     </Form.Field>
                     {/* <Form.Field>
                         <label>{fraseOrario}*</label>
