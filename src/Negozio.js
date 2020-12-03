@@ -18,6 +18,9 @@ const Negozio = (props) => {
     const [articoli, setArticoli] = useState([]);
     const [componentiArticolo, setComponentiArticolo] = useState([]);
     const [associazioniComponenteArticolo, setAssociazioniComponenteArticolo] = useState([]);
+    // const [asporto, setAsporto] = useState(0);
+    // const [numeroFasceDomicilio, setNumeroFasceDomicilio] = useState([]);
+    const [ordiniAttivi, setOrdiniAttivi] = useState(0);
 
 
     useEffect(() => {
@@ -27,6 +30,7 @@ const Negozio = (props) => {
         fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/negozio/' + props.match.params.id_negozio)
             .then(response => response.json())
             .then(json => {
+                console.log(json)
                 setInfoNegozio(json.get_negozio);
                 setInfoUtenteNegozio(json.get_utente);
                 setCategorie(json.get_categorie);
@@ -34,6 +38,9 @@ const Negozio = (props) => {
                 setArticoli(json.get_articoli);
                 setComponentiArticolo(json.get_componenti_articolo);
                 setAssociazioniComponenteArticolo(json.get_associazioni_componente_articolo);
+                // setNumeroFasceDomicilio(json.get_fasce_domicilio);
+                // setAsporto(json.get_asporto);  
+                setOrdiniAttivi(json.ordini_attivi);  
                 setVisibilitaLoader(false)
                     }
             );
@@ -69,7 +76,7 @@ const Negozio = (props) => {
 
     const stampaBottoneProsegui = () => {
         console.log(infoUtenteNegozio.livello)
-        if(infoUtenteNegozio.livello!=='2' && infoUtenteNegozio.livello!=='0'){
+        if(infoUtenteNegozio.livello!=='2' && infoUtenteNegozio.livello!=='0' && ordiniAttivi===1){
             return (
                 <Button animated fluid color="green" size="large" className="bottom-0" style={{"position" : "fixed"}} type="submit" form="form-articoli">
                     <Button.Content visible>Prosegui e vai al riepilogo <Icon name='arrow right' /></Button.Content>
@@ -78,6 +85,7 @@ const Negozio = (props) => {
                     </Button.Content>
                 </Button>
             )
+            
         }
     }
 
@@ -104,7 +112,15 @@ const Negozio = (props) => {
                         />    
                     </div>
                     
-                    <ListaArticoli idNegozio={props.match.params.id_negozio} abbonamentoUtente={infoUtenteNegozio.livello} articoli={articoli} categorieArticoli={categorieArticoli} componentiArticolo={componentiArticolo} associazioniComponenteArticolo={associazioniComponenteArticolo} />
+                    <ListaArticoli
+                        idNegozio={props.match.params.id_negozio}
+                        abbonamentoUtente={infoUtenteNegozio.livello}
+                        articoli={articoli}
+                        categorieArticoli={categorieArticoli}
+                        componentiArticolo={componentiArticolo}
+                        associazioniComponenteArticolo={associazioniComponenteArticolo}
+                        ordiniAttivi={ordiniAttivi}
+                    />
                 </div>
 
             </div>

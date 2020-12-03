@@ -9,7 +9,7 @@ import SezioneBoxed from './SezioneBoxed'
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react'
 
 
-const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo}) => {
+const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticoli, componentiArticolo, associazioniComponenteArticolo, ordiniAttivi}) => {
 
     const { register, handleSubmit, setValue, watch, errors} = useForm();
     const [ aperturaModale, setAperturaModale ] = useState(false);
@@ -96,9 +96,7 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
                                                     .map( articoloFiltrato => {
 
                                                         if(articoloFiltrato.visibilita === '1'){
-
-                                                            if(abbonamentoUtente!=='2' && abbonamentoUtente!=='0'){
-
+                                                            if(abbonamentoUtente!=='2' && abbonamentoUtente!=='0' && ordiniAttivi===1){
                                                                 return (
 
                                                                     <Articolo
@@ -149,10 +147,6 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
                                                             }
 
                                                         }
-
-                                                        
-
-                                                        
 
                                                     }                                                    
 
