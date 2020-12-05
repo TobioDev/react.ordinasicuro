@@ -153,26 +153,26 @@ const ModuloInvioOrdine = ({ infoNegozio, idOrdine, arrayOrariDomicilio, arrayOr
         if(data.orario !== undefined && data.tipologia_consegna !== undefined){
             console.log(data);
 
-            // localStorage.setItem('infoOrdine', JSON.stringify(data));
+            localStorage.setItem('infoOrdine', JSON.stringify(data));
 
-            // const requestOptions = {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            //     body: JSON.stringify(data)
-            // };
-            // fetch('https://ordinasicuro.it/670914_920408/lib/api/conferma_ordine', requestOptions)
-            //     .then(response => response.json())
-            //     .then(dati => {
-            //         console.log(dati);
-            //         if(dati.presenza_errori===false){
-            //             //alert('Successo!');
-            //             history.push("/ordine-inviato/");
-            //         }
-            //         else{
-            //             //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-            //             alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
-            //         }
-            //     });
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: JSON.stringify(data)
+            };
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/conferma_ordine', requestOptions)
+                .then(response => response.json())
+                .then(dati => {
+                    console.log(dati);
+                    if(dati.presenza_errori===false){
+                        //alert('Successo!');
+                        history.push("/ordine-inviato/");
+                    }
+                    else{
+                        //avviaModale('Attenzione','Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                        alert('Si è verificato un errore durante l\'invio del tuo ordine. Riprova di nuovo.');
+                    }
+                });
 
         }
         else{
