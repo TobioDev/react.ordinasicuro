@@ -246,6 +246,10 @@ function App() {
 				{<Redirect to="/negozio/13" />}
 			</Route>
 
+			<Route exact path="/il-braciere">
+				{<Redirect to="/negozio/16" />}
+			</Route>
+
 			<Route exact path="/negozio/8/farmerk-market-ristorante">
 				{<Redirect to="/negozio/8" />}
 			</Route>
