@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import {Helmet} from "react-helmet";
+import axios from "axios";
 
 import Home from './Home'
 
@@ -41,11 +42,31 @@ function App() {
 
 
 	const [loggato, setLoggato] = useState([false]);
+
+	useEffect(() => {
+		//check versione app
+		axios.get('https://ordinasicuro.it/670914_920408/lib/api/versione/', {
+			params: {
+				
+			}
+		})
+		.then(function (response) {
+			console.log(response.data)
+	
+			if(localStorage.getItem("build_ordinasicuro") !== null && localStorage.getItem("build_ordinasicuro") !== response.data['get_versione'][0].build){
+			  localStorage.setItem("build_ordinasicuro", response.data['get_versione'][0].build);
+			  window.location.reload();
+			}else
+			if(localStorage.getItem("build_ordinasicuro") === null){
+			  localStorage.setItem("build_ordinasicuro", response.data['get_versione'][0].build);
+			}
+			
+		});
+		
+	}, [])
 	
 
 	useEffect(() => {
-
-		console.log('da APPPP');
 
         if(localStorage.getItem('infoUtente') === null){
           
