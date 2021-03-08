@@ -19,8 +19,6 @@ const formDataImmagine = new FormData();
 
 const AggiungiArticolo = (props) => {
 
-    window.scrollTo(0,0);
-
     const { enqueueSnackbar } = useSnackbar();
     const { register, handleSubmit, setValue, getValues} = useForm();
 
@@ -75,31 +73,24 @@ const AggiungiArticolo = (props) => {
 
     useEffect(() => {
 
+        //All'apertura della pagina torna in cima
+        window.scrollTo(0,0);
+
         if(localStorage.getItem('infoUtente') === null){
             localStorage.removeItem('infoUtente');
             history.push("/login/");
         }
         else{
+            //Richiedo categorie del negozio e componenti articoli del negozio
             fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/aggiungi_articolo/' + JSON.parse(localStorage.getItem('infoUtente')).id_negozio + '/' )
             .then(response => response.json())
             .then(json => {
-
-                console.log(json);
-                    //setNome(json.get_articolo.nome.replace("\\\'", "\'"));
+                    //console.log(json);
                     setValue("nome_articolo", '');
-                    //setIdArticolo(json.get_articolo.id);
-                    //setValue("id_articolo", json.get_articolo.id);
-                    //setDescrizione(json.get_articolo.descrizione.replace("\\\'", "\'"));
                     setValue("descrizione_articolo", '');
-                    // setIdCategoriaArticolo(json.get_articolo.id_categoria_articolo);
-                    // setValue("id_categoria_articolo", json.get_articolo.id_categoria_articolo);
-                    //setNumeroMaxComponenti(json.get_articolo.numero_max_componenti);
                     setValue("numero_max_componenti_articolo", '');
-                    //setUnitaMisura(json.get_articolo.unita_misura.replace("\\\'", "\'"));
                     setValue("unita_misura_articolo", '');
-                    //setPrezzo(json.get_articolo.prezzo);
                     setValue("prezzo_articolo", '');
-                    //setUrlImmagine(json.get_articolo.url_immagine);
                     setTipologia('semplice');
                     setValue("tipologia_articolo", 'semplice');
 
@@ -110,8 +101,6 @@ const AggiungiArticolo = (props) => {
                     arrayTemporaneo = [];
                         json.get_componenti_articoli.map( componente => arrayTemporaneo.push({key: componente.id, text: componente.nome, value: componente.id}));
                         setArrayOpzioniComponentiArticoli(arrayTemporaneo);
-
-                    console.log(json);
                 
                     }
             );
@@ -143,10 +132,8 @@ const AggiungiArticolo = (props) => {
     }
 
     const handleChangeComponenti = (e, {value} ) => {
-        
         setArrayOpzioniComponentiArticolo(value);
         setValue("componenti_articolo", JSON.stringify(value));
-
     }
 
     
@@ -217,13 +204,14 @@ const AggiungiArticolo = (props) => {
         //console.log(data);
         // console.log(data.nuova_immagine_articolo);
         setSaving(true);
-        let message = "Attendere, salvataggio in corso..."
-        enqueueSnackbar(message, { 
-            autoHideDuration: 2000,
-            variant: 'success',
-        });
 
-        if(data.nome_articolo !== '' &&  data.descrizione_articolo !== '' && data.unita_misura_articolo !== '' && data.prezzo_articolo !== '' ){
+        if(data.nome_articolo !== '' && data.unita_misura_articolo !== '' && data.prezzo_articolo !== '' ){
+
+            let message = "Attendere, salvataggio in corso..."
+            enqueueSnackbar(message, { 
+                autoHideDuration: 2000,
+                variant: 'success',
+            });
 
             const requestOptions = {
                 method: 'POST',
@@ -277,9 +265,9 @@ const AggiungiArticolo = (props) => {
                     }
                     
                 });
-
         }
         else{
+            setSaving(false);
             alert("È necessario compilare ogni campo prima di proseguire con il salvataggio!");
         }
 

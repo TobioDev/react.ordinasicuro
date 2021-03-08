@@ -5,8 +5,10 @@ import  './Articolo.css'
 
 const ArticoloBase = ({id, visibilita, nome, tipologia, id_categoria_articolo, descrizione, unita_misura, prezzo, url_immagine, register, setValue, componentiArticolo, associazioniComponenteArticolo, avviaModaleImg }) => {
 
-    let escapeNome = nome.replace("\\", "")
-    let escapeDescrizione = descrizione.replace("\\", "")
+    let escapeNome = nome.replaceAll("\\\'", "\'")
+    escapeNome = nome.replaceAll("\\\"", "\"")
+    let escapeDescrizione = descrizione.replaceAll("\\\'", "\'")
+    escapeDescrizione = descrizione.replaceAll("\\\"", "\"")
 
     
 
