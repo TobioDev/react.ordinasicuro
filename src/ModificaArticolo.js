@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import SezioneBoxed from './SezioneBoxed'
 
-import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon} from 'semantic-ui-react'
+import { Button, Form, Input, TextArea, Label, Dropdown, Image, Select, Modal, Header, Icon, Checkbox} from 'semantic-ui-react'
 import { useForm } from "react-hook-form"
 
 import Snackbar from '@material-ui/core/Snackbar';
@@ -17,7 +17,6 @@ import { id } from 'date-fns/esm/locale';
 
 const ModificaArticolo = (props) => {
 
-    window.scrollTo(0,0);
     let history = useHistory();
 
     const { enqueueSnackbar } = useSnackbar();
@@ -44,6 +43,13 @@ const ModificaArticolo = (props) => {
     const [tipologia, setTipologia] = useState(['']);
     const [unitaMisuraDisabilitato, setUnitaMisuraDisabilitato] = useState(false);
 
+    const [dispSempre, setDispSempre] = useState(false);
+    const [dispPranzo, setDispPranzo] = useState(false);
+    const [dispCena, setDispCena] = useState(false);
+    const [dispAsporto, setDispAsporto] = useState(false);
+    const [dispConsegna, setDispConsegna] = useState(false);
+
+
     //Codice per snackbar ui-material ----------
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -68,6 +74,8 @@ const ModificaArticolo = (props) => {
     //Fine codice per snackbar ui-material ---------------
 
     useEffect(() => {
+
+        window.scrollTo(0,0);
 
         if(localStorage.getItem('infoUtente') === null){
             localStorage.removeItem('infoUtente');
@@ -129,6 +137,35 @@ const ModificaArticolo = (props) => {
         }
   
     }, [])
+
+    const changeDispSempre = () => {
+        //se dispSempre è vera e quindi diventerà falsa
+        if(dispSempre){
+            setDispPranzo(false);
+            setDispCena(false);
+            setDispAsporto(false);
+            setDispConsegna(false);
+            setDispSempre(false)
+        }
+        //altrimenti
+        else{
+            setDispPranzo(true);
+            setDispCena(true);
+            setDispAsporto(true);
+            setDispConsegna(true);
+            setDispSempre(true);
+        }
+    }
+
+    const checkDispSempre = (valore) => {
+
+        //se falso setto dispsempre falsa
+        if(valore === false){
+            setDispSempre(false);
+        }
+
+    }
+
 
     const handleChangeCategoria = (e, {value} ) => {
         setIdCategoriaArticolo(value);
@@ -343,6 +380,14 @@ const ModificaArticolo = (props) => {
                                 <label>Nome:</label>
                                 <input require ref={register} name="nome_articolo" id="nome_articolo" placeholder='Nome del prodotto' defaultValue={nome} maxLength="60"/>
                                 <Label pointing>Max 60 caratteri</Label>
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Disponibilità:</label>
+                                <Checkbox toggle label="Sempre" className="mh2 mv1" onChange={() => changeDispSempre()} checked={dispSempre}/>
+                                <Checkbox toggle label="A pranzo" className="mh2 mv1" onChange={() => {checkDispSempre(!dispPranzo); setDispPranzo(!dispPranzo)}} checked={dispPranzo}/>
+                                <Checkbox toggle label="A cena" className="mh2 mv1" onChange={() => {checkDispSempre(!dispCena); setDispCena(!dispCena)}} checked={dispCena}/>
+                                <Checkbox toggle label="Per asporto" className="mh2 mv1" onChange={() => {checkDispSempre(!dispAsporto); setDispAsporto(!dispAsporto)}} checked={dispAsporto}/>
+                                <Checkbox toggle label="Consegna a Domicilio" className="mh2 mv1" onChange={() => {checkDispSempre(!dispConsegna); setDispConsegna(!dispConsegna)}} checked={dispConsegna}/>
                             </Form.Field>
                             <Form.Field>
                                 <label>Descrizione:</label>
