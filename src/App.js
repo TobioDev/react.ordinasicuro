@@ -35,6 +35,7 @@ import ConfermaComposti2 from './ConfermaComposti2';
 import GestioneArticoliCategoria from './GestioneArticoliCategoria';
 import GestioneOrdini from './GestioneOrdini';
 import InfoOrdine from './InfoOrdine';
+import CompressioneImmagini from './CompressioneImmagini';
 
 
 function App() {
@@ -154,6 +155,11 @@ function App() {
 				path='/info-ordine/:id_ordine'
 				exact
 				component={InfoOrdine} />
+			
+			<Route 
+				path='/compressione-immagini'
+				exact
+				component={CompressioneImmagini} />
 
 			<Route 
 				path='/gestione-categorie'

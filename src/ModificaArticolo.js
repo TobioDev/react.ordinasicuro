@@ -291,6 +291,10 @@ const ModificaArticolo = (props) => {
                                 .then(dati => {
                                     console.log('aggiornamento immagine', dati);
                                     if(dati==="ok"){
+                                        let message = "Salvataggio effettuato!"
+                                        enqueueSnackbar(message, { 
+                                            variant: 'success',
+                                        });
                                         history.goBack()
                                     }
                                     else{
@@ -305,6 +309,10 @@ const ModificaArticolo = (props) => {
                     }
                     else{
                         if( dati === 'ok'){
+                            let message = "Salvataggio effettuato!"
+                            enqueueSnackbar(message, { 
+                                    variant: 'success',
+                            });
                             history.goBack();
                         }else{
                             setSaving(false);
