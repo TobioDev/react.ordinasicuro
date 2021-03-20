@@ -63,6 +63,12 @@ const NavbarOS = ({loggato}) => {
                                 to="/gestione-profilo"
                                 onClick={apriChiudiMenu}
                             />
+                            <Menu.Item
+                                name='Comprimi Immagine'
+                                as={Link}
+                                to="/compressione-immagini"
+                                onClick={apriChiudiMenu}
+                            />
                         </Menu.Menu>
                     </Menu.Item>
                     <Menu.Item name='LOGOUT' onClick={() => {apriChiudiMenu(); pushHistory("/logout"); }} />

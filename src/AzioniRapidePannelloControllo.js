@@ -49,7 +49,14 @@ const AzioniRapidePannelloControllo = () => {
                         name= 'Gestione Profilo'
                     >
                         Gestione Profilo <Icon name='user' />
-            </Menu.Item>   
+            </Menu.Item>
+            <Menu.Item as={Link}
+                        key={'compressione-immagini'}
+                        to={'/compressione-immagini'}  
+                        name= 'Compressione Immagini'
+                    >
+                        Comprimi Immagine <Icon name='file image' />
+            </Menu.Item>    
         </Menu>
     )
 }
