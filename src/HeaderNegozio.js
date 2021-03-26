@@ -45,13 +45,13 @@ const HeaderNegozio = ({infoNegozio, categorie,infoUtenteNegozio}) => {
 	}
 	else { urlBackground = "https://ordinasicuro.it/670914_920408/lib/img/header-bg.jpg" }
 
-	let visibilitaBottoni = 'flex';
+	let visibilitaBottoni = false;
 
-	// if(infoUtenteNegozio.livello === '0' || infoUtenteNegozio.livello === '2'){
+	if(infoUtenteNegozio.livello !== '0' && infoUtenteNegozio.livello !== '2'){
 
-	// 	visibilitaBottoni = 'none';
+		visibilitaBottoni = true;
 
-	// }
+	}
 
 	
 
@@ -81,6 +81,7 @@ const HeaderNegozio = ({infoNegozio, categorie,infoUtenteNegozio}) => {
 							<h3 className="fw1 f-4 white-80 mb0 mt3 sottotitolo"><i>{infoNegozio.citta}</i></h3>
 							<h1 className="f-6-l f2 fw7 white-90 lh-title mt1 titolo">{infoNegozio.nome}</h1>
 							<p className="f4-l f5 white sottotitolo">{infoNegozio.descrizione}</p>
+							{visibilitaBottoni && (
 								<div className="w-100 flex flex-row justify-center items-center" >
 									<div className="w-20-l w40 ph2">
 										<div onClick={() => avviaModaleZone()} className="link br2 ph3 pv2 mb2 mt2 mh3-l dib black w-100 tc b f4-l hover-white titolo pointer" style={{backgroundColor : "rgb(255, 193, 7)"}}>Zone di Consegna</div>
@@ -88,8 +89,9 @@ const HeaderNegozio = ({infoNegozio, categorie,infoUtenteNegozio}) => {
 									<div className="w-20-l w-40 ph2">
 										<div onClick={() => avviaModaleOrari()} className="link br2 ph3 pv2 mb2 mt2 mh3-l dib black w-100 tc b f4-l hover-white titolo pointer" style={{backgroundColor : "rgb(255, 193, 7)"}}>Orari</div>
 									</div>
-
 								</div>
+							)}
+							
 							<div>
 								<img src="https://ordinasicuro.it/670914_920408/lib/img/arrow_bouncing.gif" className="w4-l w3" alt=""/>
 							</div>
