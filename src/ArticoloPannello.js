@@ -13,12 +13,16 @@ import LinkIcon from '@material-ui/icons/Link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
+import { useSnackbar } from 'notistack';
+
 
 // import { Dropdown } from 'semantic-ui-react'
 
 import  './ArticoloPannello.css'
 
-const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizione, unita_misura, prezzo, url_immagine, avviaModaleImg }) => {
+const ArticoloPannello = ({infoArticolo, avviaModaleImg }) => {
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const [varVisibilita, setVarVisibilita] = useState(true);
 
@@ -28,10 +32,10 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
 
     useEffect( () => {
 
-        if(visibilita === '1'){
+        if(infoArticolo.visibilita === '1'){
             setVarVisibilita(true);
         }
-        else if (visibilita === '0'){
+        else if (infoArticolo.visibilita === '0'){
             setVarVisibilita(false);
         }
         
@@ -46,7 +50,7 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
 
     const handleChangeVisibilita = () => {
 
-        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/change_visibilita_articolo/' + randomNumber + id + '/')
+        fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/change_visibilita_articolo/' + randomNumber + infoArticolo.id + '/')
         .then(response => response.text())
         .then(risp => {
             console.log(risp);
@@ -97,7 +101,7 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
     const pushHistory = (indirizzo) => {
 
         localStorage.setItem('posizioneCategoria', window.pageYOffset);
-        localStorage.setItem('ultimaCategoria', idCategoriaArticolo );
+        localStorage.setItem('ultimaCategoria', infoArticolo.idCategoriaArticolo );
         //console.log('pos', window.pageYOffset);
         history.push(indirizzo);
 
@@ -105,17 +109,17 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
 
 
 
-    let escapeNome = nome.replaceAll("\\\'", "\'")
-    escapeNome = nome.replaceAll("\\\"", "\"")
-    let escapeDescrizione = descrizione.replaceAll("\\\'", "\'")
-    escapeDescrizione = descrizione.replaceAll("\\\"", "\"")
+    let escapeNome = infoArticolo.nome.replaceAll("\\\'", "\'")
+    escapeNome = infoArticolo.nome.replaceAll("\\\"", "\"")
+    let escapeDescrizione = infoArticolo.descrizione.replaceAll("\\\'", "\'")
+    escapeDescrizione = infoArticolo.descrizione.replaceAll("\\\"", "\"")
 
     let prezzoUnita = () => {
-        if(unita_misura.toLowerCase() !== 'pz' ){
-            return '€ '+prezzo+' / '+unita_misura
+        if(infoArticolo.unita_misura.toLowerCase() !== 'pz' ){
+            return '€ '+infoArticolo.prezzo+' / '+infoArticolo.unita_misura
         }
         else{
-            return '€ '+prezzo
+            return '€ '+infoArticolo.prezzo
         }
     }
 
@@ -129,12 +133,59 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
 
     const classes = useStyles();
 
+    const handlePosizione = (e) => {
+
+        if(e.target.value!== ''){
+
+            const formDataPosizione = new FormData();
+
+            formDataPosizione.append('id_articolo', infoArticolo.id);
+            formDataPosizione.append('nuova_posizione', e.target.value);
+
+            console.log(formDataPosizione.get('id_articolo'));
+            console.log(formDataPosizione.get('nuova_posizione'));
+
+            const requestOptionsPosizione = {
+                method: 'POST',
+                body: formDataPosizione
+            };
+
+
+            fetch('https://ordinasicuro.it/670914_920408/lib/api/aggiorna_ordine_articolo/', requestOptionsPosizione)
+                .then(response => response.text())
+                .then(dati => {
+                    console.log(dati);
+                    if(dati==="ok"){
+                        let message = "Posizione aggiornata!"
+                        enqueueSnackbar(message, { 
+                            variant: 'success',
+                            autoHideDuration: 1500,
+                        });
+
+                    }
+                    else{
+
+                        let message = "Errore nell'aggiornamento della posizione!"
+                        enqueueSnackbar(message, { 
+                            variant: 'error',
+                            autoHideDuration: 1500,
+                        });
+
+
+                    }
+
+                });
+
+        }
+
+    }
+
 
     return (
         <Fragment>
-            <div id={"cardArticolo"+id} className="w-100 pv2 ph3 shadow-3 br4 mb2">
+            <div id={"cardArticolo"+infoArticolo.id} className="w-100 pv2 ph3 shadow-3 br4 mb2">
                 <div className="w-80 mv2 mh0 flex items-start justify-start">
-                    {link_img(url_immagine)}
+                    {link_img(infoArticolo.url_immagine)}
                     <div>
                         <h1 className="f5 fw7 titolo mb0">{escapeNome}</h1>
                         <p className="sottotitolo f5 mt3-l mt2">{escapeDescrizione}</p>
@@ -144,13 +195,13 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
                 <div className="w-100 mt4 mb2 flex items-start justify-between">
                     <div className="w-100 dn flex-l justify-start items-center">
                         <div className="flex items-center w-100" style={{justifyContent : 'space-evenly'}}>
-                            <Button onClick={() => pushHistory('/modifica-articolo/' + randomNumber + id)} variant="contained" startIcon={<CreateIcon />} style={{backgroundColor: '#17a2b8', color: 'white'}}>
+                            <Button onClick={() => pushHistory('/modifica-articolo/' + randomNumber + infoArticolo.id)} variant="contained" startIcon={<CreateIcon />} style={{backgroundColor: '#17a2b8', color: 'white'}}>
                                 Modifica
                             </Button>
-                            <Button onClick={() => pushHistory('/duplica-articolo/' + randomNumber + id)} variant="contained" startIcon={<FileCopyIcon />} style={{backgroundColor: '#ffc107', color: 'black'}}>
+                            <Button onClick={() => pushHistory('/duplica-articolo/' + randomNumber + infoArticolo.id)} variant="contained" startIcon={<FileCopyIcon />} style={{backgroundColor: '#ffc107', color: 'black'}}>
                                 Duplica
                             </Button>
-                            <Button onClick={() => pushHistory('/elimina-articolo/' + randomNumber + id)} variant="contained" color="secondary" startIcon={<DeleteIcon />}>
+                            <Button onClick={() => pushHistory('/elimina-articolo/' + randomNumber + infoArticolo.id)} variant="contained" color="secondary" startIcon={<DeleteIcon />}>
                                 Elimina
                             </Button>
                         {/* <Button variant="contained" startIcon={<LinkIcon />}>
@@ -161,13 +212,13 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
                     </div>
                     <div className="w-100 flex dn-l justify-start items-center">
                         <div className="flex items-center w-100" style={{justifyContent : 'space-evenly'}}>
-                            <IconButton onClick={() => pushHistory('/modifica-articolo/' + randomNumber + id)} style={{backgroundColor: '#17a2b8', color: 'white'}}>
+                            <IconButton onClick={() => pushHistory('/modifica-articolo/' + randomNumber + infoArticolo.id)} style={{backgroundColor: '#17a2b8', color: 'white'}}>
                                 <CreateIcon />
                             </IconButton>
-                            <IconButton onClick={() => pushHistory('/duplica-articolo/' + randomNumber + id)} style={{backgroundColor: '#ffc107', color: 'black'}}>
+                            <IconButton onClick={() => pushHistory('/duplica-articolo/' + randomNumber + infoArticolo.id)} style={{backgroundColor: '#ffc107', color: 'black'}}>
                                 <FileCopyIcon />
                             </IconButton>
-                            <IconButton onClick={() => pushHistory('/elimina-articolo/' + randomNumber + id)} style={{backgroundColor: '#dc3545', color: 'white'}}>
+                            <IconButton onClick={() => pushHistory('/elimina-articolo/' + randomNumber + infoArticolo.id)} style={{backgroundColor: '#dc3545', color: 'white'}}>
                                 <DeleteIcon />
                             </IconButton>
                             {/* <IconButton  style={{backgroundColor: '#e0e0e0', color: 'black'}}>
@@ -178,10 +229,10 @@ const ArticoloPannello = ({id, idCategoriaArticolo, visibilita, nome, descrizion
                     </div>
                 </div>
                 <Divider/>
-                <div className="w-100 mv2 flex items-start justify-end">
+                <div className="w-100 mv2 flex items-start justify-between">
+                    <p>Posizione: <input type="number" placeholder={infoArticolo.ordine} onChange={(e)=>handlePosizione(e)} step="1" style={{width: "50px"}}></input></p>
                     <p className="w-40 f5 titolo flex justify-end"><b>{prezzoUnita()}</b></p>
                 </div>
-
             </div>
             
         </Fragment>

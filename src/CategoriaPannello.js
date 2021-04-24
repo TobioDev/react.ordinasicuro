@@ -66,6 +66,7 @@ const CategoriaPannello = ({id, nome, id_negozio, posizione}) => {
                         let message = "Posizione aggiornata!"
                         enqueueSnackbar(message, { 
                             variant: 'success',
+                            autoHideDuration: 1500,
                         });
 
                     }
@@ -74,6 +75,7 @@ const CategoriaPannello = ({id, nome, id_negozio, posizione}) => {
                         let message = "Errore nell'aggiornamento della posizione!"
                         enqueueSnackbar(message, { 
                             variant: 'error',
+                            autoHideDuration: 1500,
                         });
 
 

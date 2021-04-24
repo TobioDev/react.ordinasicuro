@@ -7,8 +7,6 @@ import ArticoloPannello from './ArticoloPannello';
 
 const ListaArticoliPannello = ({articoli}) => {
 
-    console.log('STAMPO LISTA');
-
     const { register, setValue, errors} = useForm();
     const [ aperturaModale, setAperturaModale ] = useState(false);
     const [ aperturaModaleImg, setAperturaModaleImg ] = useState(false);
@@ -89,22 +87,12 @@ const ListaArticoliPannello = ({articoli}) => {
 
     const stampaArticoli = articoli.map( articolo => {
 
-        console.log('stampo prodotto');
         return (
 
             <ArticoloPannello
                 key={articolo.id} 
                 avviaModaleImg={avviaModaleImg}
-                id={articolo.id} 
-                idCategoriaArticolo={articolo.id_categoria_articolo} 
-                visibilita={articolo.visibilita} 
-                nome={articolo.nome} 
-                tipologia={articolo.tipologia} 
-                id_categoria_articolo = {articolo.id_categoria_articolo} 
-                descrizione = {articolo.descrizione} 
-                unita_misura = {articolo.unita_misura} 
-                prezzo = {articolo.prezzo} 
-                url_immagine = {articolo.url_immagine}
+                infoArticolo={articolo}
             />
 
         )
@@ -112,9 +100,6 @@ const ListaArticoliPannello = ({articoli}) => {
 
 )
 
-
-    
-    
 
     return (
 
