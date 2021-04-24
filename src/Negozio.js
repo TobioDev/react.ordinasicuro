@@ -30,7 +30,6 @@ const Negozio = (props) => {
         fetch('https://ordinasicuro.it/670914_920408/lib/index.php/api/negozio/' + props.match.params.id_negozio)
             .then(response => response.json())
             .then(json => {
-                console.log(json)
                 setInfoNegozio(json.get_negozio);
                 setInfoUtenteNegozio(json.get_utente);
                 setCategorie(json.get_categorie);

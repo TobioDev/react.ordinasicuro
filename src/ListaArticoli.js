@@ -96,7 +96,6 @@ const ListaArticoli = ({idNegozio, abbonamentoUtente, articoli, categorieArticol
                                                     .map( articoloFiltrato => {
 
                                                         if(articoloFiltrato.visibilita === '1'){
-                                                            console.log(articoloFiltrato);
                                                             if(abbonamentoUtente!=='2' && abbonamentoUtente!=='0' && ordiniAttivi===1){
                                                                 return (
 
